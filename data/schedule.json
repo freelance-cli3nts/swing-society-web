@@ -1,0 +1,6 @@
+{
+  "classes": [
+      {"day": "Monday", "time": "6 PM - 8 PM", "title": "Beginner Swing"},
+      {"day": "Wednesday", "time": "7 PM - 9 PM", "title": "Intermediate Lindy Hop"}
+  ]
+}

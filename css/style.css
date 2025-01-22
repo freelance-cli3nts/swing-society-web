@@ -1,0 +1,178 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* Header container */
+.header-container {
+  display: flex;
+  flex-direction: column; /* Stack logo and navigation by default */
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center; /* Center-align text */
+}
+
+/* Logo styling */
+.logo-icon {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* Navigation menu */
+.nav-list {
+  display: flex;
+  gap: 20px; /* Space between menu items */
+}
+
+.nav-list li a {
+  font-size: 16px;
+  padding: 5px 10px;
+}
+
+/* Make the navigation responsive */
+@media (max-width: 768px) {
+  .nav-list {
+    flex-direction: column; /* Stack menu items vertically on smaller screens */
+    align-items: center;
+  }
+}
+
+
+
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 10;
+  padding: 10;
+}
+header {
+  background: #cf7878;
+  color: #fff;
+  padding: 10px 0;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+nav ul li {
+  margin: 0 15px;
+}
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+#hero {
+  text-align: center;
+  padding: 50px 20px;
+  background: #f4f4f4;
+}
+#hero .cta {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #dd8989;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+      flex-direction: column;
+      text-align: center;
+  }
+}
+
+#schedule {
+  margin: 20px;
+  padding: 10px;
+  background: #f4f4f4;
+  border-radius: 5px;
+}
+#schedule div {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+
+.social {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  width: 30px; /* Set the desired width */
+  height: 30px; /* Set the desired height */
+}
+
+.social-container {
+  display: flex;
+  justify-content: center; /* Center the icons horizontally */
+  align-items: center; /* Center the icons vertically (if needed) */
+  gap: 10px; /* Space between icons */
+  padding: 10px 0;
+}
+
+footer a {
+  text-decoration: none;
+  color: #000; /* Change to your desired color */
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: #007BFF; /* Highlight color on hover */
+}
+
+.logo-icon {
+  width: 50px; /* Set the desired width */
+  height: 50px; /* Set the desired height */
+  margin: 10px;
+}
+
+
+body {
+  font-family: 'Dancing Script', cursive;
+}
+
+h1, h2, h3 {
+  font-family: 'Lobster', cursive;
+}
+
+/* video responsive view aspect ratio */
+.video-container {
+  position: relative;
+  width: 100%; /* Full width */
+  padding-bottom: 56.25%; /* 16:9 aspect ratio (height/width * 100) */
+  height: 0; /* Necessary for aspect ratio trick */
+}
+
+.video-container iframe,
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* To fine-tune for different viewports, use media queries */
+@media (max-width: 768px) {
+  .video-container {
+      padding-bottom: 75%; /* Adjust for a taller aspect ratio on smaller screens */
+  }
+}
+
+@media (min-width: 769px) {
+  .video-container {
+      padding-bottom: 56.25%; /* Default 16:9 aspect ratio for larger screens */
+  }
+}

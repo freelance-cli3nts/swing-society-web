@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Swing Society - Learn swing dance with us"
+    />
+    <title>Swing Society</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="images/icon" href="assets/images/fav-icon/favicon-32x32.png" />
+    <link rel="apple-touch-icon" type="images/icon" href="assets/images/fav-icon/apple-touch-icon.png" />
+    <link rel="android-chrome" type="images/icon" href="assets/images/fav-icon/" />
+    <script src="https://unpkg.com/htmx.org" defer></script>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header>
+      <div class="header-container">
+        <nav>
+          <img src="assets/images/logo.png" alt="Swing Society" class="logo-icon"/>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="classes.html">Classes</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+      <h1>Swing society where jazz happens!</h1>
+      <p>Discover the joy of swing dance with our passionate instructors.</p>
+      <div class="video-container">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/OpXc2svVtZM?si=ZyEVIMdwmfnH_33u/?autoplay=1&mute=1&playsinline=1" title="Miro & Stella Dance of the Gremlins" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <a href="classes.html" class="cta">View Classes</a>
+    </section>
+    <main>
+      <h1>Weekly Classes Schedule</h1>
+      <div id="schedule">
+        <div
+          hx-get="/data/schedule.html"
+          hx-trigger="load"
+          hx-target="#schedule"
+        >
+          Loading schedule...
+        </div>
+      </div>
+    </main>
+    <!-- Footer Section -->
+
+    <footer>
+      <div class="social-container">
+
+        <a href="https://www.facebook.com/swingsocietybg/">
+          <img
+            src="assets/images/5296499_fb_facebook_facebook logo_icon.png"
+            class="social"
+            alt="facebook"
+          />
+        </a>
+        <a href="https://www.instagram.com/bgswingsociety/">
+          <img
+            src="assets/images/5296765_camera_instagram_instagram logo_icon.png"
+            class="social"
+            alt="instagram"
+          />
+        </a>
+        <a href="https://www.youtube.com/@bgswingsociety">
+          <img
+            src="assets/images/5296521_play_video_vlog_youtube_youtube logo_icon.png"
+            class="social"
+            alt="youtube"
+          />
+        </a>
+        <a href="https://www.tiktok.com/@swing_society5">
+          <img
+            src="assets/images/5367362_media_network_social_social media_tiktok_icon.png"
+            class="social"
+            alt="tiktok"
+          />
+        </a>
+        <p>
+          Свържете се с нас: <a href="tel:+885554597">0885554597</a>
+        </p>
+        
+      </div>
+ 
+
+      <p>&copy; 2025 Swing Society. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>
