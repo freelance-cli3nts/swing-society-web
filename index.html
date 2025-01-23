@@ -13,17 +13,21 @@
     <link rel="apple-touch-icon" type="images/icon" href="assets/images/fav-icon/apple-touch-icon.png" />
     <link rel="android-chrome" type="images/icon" href="assets/images/fav-icon/" />
     <script src="https://unpkg.com/htmx.org" defer></script>
+    <script src="js/main.js" defer></script>
   </head>
   <body>
     <!-- Header Section -->
     <header>
       <div class="header-container">
-        <nav>
+        <a href="index.html" class="logo">
           <img src="assets/images/logo.png" alt="Swing Society" class="logo-icon"/>
+        </a>
+        <nav>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="classes.html">Classes</a></li>
-            <li><a href="about.html">About Us</a></li>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="classes.html">Класове</a></li>
+            <li><a href="events.html">Събития</a></li>
+            <li><a href="about.html">За нас</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </nav>
@@ -32,15 +36,21 @@
 
     <!-- Hero Section -->
     <section id="hero">
-      <h1>Swing society where jazz happens!</h1>
-      <p>Discover the joy of swing dance with our passionate instructors.</p>
+      <div class="hero-container">
+        <div id="hero-text">
+          <h1>Swing society where jazz happens!</h1>
+          <p>Вкарай джаз в кръвта си и стъпвай прес живота като танц</p>
+        </div>
+        <button class="btn" hx-get="/data/schedule.html" hx-trigger="load" hx-target="#swappabel-container">Запиши се</button>
+      </div>
       <div class="video-container">
         <iframe width="560" height="315" src="https://www.youtube.com/embed/OpXc2svVtZM?si=ZyEVIMdwmfnH_33u/?autoplay=1&mute=1&playsinline=1" title="Miro & Stella Dance of the Gremlins" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
-      <a href="classes.html" class="cta">View Classes</a>
     </section>
     <main>
-      <h1>Weekly Classes Schedule</h1>
+      <div id="main-view">
+      </div>
+      <h1>Календар класове и партита </h1>
       <div id="schedule">
         <div
           hx-get="/data/schedule.html"
@@ -52,46 +62,81 @@
       </div>
     </main>
     <!-- Footer Section -->
-
     <footer>
-      <div class="social-container">
-
-        <a href="https://www.facebook.com/swingsocietybg/">
-          <img
-            src="assets/images/5296499_fb_facebook_facebook logo_icon.png"
-            class="social"
-            alt="facebook"
-          />
-        </a>
-        <a href="https://www.instagram.com/bgswingsociety/">
-          <img
-            src="assets/images/5296765_camera_instagram_instagram logo_icon.png"
-            class="social"
-            alt="instagram"
-          />
-        </a>
-        <a href="https://www.youtube.com/@bgswingsociety">
-          <img
-            src="assets/images/5296521_play_video_vlog_youtube_youtube logo_icon.png"
-            class="social"
-            alt="youtube"
-          />
-        </a>
-        <a href="https://www.tiktok.com/@swing_society5">
-          <img
-            src="assets/images/5367362_media_network_social_social media_tiktok_icon.png"
-            class="social"
-            alt="tiktok"
-          />
-        </a>
-        <p>
-          Свържете се с нас: <a href="tel:+885554597">0885554597</a>
-        </p>
-        
+      <div class="footer-grid">
+        <!-- Column 1 -->
+        <div class="footer-col">
+          <h3>Контакти</h3>
+          <ul>
+            <li>Адрес: 
+              <a href="https://maps.app.goo.gl/Vhr6hWq7p1xr4wb37" target="_blank">София, ул Сердика 25</a>
+            </li>
+            <li>Телефон: 
+              <a href="tel:+885554597">0885554597</a>
+            </li>
+            <li>Имейл: 
+              <a href="mailto: mr.anastasov@gmail.com">info@swingsociety.bg</a>
+            </li>
+          </ul>
+        </div>
+     
+        <!-- Column 2 -->
+        <div class="footer-col">
+          <h3>Информация</h3>
+          <ul>
+            <li><a href="#">Често Задавани Въпроси</a></li>
+            <li><a href="#">Разписание</a></li>
+            <li><a href="#">Цени</a></li>
+            <li><a href="#">Условия</a></li>
+            <li><a href="#">Политика за поверителност</a></li>
+          </ul>
+        </div>
+     
+        <!-- Column 3 -->
+        <div class="footer-col">
+          <h3>Проекти</h3>
+          <ul>
+            <li><a href="https://swingbuzz.eu/" target="_blank">Swing Buzz</a></li>
+            <li><a href="#">Podcast</a></li>
+            <li><a href="#">Jazz Scene</a></li>
+          </ul>
+        </div>
+     
+        <!-- Column 4 -->
+        <div class="footer-col">
+          <h3>Намерете ни</h3>
+          <div class="social-links">
+            <a href="https://www.facebook.com/swingsocietybg/" target="_blank">
+              <img src="assets/images/5296499_fb_facebook_facebook logo_icon.png" alt="Facebook" class="social"
+              >Facebook
+            </a>
+            <a href="https://www.instagram.com/bgswingsociety/" target="_blank">
+              <img
+                src="assets/images/5296765_camera_instagram_instagram logo_icon.png"
+                class="social"
+                alt="instagram"
+              />Instagram
+            </a>
+            <a href="https://www.youtube.com/@bgswingsociety" target="_blank">
+              <img
+                src="assets/images/5296521_play_video_vlog_youtube_youtube logo_icon.png"
+                class="social"
+                alt="youtube"
+              />Youtube
+            </a>
+            <a href="https://www.tiktok.com/@swing_society5" target="_blank">
+              <img
+                src="assets/images/5367362_media_network_social_social media_tiktok_icon.png"
+                class="social"
+                alt="tiktok"
+              />TikTok
+            </a>
+          </div>
+        </div>
       </div>
- 
-
-      <p>&copy; 2025 Swing Society. All Rights Reserved.</p>
-    </footer>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Swing Society. All Rights Reserved.</p>
+      </div>
+     </footer>
   </body>
 </html>

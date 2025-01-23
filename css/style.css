@@ -1,150 +1,226 @@
-ul {
+/* Base styles */
+
+/* color palette */
+:root {
+  --primary: #cf7878;    /* Your pink shade */
+  --secondary: #ffce1b;  /* Light gray */
+  --white: #fff;
+  --black: #000;  
+  --accent: #9b80e2;    /* Lighter accent */
+  --shade: #d39a9a;     /* Lighter pink */
+}
+
+html, body {
+  font-family: 'Dancing Script', cursive;
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
-  list-style: none;
+  background: var(--primary);
+  position: relative;
+  min-height: 100vh;
+  overscroll-behavior: none;  /* Prevents bounce/rubber-band effect */
 }
-
-a {
-  text-decoration: none;
-  color: #000;
-}
-
-/* Header container */
-.header-container {
-  display: flex;
-  flex-direction: column; /* Stack logo and navigation by default */
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  text-align: center; /* Center-align text */
-}
-
-/* Logo styling */
-.logo-icon {
-  width: 100px;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-/* Navigation menu */
-.nav-list {
-  display: flex;
-  gap: 20px; /* Space between menu items */
-}
-
-.nav-list li a {
-  font-size: 16px;
-  padding: 5px 10px;
-}
-
-/* Make the navigation responsive */
-@media (max-width: 768px) {
-  .nav-list {
-    flex-direction: column; /* Stack menu items vertically on smaller screens */
-    align-items: center;
-  }
-}
-
-
-
-
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  margin: 10;
-  padding: 10;
-}
-header {
-  background: #cf7878;
-  color: #fff;
-  padding: 10px 0;
-}
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-}
-nav ul li {
-  margin: 0 15px;
-}
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-#hero {
-  text-align: center;
-  padding: 50px 20px;
-  background: #f4f4f4;
-}
-#hero .cta {
-  display: inline-block;
-  padding: 10px 20px;
-  background: #dd8989;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-@media (max-width: 768px) {
-  nav ul {
-      flex-direction: column;
-      text-align: center;
-  }
-}
-
-#schedule {
-  margin: 20px;
-  padding: 10px;
-  background: #f4f4f4;
-  border-radius: 5px;
-}
-#schedule div {
-  margin-bottom: 10px;
-  font-size: 1.2em;
-}
-
-
-.social {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-  width: 30px; /* Set the desired width */
-  height: 30px; /* Set the desired height */
-}
-
-.social-container {
-  display: flex;
-  justify-content: center; /* Center the icons horizontally */
-  align-items: center; /* Center the icons vertically (if needed) */
-  gap: 10px; /* Space between icons */
-  padding: 10px 0;
-}
-
-footer a {
-  text-decoration: none;
-  color: #000; /* Change to your desired color */
-}
-
-footer a:hover {
-  text-decoration: underline;
-  color: #007BFF; /* Highlight color on hover */
-}
-
-.logo-icon {
-  width: 50px; /* Set the desired width */
-  height: 50px; /* Set the desired height */
-  margin: 10px;
-}
-
-
-body {
-  font-family: 'Dancing Script', cursive;
+* {
+box-sizing: border-box;
 }
 
 h1, h2, h3 {
   font-family: 'Lobster', cursive;
+  font-size: 5em;
 }
+
+p {
+  font-size: 2em;
+}
+
+a {
+  text-decoration: none;
+  color: var(--black);
+}
+
+/* Header styles */
+header {
+  background: var(--shade);
+  color: var(--accent);
+  padding: 0.525em ; /* 10px to em */
+} 
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625em 1.25em; /* 10px 20px to em */
+  max-width: 75em; /* 1200px to em */
+  max-height: 4em; /* 32px to em */
+  margin: 0 auto;
+}
+
+.logo-icon {
+  width: 6.25em; /* 100px to em */
+  height: auto;
+}
+
+/* Navigation */
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 1em;
+  padding: 1em;
+  gap: 2em;
+}
+
+nav ul li a {
+  color: var(--black);
+  font-size: 2em;
+  padding: 0.3125em 0.625em; /* 5px 10px to em */
+}
+
+/* Hero section */
+#hero {
+  text-align: center;
+  padding: 3.125em 1.25em; /* 50px 20px to em */
+  background: rgb(255,206,27);
+  background: radial-gradient(circle, rgba(255,206,27,0.958420868347339) 20%, rgba(211,154,154,1) 100%);
+}
+
+#hero .cta {
+  display: inline-block;
+  padding: 0.625em 1.25em; /* 10px 20px to em */
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 0.3125em; /* 5px to em */
+}
+
+.hero-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5rem;
+ }
+ 
+ .hero-text {
+  max-width: 50%;
+ }
+ 
+ h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: var(--black);
+  margin-left: 1em;
+ }
+ 
+ p {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--black);
+  margin-left: 1em;
+ }
+ 
+ 
+ .btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: transparent;
+  border: 0.17em solid var(--secondary);
+  color: var(--black);
+  font-size: xx-large;
+  text-decoration: none;
+  margin: 0.5rem 7em;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: var(--shade);
+ }
+
+/* Schedule section */
+#schedule {
+  margin: 1.25em; /* 20px to em */
+  padding: 0.625em; /* 10px to em */
+  background: var(--shade);
+  border-radius: 0.3125em; /* 5px to em */
+}
+
+#schedule div {
+  margin-bottom: 0.625em; /* 10px to em */
+  font-size: 1.2em;
+}
+
+/* Social and footer */
+footer {
+  background: var(--shade);
+  color: var(--black);
+  padding: 2.5em 1.25em 1.25em;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.875em;
+  max-width: 75em;
+  margin: 0 auto;
+}
+
+.footer-col h3 {
+  color: var(--black);
+  margin-bottom: 1.25em;
+  font-size: 1.8em;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 0.625em;
+}
+
+.footer-col a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+.social-links {
+  display: flex;
+  gap: 0.9375em;
+}
+
+.social-icon {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 1.50em;
+  padding-top: 1.05em;
+  border-top: 0.0625em solid var(--black);
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+footer a {
+  text-decoration: none;
+  color: var(--black); /* Change to your desired color */
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: var(--accent); /* Highlight color on hover */
+}
+
 
 /* video responsive view aspect ratio */
 .video-container {
