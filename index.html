@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no" />
     <meta
       name="description"
       content="Swing Society - Learn swing dance with us"
@@ -23,14 +23,21 @@
           <img src="assets/images/logo.png" alt="Swing Society" class="logo-icon"/>
         </a>
         <nav>
-          <ul>
-            <li><a href="home.html">Home</a></li>
-            <li><a href="classes.html">Класове</a></li>
+          <div class="hamburger" id="hamburger">☰</div>
+          <ul class="nav-list" id="nav-list">
+            <li class="has-submenu">
+              <a href="#" class="menu-item">Класове</a>
+              <ul class="submenu">
+                <li><a href="#">Линди Хоп</a></li>
+                <li><a href="#">Соло Джаз</a></li>
+                <li><a href="#">Цени</a></li>
+              </ul>
+            </li>
             <li><a href="events.html">Събития</a></li>
             <li><a href="about.html">За нас</a></li>
-            <li><a href="contact.html">Contact</a></li>
           </ul>
         </nav>
+
       </div>
     </header>
 
@@ -108,28 +115,32 @@
           <div class="social-links">
             <a href="https://www.facebook.com/swingsocietybg/" target="_blank">
               <img src="assets/images/5296499_fb_facebook_facebook logo_icon.png" alt="Facebook" class="social"
-              >Facebook
+              >
+              <span>Facebook</span>
             </a>
             <a href="https://www.instagram.com/bgswingsociety/" target="_blank">
               <img
                 src="assets/images/5296765_camera_instagram_instagram logo_icon.png"
                 class="social"
                 alt="instagram"
-              />Instagram
+              />
+              <span>Instagram</span>
             </a>
             <a href="https://www.youtube.com/@bgswingsociety" target="_blank">
               <img
                 src="assets/images/5296521_play_video_vlog_youtube_youtube logo_icon.png"
                 class="social"
                 alt="youtube"
-              />Youtube
+              />
+              <span>Youtube</span>
             </a>
             <a href="https://www.tiktok.com/@swing_society5" target="_blank">
               <img
                 src="assets/images/5367362_media_network_social_social media_tiktok_icon.png"
                 class="social"
                 alt="tiktok"
-              />TikTok
+              />
+              <span>TikTok</span>
             </a>
           </div>
         </div>
