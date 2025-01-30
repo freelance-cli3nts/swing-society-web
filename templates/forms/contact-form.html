@@ -1,0 +1,87 @@
+<div class="form-container" id="contact-form-container">
+  <button class="close-btn" hx-get="/close-form" hx-target="#main-view">&times;</button>
+  <h2>Пишете ни!</h2>
+  <p>Изпратете ни съобщение и ние ще се свържем с вас възможно най-скоро.</p>
+  
+  <form id="contact-form" hx-post="/submit-form" hx-target="#form-view">
+    <div class="form-group">
+      <label for="name">Име:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Имейл:</label>
+      <input type="email" id="email" name="email">
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Телефон:</label>
+      <input type="tel" id="phone" name="phone">
+    </div>
+
+    <div class="form-group">
+      <label for="message">Съобщение:</label>
+      <textarea id="message" name="message" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="menu-item">Как предпочитате да се свържем с вас:</label> 
+      <select id="menu-item" name="menu-item">
+        <option value="email">Имейл</option>
+        <option value="phone">Телефонен разговор</option>
+        <option value="viber">Viber съобщение</option>
+        <option value="whatsapp">Whatsapp съобщение</option>
+      </select>
+    </div>
+
+    <button type="submit">Изпрати</button>
+  </form>
+</div>
+
+
+
+<!-- <div class="form-container" id="contact-form-container">
+  <button class="close-btn" hx-get="/close-form" hx-target="#main-view">&times;</button>
+  <h2>Пишете ни!</h2>
+  <p>Изпратете ни съобщение и ние ще се свържем с вас възможно най-скоро.</p>
+  
+  <form id="contact-form" hx-post="/submit-form" hx-target="#main-view">
+    <div class="form-group">
+      <label for="name">Име:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Имейл:</label>
+      <input type="email" id="email" name="email">
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Телефон:</label>
+      <input type="tel" id="phone" name="phone">
+      <span class="validation-message" id="contact-validation">Моля, въведете имейл или телефон за връзка</span>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Съобщение:</label>
+      <textarea id="message" name="message" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="menu-item">Как предпочитате да се свържем с вас:</label> 
+      <select id="menu-item" name="menu-item">
+        <option value="email">Имейл</option>
+        <option value="phone">Телефонен разговор</option>
+        <option value="viber">Viber съобщение</option>
+        <option value="whatsapp">Whatsapp съобщение</option>
+      </select>
+    </div>
+
+    <button type="submit">Изпрати</button>
+  </form>
+
+  <div class="success-message" id="success-message">
+    <h3>Благодарим за съобщението!</h3>
+    <p>Ще се свържем с вас възможно най-скоро.</p>
+  </div>
+</div> -->
