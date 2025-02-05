@@ -1,0 +1,62 @@
+
+/* Navigation */
+/* Base navigation styles */
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-list li {
+  position: relative;
+}
+
+.nav-list li a {
+  font-size: 2.5rem;
+  padding: 0.5rem 1rem;
+  display: block;
+}
+
+Copy/* Add these specific styles to ensure submenus work properly */
+.nav-list > li.has-submenu > a {
+  position: relative;
+  padding-right: 1.5rem; /* Space for dropdown indicator if needed */
+}
+
+/* Target direct submenu under has-submenu class */
+.has-submenu > .submenu {
+  left: 0;
+  top: 100%;
+  display: none;
+}
+
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 1001;
+  color: var(--black);
+}
+
+/* Submenu */
+.submenu {
+  display: none;
+  position: absolute;
+  background: var(--shade);
+  min-width: 12.5rem;
+  box-shadow: 0 0.125rem 0.3125rem rgba(146, 61, 61, 0.2);
+  border-radius: 0.25rem;
+  z-index: 1000;
+}
+
+.submenu li a {
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.submenu li a:hover {
+  background: var(--primary);
+  border-radius: 0.25rem;
+}

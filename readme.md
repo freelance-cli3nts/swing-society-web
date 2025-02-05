@@ -1,99 +1,175 @@
-📜 Swing Society Website
-A fast, lightweight, and interactive website for Swing Society, built with Go, HTMX, and HTML/CSS.
+# 📜 Swing Society Website
 
-📂 Project Structure
+A modern, high-performance website for Swing Society dance school, built with Go, HTMX, and HTML/CSS. Focusing on simplicity and speed while providing dynamic content updates without heavy JavaScript.
+
+## 🎯 Current Status
+
+- ✅ Basic infrastructure setup
+- ✅ HTMX integration for dynamic content
+- ✅ Basic routing and template serving
+- ✅ Static file handling
+- 🏗️ Form handling (In Progress)
+- 🏗️ Email notifications (In Progress)
+
+## 📂 Project Structure
+```
 swing-society/
-│── static/            # CSS, JS, images, fonts
-│── templates/         # HTML files (views)
-│── data/              # JSON or other static data
-│── .env               # Environment variables
-│── main.go            # Main Go application
-│── go.mod             # Go module file
-│── README.md          # Project documentation
+├── server/           # Backend server logic
+│   ├── internal/         # Core backend logic
+│   │   ├── api/             # API handlers
+│   │   ├── config/          # Configuration
+│   │   ├── middleware/      # HTTP middleware
+│   │   └── monitoring/      # Metrics and monitoring
+│   └── main.go          # Entry point
+├── static/           # Static assets
+│   ├── css/             # Stylesheets
+│   ├── js/              # JavaScript files
+│   ├── data/            # Data files (schedules, etc.)
+│   └── assets/          # Media assets
+│       ├── images/          # Image files
+│       └── videos/          # Video files
+└── templates/        # HTML templates
+    ├── classes/          # Class-related templates
+    ├── events/           # Event templates
+    └── forms/            # Form templates
+```
 
-Project New Features Board:
-https://www.figma.com/board/YXIM0ao7X6mtGbcUFQQOj8/Swing-Society-web?node-id=7-925&t=weUqv9eMgFAnFSnO-0
+## 🚀 Features
 
+### Implemented
+* ✅ Server-side routing with Go
+* ✅ Dynamic content loading with HTMX
+* ✅ Mobile-responsive design
+* ✅ Static file serving
+* ✅ Template-based pages
+* ✅ Basic monitoring metrics
 
-🚀 Features
-✅ Static website with dynamic components using HTMX library (https://htmx.org/)
-✅ Forms submission with Go server-side processing
-✅ Automatic email notifications for forms submissions
-✅ Mobile-responsive navigation with hamburger menu
-✅ Lightweight, fast, and simple Go backend
+### In Development
+* 🏗️ Form submissions
+* 🏗️ Email notifications
+* 🏗️ Database integration
+* 🏗️ Analytics tracking
+* 🏗️ Event scheduling system
 
-📌 Requirements
-Before running the project, make sure you have:
+## 🛠️ Technologies
 
-Go installed (go version to check)
-.env file with SMTP email credentials (for email notifications)
-🛠️ Installation & Setup
-1️⃣ Clone the repository
+- **Backend**: Go 1.21+
+- **Frontend**: HTML5, CSS3, HTMX
+- **Database**: Firestore (planned)
+- **Deployment**: Google Cloud Run
+- **CI/CD**: Google Cloud Build (planned)
+
+## 📌 Requirements
+
+- Go 1.21 or higher
+- Google Cloud SDK (for deployment)
+- `.env` file for environment variables
+
+## 🚦 Getting Started
+
+1. **Clone the Repository**
+```bash
 git clone https://github.com/yourusername/swing-society.git
 cd swing-society
-2️⃣ Initialize Go module (if not done yet)
-go mod tidy
-3️⃣ Set up environment variables
-Create a .env file in the project root:
+```
+
+2. **Set Up Environment Variables**
+Create a `.env` file in the root directory:
+```env
 SMTP_HOST=smtp.example.com
 SMTP_PORT=587
 SMTP_USER=your-email@example.com
 SMTP_PASS=your-email-password
 RECIPIENT_EMAIL=info@swingsociety.bg
-4️⃣ Run the server
+GOOGLE_CLOUD_PROJECT=swingsociety-backend
+```
+
+3. **Install Dependencies**
+```bash
+cd server
+go mod tidy
+```
+
+4. **Run Locally**
+```bash
 go run main.go
-Your site will now be available at http://localhost:8080 🎉
+```
+The site will be available at `http://localhost:8080`
 
-🔧 Endpoints
-Endpoint	Method	Description
-/	GET	Serves the homepage
-/contact-form	GET	Loads the contact form (HTMX)
-/submit-form	POST	Handles form submission (Go backend)
-/close-form	GET	Closes the form
-/static/	GET	Serves static assets (CSS, JS, Images)
+## 🚀 Deployment
 
-📧 Contact Form Handling
-Uses HTMX for dynamic updates without JavaScript.
-Sends user messages via email notifications.
-Prevents empty form submissions & validates input.
+### Local Development
+```bash
+go run main.go
+```
 
-🖥️ Deployment
-Option 1: Run on a VPS
-Install Go on the server.
-Clone the repository.
-Set up environment variables (.env).
-Run the server:
-nohup go run main.go &
-Use Nginx as a reverse proxy for production.
+### Google Cloud Run Deployment
+```bash
+# Build the container
+docker build -t gcr.io/swingsociety-backend/ss-go .
 
-Option 2: Deploy with Docker (Coming Soon)
+# Push to Container Registry
+docker push gcr.io/swingsociety-backend/ss-go
 
-🤝 Contributing
+# Deploy to Cloud Run
+gcloud run deploy ss-go \
+  --image gcr.io/swingsociety-backend/ss-go \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
+```
+
+## 📝 Development Tasks
+
+### MVP
+- [ ] validate concept
+- [ ] finish back-end logic
+- [ ] custom domain setup
+
+### High Priority
+- [ ] Redesign Hero Page to be focus
+- [ ] Complete email notification system
+- [ ] Implement form validation
+- [ ] Add email validation and actual email sending logic
+- [ ] Add all sub-pages & connect them
+  - [ ] Add contact form
+  - [ ] For us
+  - [ ] class
+  - [ ] contacts
+- [ ] Set up Firestore database
+- [ ] Add proper error handling
+- [ ] Implement logging system
+
+### Medium Priority
+- [ ] Add event scheduling system
+- [ ] Implement user authentication
+- [ ] Create admin dashboard
+- [ ] Add analytics tracking
+
+### Low Priority
+- [ ] Implement caching
+- [ ] Add performance monitoring
+- [ ] Create backup system
+- [ ] Implement rate limiting
+
+## 🔗 Resources
+- [Project Figma Board](https://www.figma.com/board/YXIM0ao7X6mtGbcUFQQOj8/Swing-Society-web?node-id=7-925&t=weUqv9eMgFAnFSnO-0)
+- [HTMX Documentation](https://htmx.org/docs/)
+- [Go Documentation](https://golang.org/doc/)
+
+## 🤝 Contributing
 Feel free to contribute to this project!
 Fork the repo.
 Create a feature branch (git checkout -b feature-name).
 Make your changes & commit (git commit -m "Description").
 Push and open a pull request.
 
-📜 License
-This project is licensed under the MIT License.
 
-🎷 Swing Society – Bringing Jazz to Life! 🎶
+## 📜 License
+MIT License - See LICENSE file for details
+
+---
+## 🎷 Swing Society – Where Jazz Comes to Life! 🎶
 Let me know if you want any changes or additions! 🚀
 
-# Backlog of tasks
-## add for us, class and contacts page
 
-
-
-
-
-🎶 Нова група по SWING танци за начинаещи! 🎶🗓️ Дата на старт: 15 януари 2025🕢 Време: всеки понеделник и сряда от 19:30 ч.📍 Локация: ул. Сердика 25: https://maps.app.goo.gl/6FUq5nkWctsXrxMQA💃🕺 Предишен опит не е необходим. Няма нужда и от партньор.🎷 Искаш ли да танцуваш един от най-забавните и социални танци? Ще учим най-популярния SWING танц - Линди Хоп, който се появил в Ню Йорк през 30-те години на миналия век.📅 Курсът се състои от 16 класа по 70 минути.💲 Цена на курса: 100 лв на месец или 180 лв за целия курс🎉 Предизвикай себе си и стани част от световното SWING и JAZZ танцувално общество, в което те очакват ритъм, стил и много нови приятели!
-
-
-Firefox:
-ctr + shift + m - toggle between mobile and desktop view in dev options
-ctr + r - refresh the page
-
-VSCode: 
-Ctr+W - close window

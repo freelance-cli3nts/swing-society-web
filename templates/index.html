@@ -8,19 +8,23 @@
         content="Swing Society - Learn swing dance with us"
       />
       <title>Swing Society</title>
-      <link rel="stylesheet" href="/static/css/style.css" />
-      <link rel="icon" type="images/icon" href="/static/assets/images/fav-icon/favicon-32x32.png" />
-      <link rel="apple-touch-icon" type="images/icon" href="/static/assets/images/fav-icon/apple-touch-icon.png" />
-      <link rel="android-chrome" type="images/icon" href="/static/" />
-      <script src="https://unpkg.com/htmx.org" defer></script>
-      <script> htmx.config.ignoreFeatureWarnings = true;</script>;
-      <script src="/static/js/main.js" defer></script>
+      <link rel="stylesheet" href="/css/style.css" />
+      <link rel="icon" type="images/icon" href="/assets/images/fav-icon/favicon-32x32.png" />
+      <link rel="apple-touch-icon" type="images/icon" href="/assets/images/fav-icon/apple-touch-icon.png" />
+      <link rel="android-chrome" type="images/icon" href="/assets/images/fav-icon/android-chrome-192x192.png" />
+      <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              htmx.config.ignoreFeatureWarnings = true;
+          });
+      </script>
+      <script src="/js/main.js" defer></script>
     </head>
   <body>
     <!-- Header Section -->
     <header>
       <div class="header-container">
-        <a href="index.html" class="logo">
+        <a href="/" class="logo" id="logo-link" >
           <img src="/static/assets/images/logo.png" alt="Swing Society" id="logo-icon"/>
         </a>
         <nav>
@@ -29,13 +33,20 @@
             <li class="has-submenu">
               <a href="#" class="menu-item">Класове</a>
               <ul class="submenu">
-                <li><a href="#" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-trigger="click">Соло Джаз</a></li>
-                <li><a href="#" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-trigger="click">Линди Хоп</a></li>
-                <li><a href="#" hx-get="/templates/classes/oldclips.html.html" hx-target="#main-view" hx-trigger="click"></a>Олд Клипс</li>
+                <li><a href="#" hx-get="/templates/classes/solojazz.html" hx-target="#main-view"   hx-push-url="/classes/solo-jazz" hx-trigger="click">Соло Джаз</a></li>
+                <li><a href="#" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view"   hx-push-url="/classes/lindy-hop" hx-trigger="click">Линди Хоп</a></li>
+                <li><a href="#" hx-get="/templates/classes/oldclips.html" hx-target="#main-view"   hx-push-url="/classes/old-clips" hx-trigger="click">Олд Клипс</a></li>
                 <li><a href="#" hx-get="/templates/prices.html" hx-target="#main-view" hx-trigger="click">Цени</a></li>
               </ul>
             </li>
-            <li><a href="/templates/events.html">Събития</a></li>
+            <li class="has-submenu">
+              <a href="#" class="menu-item">Събития</a>
+              <ul class="submenu">
+                <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/Party" hx-trigger="click">Партита</a></li>
+                <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/Festivals" hx-trigger="click">Фестивали</a></li>
+                <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/Workshops" hx-trigger="click">Интензивни курсове</a></li>
+              </ul>
+            </li>
             <li><a href="/templates/about.html">За нас</a></li>
           </ul>
         </nav>
@@ -48,7 +59,7 @@
       <div class="hero-container">
         <div id="hero-text">
           <h1>Swing society where jazz happens!</h1>
-          <p>Вкарай джаз в кръвта си и стъпвай прес живота като танц</p>
+          <p>Вкарай джаз в кръвта си и стъпвай през живота танцово и леко</p>
         </div>
         <button 
           class="btn" 
@@ -62,8 +73,10 @@
       </div>
     </section>
     <main>
-      <div id="main-view">
+      <div id="main-view" hx-indicator="#loading-spinner">
+        <!-- content that is swapped based on where user clicks-->
       </div>
+      <div id="loading-spinner" class="htmx-indicator">Loading...</div>
       <h1>Календар класове и партита </h1>
       <div id="schedule">
         <div

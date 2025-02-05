@@ -1,17 +1,35 @@
-// logo link to about us section on main page, and to main page on other pages
-document.addEventListener("DOMContentLoaded", () => {
-  const logoLink = document.getElementById("logo-icon");
-  const currentPage = window.location.pathname;
+document.addEventListener("DOMContentLoaded", handleLogoLogic);
+document.body.addEventListener("htmx:afterSwap", handleLogoLogic);
 
-  // Check if we're on the main page
-  if (currentPage.includes("index.html") || currentPage === "/") {
-    // If on the main page, set link to scroll to About Us section
-    logoLink.setAttribute("href", "#about");
-  } else {
-    // On other pages, set link to go back to the main page
-    logoLink.setAttribute("href", "index.html");
-  }
-});
+function handleLogoLogic() {
+    const logoLink = document.getElementById("logo-link");
+    console.log("I got the logo link:", logoLink);
+    const currentPath = window.location.pathname;
+    console.log("Current path:", currentPath);
+
+    if (currentPath === "/" || currentPath === "") {
+        console.log("I am on the main page");
+        // Add click event listener for main page
+        logoLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log("Logo clicked on main page");
+            htmx.ajax('GET', '/templates/about.html', {
+                target: '#main-view',
+                swap: 'innerHTML'
+            }).then(() => {
+                console.log("About content loaded");
+            }).catch(error => {
+                console.error("Error loading about content:", error);
+            });
+        });
+    } else {
+        console.log("I am on another page");
+        // Reset to home page navigation
+        logoLink.href = "/";
+        // Remove any existing click listeners
+        logoLink.replaceWith(logoLink.cloneNode(true));
+    }
+}
 
 // Hamburger menu for mobile
 document.addEventListener('DOMContentLoaded', () => {
@@ -56,6 +74,42 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Wait for both DOM and HTMX to be ready
+document.addEventListener('DOMContentLoaded', function() {
+  // HTMX configuration
+  const configureHtmx = function() {
+        console.log('Checking for HTMX...'); // Debug log
+        if (window.htmx) {
+        console.log('HTMX found!'); // Debug log
+        htmx.config.ignoreFeatureWarnings = true;
+          
+          const path = window.location.pathname;
+          console.log('Current path:', path); // Debug log
+            
+          // Get current path and handle pretty URLs
+          const urlMapping = {
+              '/classes/solo-jazz': '/templates/classes/solojazz.html',
+              '/classes/lindy-hop': '/templates/classes/lindyhop.html',
+              '/classes/old-clips': '/templates/classes/oldclips.html',
+              '/events/parties': '/templates/events/parties.html',
+              '/events/festivals': '/templates/events/festivals.html',
+              '/events/workshops': '/templates/events/workshops.html'
+          };
+          console.log('URL found in mapping:', path in urlMapping); // Debug log
+
+          if (path in urlMapping) {
+              console.log('Loading template:', urlMapping[path]); // Debug log
+
+              htmx.ajax('GET', urlMapping[path], {target: '#main-view'});
+          }
+      } else {
+          // If HTMX isn't loaded yet, wait a bit and try again
+          setTimeout(configureHtmx, 50);
+      }
+  };
+
+  configureHtmx();
+});
 
 
 // Registration form 

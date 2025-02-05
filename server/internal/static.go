@@ -1,63 +1,47 @@
 package internal
 
 import (
-	"net/http"
-	"path/filepath"
-	"log"
-	"os"
+    "log"
+		"mime"
+    "net/http"
+		"strings"
+		"path/filepath"
+    "swinng-society-website/server/internal/config"
 )
 
-// ServeFiles sets up static file serving
-// func ServeFiles() {
-// 		rootDir, _ := filepath.Abs("../")
-// 		staticDir := http.Dir(filepath.Join(rootDir,"static"))
-//     fs := http.FileServer(staticDir))
-//     http.Handle("/static/", http.StripPrefix("/static/", fs))
-// }
+func init() {
+	// Register common MIME types
+	mime.AddExtensionType(".css", "text/css")
+	mime.AddExtensionType(".js", "application/javascript")
+	mime.AddExtensionType(".html", "text/html")
+	mime.AddExtensionType(".png", "image/png")
+	mime.AddExtensionType(".jpg", "image/jpeg")
+	mime.AddExtensionType(".jpeg", "image/jpeg")
+	mime.AddExtensionType(".gif", "image/gif")
+	mime.AddExtensionType(".svg", "image/svg+xml")
+}
 
-
-// ServeFiles sets up static file serving
 func ServeFiles() {
-    rootDir, err := filepath.Abs("../")
-    if err != nil {
-        log.Printf("Error getting root directory: %v", err)
-        return
-    }
-    
-    staticPath := filepath.Join(rootDir, "static")
-    log.Printf("Static files directory: %s", staticPath)
-    
-    // Verify static directory exists
-    if _, err := os.Stat(staticPath); os.IsNotExist(err) {
-        log.Printf("Static directory not found: %s", staticPath)
-        return
-    }
+    fs := http.FileServer(http.Dir(config.AppPaths.StaticDir))
 
-    // Verify CSS file exists
-    cssPath := filepath.Join(staticPath, "css", "style.css")
-    if _, err := os.Stat(cssPath); os.IsNotExist(err) {
-        log.Printf("CSS file not found: %s", cssPath)
-    } else {
-        log.Printf("CSS file found: %s", cssPath)
-    }
-    
-    fs := http.FileServer(http.Dir(staticPath))
-    
-    // Wrap file server with logging
     handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        log.Printf("Static request received: %s", r.URL.Path)
-        requestedFile := filepath.Join(staticPath, r.URL.Path)
-        log.Printf("Looking for file: %s", requestedFile)
+				// Clean the path to prevent directory traversal
+        path := filepath.Clean(r.URL.Path)
         
-        if _, err := os.Stat(requestedFile); os.IsNotExist(err) {
-            log.Printf("File not found: %s", requestedFile)
-            http.NotFound(w, r)
-            return
+        // Get file extension
+        ext := strings.ToLower(filepath.Ext(path))
+        
+        // Set appropriate MIME type
+        if mimeType := mime.TypeByExtension(ext); mimeType != "" {
+            w.Header().Set("Content-Type", mimeType)
         }
+
+        // Set caching headers for static assets
+        w.Header().Set("Cache-Control", "public, max-age=31536000")
         
-        log.Printf("Serving file: %s", requestedFile)
+        log.Printf("Serving static file: %s with MIME type: %s", path, w.Header().Get("Content-Type"))
         fs.ServeHTTP(w, r)
     })
-    
+
     http.Handle("/static/", http.StripPrefix("/static/", handler))
 }

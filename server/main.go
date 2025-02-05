@@ -1,71 +1,104 @@
 package main
 
 import (
-	"log"
-	"net/http"
-	"os"
-	"github.com/joho/godotenv"
-	"swinng-society-website/server/internal"
+    "log"
+    "net/http"
+    "os"
+    "github.com/joho/godotenv"
+    "swinng-society-website/server/internal"
+    "swinng-society-website/server/internal/config"
 )
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-			log.Printf("Warning: .env file not found")
-	}
+    // Load environment variables
+    if err := godotenv.Load(); err != nil {
+        log.Printf("Warning: .env file not found")
+    }
 
-	internal.SetupRoutes()
+    // Initialize paths
+    config.InitPaths()
 
-	port := os.Getenv("PORT")
-	if port == "" {
-			port = "8080"
-	}
-	
-	log.Printf("Server starting on http://localhost:%s", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+    // Create router with Google Cloud project ID
+    projectID := os.Getenv("GOOGLE_CLOUD_PROJECT")
+    if projectID == "" {
+        projectID = "swingsociety-backend" // fallback to your project ID
+    }
+
+    router, err := internal.NewRouter(projectID)
+    if err != nil {
+        log.Fatalf("Failed to create router: %v", err)
+    }
+
+    // Setup routes
+    router.SetupRoutes()
+
+    // Get port from environment
+    port := os.Getenv("PORT")
+    if port == "" {
+        port = "8080"
+    }
+    
+    log.Printf("Server starting on port %s", port)
+    log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
+// package main
 
-// // Serve static files (CSS, JS, Images)
-// func serveStaticFiles() {
-// 	fs := http.FileServer(http.Dir("static"))
-// 	http.Handle("/static/", http.StripPrefix("/static/", fs))
+// import (
+//     "log"
+//     "net/http"
+//     "os"
+//     "github.com/joho/godotenv"
+//     "swinng-society-website/server/internal"
+//     "swinng-society-website/server/internal/config"
+// )
+
+// func main() {
+//     // Load environment variables
+//     if err := godotenv.Load(); err != nil {
+//         log.Printf("Warning: .env file not found")
+//     }
+
+//     // Initialize paths
+//     config.InitPaths()
+
+//     // Setup routes
+//     internal.SetupRoutes()
+
+//     // Get port from environment
+//     port := os.Getenv("PORT")
+//     if port == "" {
+//         port = "8080"
+//     }
+    
+//     log.Printf("Server starting on port %s", port)
+//     log.Fatal(http.ListenAndServe(":"+port, nil))
 // }
 
+// // package main
 
-// // Handle all template requests
-// func handleTemplateRequest(w http.ResponseWriter, r *http.Request) {
-//   // Print request details
-//   log.Printf("\n=== New Request ===")
-//   log.Printf("Request URL: %s", r.URL.Path)
-  
-//   // Get absolute path to requested file
-//   absPath, err := filepath.Abs(filepath.Join(".", r.URL.Path))
-//   if err != nil {
-//       log.Printf("Error getting absolute path: %v", err)
-//       http.Error(w, "Server error", http.StatusInternalServerError)
-//       return
-//   }
-//   log.Printf("Absolute path: %s", absPath)
-  
-//   // Check if file exists
-//   _, err = os.Stat(absPath)
-//   if os.IsNotExist(err) {
-//       log.Printf("File does not exist at: %s", absPath)
-//       http.NotFound(w, r)
-//       return
-//   }
-  
-//   // If we get here, file exists
-//   log.Printf("File found, attempting to serve: %s", absPath)
-  
-//   // Set headers
-//   w.Header().Set("Access-Control-Allow-Origin", "*")
-//   w.Header().Set("Content-Type", "text/html")
-  
-//   // Serve the file
-//   http.ServeFile(w, r, absPath)
-//   log.Printf("File served successfully")
-// }
+// // import (
+// // 	"log"
+// // 	"net/http"
+// // 	"os"
+// // 	"github.com/joho/godotenv"
+// // 	"swinng-society-website/server/internal"
+// // )
 
+// // func main() {
+// // 	if err := godotenv.Load(); err != nil {
+// // 			log.Printf("Warning: .env file not found")
+// // 	}
+
+// // 	internal.SetupRoutes()
+
+// // 	port := os.Getenv("PORT")
+// // 	if port == "" {
+// // 			port = "8080"
+// // 	}
+	
+// // 	log.Printf("Server starting on http://localhost:%s", port)
+// // 	log.Fatal(http.ListenAndServe(":"+port, nil))
+// // }
 
 
