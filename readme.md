@@ -111,42 +111,52 @@ docker build -t gcr.io/swingsociety-backend/ss-go .
 # Push to Container Registry
 docker push gcr.io/swingsociety-backend/ss-go
 
-# Deploy to Cloud Run
+# Deploy to Cloud Run // make it eu, stop the unauthenticated access
 gcloud run deploy ss-go \
   --image gcr.io/swingsociety-backend/ss-go \
   --platform managed \
-  --region us-central1 \
-  --allow-unauthenticated
+  --region us-central1 \ 
+  --allow-unauthenticated 
 ```
 
 ## 📝 Development Tasks
 
 ### MVP
 - [ ] validate concept
-- [ ] finish back-end logic
 - [ ] custom domain setup
+- [ ] implement back-end logic
 
 ### High Priority
-- [ ] Redesign Hero Page to be focus
-- [ ] Complete email notification system
-- [ ] Implement form validation
-- [ ] Add email validation and actual email sending logic
-- [ ] Add all sub-pages & connect them
-  - [ ] Add contact form
-  - [ ] For us
-  - [ ] class
-  - [ ] contacts
+- [ ] Redesign Hero Page that demanding focus
+- [ ] Forms
+  - [ ] Contact form
+  - [ ] Registration form
+  - [ ] Newsletter subscription
+  - [ ] Implement form validation
+  - [ ] email validation and email sending logic
+  - [ ] Complete email notification system
 - [ ] Set up Firestore database
+- [ ] Add main pages & route them
+  - [ ] Classes
+  - [ ] Forms
+  - [ ] About US
 - [ ] Add proper error handling
-- [ ] Implement logging system
 
 ### Medium Priority
 - [ ] Add event scheduling system
-- [ ] Implement user authentication
-- [ ] Create admin dashboard
+- [ ] Add sub-pages & route them
+  - [ ] prices
+  - [ ] Terms of Use
+  - [ ] GDPR
+  - [ ] Privacy policy
+  - [ ] Events
+  - [ ] Projects
 - [ ] Add analytics tracking
+- [ ] CMS or Admin dashboard
+- [ ] Implement user authentication
 
 ### Low Priority
+- [ ] Implement logging system
 - [ ] Implement caching
 - [ ] Add performance monitoring
 - [ ] Create backup system

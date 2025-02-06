@@ -1,4 +1,4 @@
-module swinng-society-website
+module swing-society-website
 
 go 1.18
 

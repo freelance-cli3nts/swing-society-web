@@ -4,6 +4,10 @@
   .nav-list li:hover .submenu {
     display: block;
   }
+
+  .registration-form {
+    padding: 2rem;
+  }
 }
 
 /* Tablet and Mobile (<= 768px) */
@@ -62,9 +66,25 @@
     padding: 1rem;
   }
 
+  .modal-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
 
   .video-container { padding-bottom: 75%; }
 
+  .registration-section {
+    padding: 2rem;
+  }
+
+  .form-header h1 {
+      font-size: 2rem;
+  }
+
+  .radio-group {
+      flex-direction: row;
+      gap: 2rem;
+  }
 
   .footer-grid {
     grid-template-columns: 1fr;
@@ -101,6 +121,18 @@
   html { font-size: 12px; }
   h1, h2, h3 { font-size: 4rem; }
   p { font-size: 3rem; }
+
+  .modal-content {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 1.125rem; /* Slightly larger for mobile */
+    padding: 0.875rem;
+  }
   .btn { 
     font-size: 3rem;
     padding: 0.5rem 1rem;

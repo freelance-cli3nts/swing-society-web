@@ -4,32 +4,29 @@ import (
     "encoding/json"
     "log"
     "net/http"
-    "swinng-society-website/server/internal/api/models"
+    "swing-society-website/server/internal/api/models"
 )
 
-func HandleNewsletterSubscription(w http.ResponseWriter, r *http.Request) {
+func HandleNewsletter(w http.ResponseWriter, r *http.Request) {
     if r.Method != http.MethodPost {
         http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
         return
     }
 
-    var subscription models.Newsletter
-    if err := json.NewDecoder(r.Body).Decode(&subscription); err != nil {
+    var newsletter models.Newsletter
+    if err := json.NewDecoder(r.Body).Decode(&newsletter); err != nil {
         http.Error(w, "Invalid request body", http.StatusBadRequest)
         return
     }
 
-    // Validate required fields
-    if subscription.Email == "" {
-        http.Error(w, "Email is required", http.StatusBadRequest)
+    if errors := newsletter.Validate(); len(errors) > 0 {
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusBadRequest)
+        json.NewEncoder(w).Encode(errors)
         return
     }
 
-    // TODO: Add email validation
-    // TODO: Add actual newsletter subscription logic
-    // TODO: Check for duplicate subscriptions
-
-    log.Printf("Newsletter subscription received: %+v", subscription)
+    log.Printf("Newsletter subscription received: %+v", newsletter)
 
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(map[string]string{

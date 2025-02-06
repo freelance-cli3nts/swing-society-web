@@ -6,7 +6,7 @@ import (
     "net/http"
 		"strings"
 		"path/filepath"
-    "swinng-society-website/server/internal/config"
+    "swing-society-website/server/internal/config"
 )
 
 func init() {

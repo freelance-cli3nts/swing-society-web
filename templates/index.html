@@ -47,7 +47,7 @@
                 <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/Workshops" hx-trigger="click">Интензивни курсове</a></li>
               </ul>
             </li>
-            <li><a href="/templates/about.html">За нас</a></li>
+            <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us">За нас</a></li>
           </ul>
         </nav>
 
@@ -62,8 +62,9 @@
           <p>Вкарай джаз в кръвта си и стъпвай през живота танцово и леко</p>
         </div>
         <button 
-          class="btn" 
-          hx-get="/templates/contact-form.html" 
+          class="btn"
+          id="open-modal"
+          hx-get="/templates/forms/registration-form.html" 
           hx-trigger="click" hx-target="#main-view">Запиши се!
         </button>
       </div>
@@ -76,6 +77,7 @@
       <div id="main-view" hx-indicator="#loading-spinner">
         <!-- content that is swapped based on where user clicks-->
       </div>
+       
       <div id="loading-spinner" class="htmx-indicator">Loading...</div>
       <h1>Календар класове и партита </h1>
       <div id="schedule">
@@ -169,5 +171,6 @@
         <p>&copy; 2025 Swing Society. All Rights Reserved.</p>
       </div>
      </footer>
+
   </body>
 </html>

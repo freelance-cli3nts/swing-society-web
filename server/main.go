@@ -5,8 +5,8 @@ import (
     "net/http"
     "os"
     "github.com/joho/godotenv"
-    "swinng-society-website/server/internal"
-    "swinng-society-website/server/internal/config"
+    "swing-society-website/server/internal"
+    "swing-society-website/server/internal/config"
 )
 
 func main() {
@@ -41,64 +41,5 @@ func main() {
     log.Printf("Server starting on port %s", port)
     log.Fatal(http.ListenAndServe(":"+port, nil))
 }
-
-// package main
-
-// import (
-//     "log"
-//     "net/http"
-//     "os"
-//     "github.com/joho/godotenv"
-//     "swinng-society-website/server/internal"
-//     "swinng-society-website/server/internal/config"
-// )
-
-// func main() {
-//     // Load environment variables
-//     if err := godotenv.Load(); err != nil {
-//         log.Printf("Warning: .env file not found")
-//     }
-
-//     // Initialize paths
-//     config.InitPaths()
-
-//     // Setup routes
-//     internal.SetupRoutes()
-
-//     // Get port from environment
-//     port := os.Getenv("PORT")
-//     if port == "" {
-//         port = "8080"
-//     }
-    
-//     log.Printf("Server starting on port %s", port)
-//     log.Fatal(http.ListenAndServe(":"+port, nil))
-// }
-
-// // package main
-
-// // import (
-// // 	"log"
-// // 	"net/http"
-// // 	"os"
-// // 	"github.com/joho/godotenv"
-// // 	"swinng-society-website/server/internal"
-// // )
-
-// // func main() {
-// // 	if err := godotenv.Load(); err != nil {
-// // 			log.Printf("Warning: .env file not found")
-// // 	}
-
-// // 	internal.SetupRoutes()
-
-// // 	port := os.Getenv("PORT")
-// // 	if port == "" {
-// // 			port = "8080"
-// // 	}
-	
-// // 	log.Printf("Server starting on http://localhost:%s", port)
-// // 	log.Fatal(http.ListenAndServe(":"+port, nil))
-// // }
 
 

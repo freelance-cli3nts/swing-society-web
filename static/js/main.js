@@ -112,30 +112,124 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Registration form 
-// document.addEventListener('DOMContentLoaded', function() {
-//   const form = document.getElementById('contact-form');
-//   const emailInput = document.getElementById('email');
-//   const phoneInput = document.getElementById('phone');
-//   const validationMessage = document.getElementById('contact-validation');
+// Form validation
+document.addEventListener('htmx:beforeRequest', function(evt) {
+  const form = evt.detail.elt;
+  if (form.tagName === 'FORM') {
+      // Reset previous validation messages
+      const errorMessages = form.querySelectorAll('.validation-message');
+      errorMessages.forEach(msg => msg.remove());
 
-//   form.addEventListener('submit', function(e) {
-//     // Check if at least one contact method is provided
-//     if (!emailInput.value && !phoneInput.value) {
-//       e.preventDefault();
-//       validationMessage.style.display = 'block';
-//       return false;
-//     }
-//     validationMessage.style.display = 'none';
-//   });
+      // Get form fields
+      const name = form.querySelector('input[name="name"]');
+      const email = form.querySelector('input[name="email"]');
+      let isValid = true;
 
-//   // Hide validation message when user starts typing in either field
-//   [emailInput, phoneInput].forEach(input => {
-//     input.addEventListener('input', function() {
-//       if (emailInput.value || phoneInput.value) {
-//         validationMessage.style.display = 'none';
+      // Name validation
+      if (name && name.value.trim() === '') {
+          showError(name, 'Моля, въведете вашето име');
+          isValid = false;
+      } else if (name && name.value.length < 2) {
+          showError(name, 'Името трябва да е поне 2 символа');
+          isValid = false;
+      }
+
+      // Email validation
+      if (email && email.value.trim() === '') {
+          showError(email, 'Моля, въведете вашия имейл');
+          isValid = false;
+      } else if (email && !isValidEmail(email.value)) {
+          showError(email, 'Моля, въведете валиден имейл адрес');
+          isValid = false;
+      }
+
+      if (!isValid) {
+          evt.preventDefault(); // Stop HTMX from sending the request
+      }
+  }
+});
+
+// Helper functions
+function showError(input, message) {
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'validation-message';
+  errorDiv.textContent = message;
+  input.parentNode.appendChild(errorDiv);
+  input.classList.add('error');
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Real-time validation
+document.addEventListener('htmx:afterSettle', function() {
+  const forms = document.querySelectorAll('form');
+  forms.forEach(form => {
+      const inputs = form.querySelectorAll('input');
+      inputs.forEach(input => {
+          input.addEventListener('input', function() {
+              // Remove error styling when user starts typing
+              this.classList.remove('error');
+              const errorMessage = this.parentNode.querySelector('.validation-message');
+              if (errorMessage) {
+                  errorMessage.remove();
+              }
+          });
+      });
+  });
+});
+
+
+// Registration form show/hide partner name field
+document.addEventListener('DOMContentLoaded', function() {
+  const aloneRadios = document.querySelectorAll('input[name="registerAlone"]');
+  const partnerNameGroup = document.getElementById('partner-name-group');
+
+  aloneRadios.forEach(radio => {
+      radio.addEventListener('change', function() {
+          if (this.value === 'no') {
+              partnerNameGroup.style.display = 'block';
+              setTimeout(() => partnerNameGroup.classList.add('visible'), 10);
+          } else {
+              partnerNameGroup.classList.remove('visible');
+              setTimeout(() => partnerNameGroup.style.display = 'none', 300);
+          }
+      });
+  });
+});
+
+
+// // Modal window functionality
+// document.addEventListener('DOMContentLoaded', () => {
+//   const modal = document.getElementById('registrationModal');
+//   const openBtn = document.getElementById('openModal');
+//   const closeBtn = modal.querySelector('.close-btn');
+  
+//   function openModal() {
+//       modal.classList.add('active');
+//       document.body.style.overflow = 'hidden'; // Prevent background scrolling
+//   }
+  
+//   function closeModal() {
+//       modal.classList.remove('active');
+//       document.body.style.overflow = ''; // Restore scrolling
+//   }
+  
+//   openBtn.addEventListener('click', openModal);
+//   closeBtn.addEventListener('click', closeModal);
+  
+//   // Close on outside click
+//   modal.addEventListener('click', (e) => {
+//       if (e.target === modal) {
+//           closeModal();
 //       }
-//     });
+//   });
+  
+//   // Close on escape key
+//   document.addEventListener('keydown', (e) => {
+//       if (e.key === 'Escape' && modal.classList.contains('active')) {
+//           closeModal();
+//       }
 //   });
 // });
-

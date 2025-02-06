@@ -4,31 +4,29 @@ import (
     "encoding/json"
     "log"
     "net/http"
-    "swinng-society-website/server/internal/api/models"
+    "swing-society-website/server/internal/api/models"
 )
 
-func HandleClassInquiry(w http.ResponseWriter, r *http.Request) {
+func HandleClass(w http.ResponseWriter, r *http.Request) {
     if r.Method != http.MethodPost {
         http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
         return
     }
 
-    var inquiry models.ClassInquiry
-    if err := json.NewDecoder(r.Body).Decode(&inquiry); err != nil {
+    var class models.ClassInquiry
+    if err := json.NewDecoder(r.Body).Decode(&class); err != nil {
         http.Error(w, "Invalid request body", http.StatusBadRequest)
         return
     }
 
-    // Validate required fields
-    if inquiry.Name == "" || inquiry.Email == "" || inquiry.ClassType == "" || inquiry.Level == "" {
-        http.Error(w, "Missing required fields", http.StatusBadRequest)
+    if errors := class.Validate(); len(errors) > 0 {
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusBadRequest)
+        json.NewEncoder(w).Encode(errors)
         return
     }
 
-    // TODO: Add email validation
-    // TODO: Add actual class registration logic
-
-    log.Printf("Class inquiry received: %+v", inquiry)
+    log.Printf("Class inquiry received: %+v", class)
 
     w.Header().Set("Content-Type", "application/json")
     json.NewEncoder(w).Encode(map[string]string{
