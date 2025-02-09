@@ -1,62 +1,86 @@
-
-/* Navigation */
-/* Base navigation styles */
+/* Primary Navigation */
 .nav-list {
   display: flex;
   align-items: center;
   gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .nav-list li {
-  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.nav-list li a {
-  font-size: 2.5rem;
-  padding: 0.5rem 1rem;
-  display: block;
-}
-
-Copy/* Add these specific styles to ensure submenus work properly */
-.nav-list > li.has-submenu > a {
-  position: relative;
-  padding-right: 1.5rem; /* Space for dropdown indicator if needed */
-}
-
-/* Target direct submenu under has-submenu class */
-.has-submenu > .submenu {
-  left: 0;
-  top: 100%;
-  display: none;
-}
-
-
-/* Hamburger */
-.hamburger {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
-  z-index: 1001;
+.nav-list .menu-item {
   color: var(--black);
+  font-size: 2.5rem;
+  text-decoration: none;
+  padding: 0.5rem;
+  font-family: 'Dancing Script', cursive;
+  white-space: nowrap; /* Prevent menu items from wrapping */
 }
 
-/* Submenu */
+/* Dot separators */
+.nav-list .dot {
+  color: var(--black);
+  font-size: 2.5rem;
+  user-select: none; /* Prevent dot selection */
+}
+
+/* Submenu Structure */
+.has-submenu {
+  position: relative;
+}
+
 .submenu {
-  display: none;
   position: absolute;
-  background: var(--shade);
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%); /* Center submenu under parent */
   min-width: 12.5rem;
-  box-shadow: 0 0.125rem 0.3125rem rgba(146, 61, 61, 0.2);
+  background: var(--shade);
   border-radius: 0.25rem;
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
   z-index: 1000;
 }
 
+/* Submenu Items */
+.submenu li {
+  display: block;
+}
+
 .submenu li a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--black);
   font-size: 1.5rem;
-  transition: all 0.3s ease;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
 }
 
 .submenu li a:hover {
   background: var(--primary);
-  border-radius: 0.25rem;
+}
+
+/* Show Submenu on Hover */
+.has-submenu:hover .submenu {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobile Menu Button */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  color: var(--black);
 }

@@ -1,0 +1,226 @@
+
+.desktop-swing-buzz,
+.desktop-swing-buzz * {
+  box-sizing: border-box;
+}
+.desktop-swing-buzz {
+  height: 10rem;
+  position: relative;
+}
+.navigation-background {
+  background: var(--beige, #f5dac1);
+  width: 100rem;
+  height: 50rem;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+.frame-14 {
+  display: flex;
+  flex-direction: row;
+  gap: 131px;
+  align-items: center;
+  justify-content: center;
+  width: 1152px;
+  position: absolute;
+  left: 144px;
+  top: 5px;
+}
+.logo-1 {
+  flex-shrink: 0;
+  width: 0.25rem;
+  height: auto;
+  position: relative;
+  object-fit: cover;
+}
+.frame-12 {
+  display: flex;
+  flex-direction: row;
+  gap: 350px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  width: 858px;
+  position: relative;
+}
+.navigation-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.nav-artists {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.artists {
+  color: var(--black, #000000);
+  text-align: left;
+  font-family: var(
+    --buttons-navigation-font-family,
+    "AvenirNextCyr-Demi",
+    sans-serif
+  );
+  font-size: var(--buttons-navigation-font-size, 16px);
+  font-weight: var(--buttons-navigation-font-weight, 400);
+  position: relative;
+}
+.vector {
+  flex-shrink: 0;
+  width: 5px;
+  height: 10px;
+  position: relative;
+  overflow: visible;
+}
+.nav-workshops {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.workshops {
+  color: var(--black, #000000);
+  text-align: left;
+  font-family: var(
+    --buttons-navigation-font-family,
+    "AvenirNextCyr-Demi",
+    sans-serif
+  );
+  font-size: var(--buttons-navigation-font-size, 16px);
+  font-weight: var(--buttons-navigation-font-weight, 400);
+  position: relative;
+}
+.vector2 {
+  flex-shrink: 0;
+  width: 5px;
+  height: 10px;
+  position: relative;
+  overflow: visible;
+}
+.nav-parties {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.parties {
+  color: var(--black, #000000);
+  text-align: left;
+  font-family: var(
+    --buttons-navigation-font-family,
+    "AvenirNextCyr-Demi",
+    sans-serif
+  );
+  font-size: var(--buttons-navigation-font-size, 16px);
+  font-weight: var(--buttons-navigation-font-weight, 400);
+  position: relative;
+}
+.vector3 {
+  flex-shrink: 0;
+  width: 5px;
+  height: 10px;
+  position: relative;
+  overflow: visible;
+}
+.frame-11 {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  position: relative;
+}
+.group-14698 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.group-14697 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.group-14696 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.group-14695 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.group-14694 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: visible;
+}
+.frame-13 {
+  display: flex;
+  flex-direction: row;
+  gap: 121px;
+  align-items: center;
+  justify-content: center;
+  width: 1152px;
+  position: absolute;
+  left: 144px;
+  top: 89px;
+}
+.swing-society-where-jazz-happens {
+  color: var(--black, #000000);
+  text-align: center;
+  font-family: "AvenirNextCyr-Heavy", sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  position: relative;
+}
+.button-register-navigation {
+  background: var(--red, #e23323);
+  border-radius: var(--sizing-32, 32px);
+  padding: var(--sizing-8, 8px) var(--sizing-24, 24px) var(--sizing-8, 8px)
+    var(--sizing-24, 24px);
+  display: flex;
+  flex-direction: row;
+  gap: var(--sizing-8, 8px);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.register-now {
+  color: var(--white, #ffffff);
+  text-align: center;
+  font-family: var(
+    --button-nav-register-font-family,
+    "AvenirNextCyr-Demi",
+    sans-serif
+  );
+  font-size: var(--button-nav-register-font-size, 16px);
+  font-weight: var(--button-nav-register-font-weight, 400);
+  position: relative;
+}

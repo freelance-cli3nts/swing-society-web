@@ -1,10 +1,13 @@
+/* responsive.css */
 
 /* Desktop (≥ 768px) */
 @media (min-width: 48rem) {
   .nav-list li:hover .submenu {
     display: block;
   }
-
+  .hamburger {
+    display: none;
+  }
   .registration-form {
     padding: 2rem;
   }
@@ -14,6 +17,23 @@
 @media (max-width: 48rem) {
   html { font-size: 1.5rem; }
   h1, h2, h3 { font-size: 1rem; }
+
+
+  .carousel-title {
+    font-size: 2rem;
+  }
+  
+  .carousel-text {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+  
+  .carousel-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+
 
   /* Navigation */
   .hamburger { 
@@ -57,10 +77,18 @@
   .has-submenu.active .submenu {
     display: block;
   }
-  .has-submenu:hover > .submenu {
-    display: block;
+
+  /* Footer-specific mobile styles */
+  .footer-social-links {
+    flex-direction: row;
+    justify-content: left;
   }
 
+  .footer-social-links a span {
+    display: none;
+  }
+
+  /* Other responsive styles */
   .class-card {
     width: 90%;
     padding: 1rem;
@@ -71,48 +99,26 @@
     margin: 1rem;
   }
 
-  .video-container { padding-bottom: 75%; }
+  .video-container { 
+    padding-bottom: 75%; 
+  }
 
   .registration-section {
     padding: 2rem;
   }
 
   .form-header h1 {
-      font-size: 2rem;
+    font-size: 2rem;
   }
 
   .radio-group {
-      flex-direction: row;
-      gap: 2rem;
+    flex-direction: row;
+    gap: 2rem;
   }
 
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
-  }
-
-  .social-links a span {
-    display: none;
-  }
-  .social-links {
-    flex-direction: row;
-    justify-content: left;
-  }
-
-
-  
-  .social-links a {
-    font-size: 0;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .social-links {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    justify-content: center;
   }
 }
 
@@ -130,21 +136,25 @@
   .form-group input,
   .form-group select,
   .form-group textarea {
-    font-size: 1.125rem; /* Slightly larger for mobile */
+    font-size: 1.125rem;
     padding: 0.875rem;
   }
+
   .btn { 
     font-size: 3rem;
     padding: 0.5rem 1rem;
   }
+
   .form-container {
     margin: 0.1rem;
     padding: 1rem;
   }
-  .form-container label { font-size: 1rem; }
-  .footer-grid { grid-template-columns: 1fr; }
+
+  .form-container label { 
+    font-size: 1rem; 
+  }
+
+  .footer-grid { 
+    grid-template-columns: 1fr; 
+  }
 }
-
-
-
-

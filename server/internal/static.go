@@ -3,6 +3,7 @@ package internal
 import (
     "log"
 		"mime"
+		"os"
     "net/http"
 		"strings"
 		"path/filepath"
@@ -36,9 +37,16 @@ func ServeFiles() {
             w.Header().Set("Content-Type", mimeType)
         }
 
-        // Set caching headers for static assets
-        w.Header().Set("Cache-Control", "public, max-age=31536000")
-        
+				if os.Getenv("DOCKER_CONTAINER") != "true" {
+					// Development environment: disable caching
+					w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+					w.Header().Set("Pragma", "no-cache")
+					w.Header().Set("Expires", "0")
+				} else {
+						// Production environment: enable caching
+						w.Header().Set("Cache-Control", "public, max-age=31536000")
+				}
+
         log.Printf("Serving static file: %s with MIME type: %s", path, w.Header().Get("Content-Type"))
         fs.ServeHTTP(w, r)
     })

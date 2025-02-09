@@ -23,7 +23,8 @@ swing-society/
 │   └── main.go          # Entry point
 ├── static/           # Static assets
 │   ├── css/             # Stylesheets
-│   ├── js/              # JavaScript files
+│   ├── js/              # Main JavaScript file
+|   |   ├── modules/     # Separate JavaScript functionalities
 │   ├── data/            # Data files (schedules, etc.)
 │   └── assets/          # Media assets
 │       ├── images/          # Image files
@@ -92,9 +93,10 @@ go mod tidy
 
 4. **Run Locally**
 ```bash
-go run main.go
+go run main.go 
+/go/bin/air -c air.toml // for development dynamic reloading as you make changes
 ```
-The site will be available at `http://localhost:8080`
+The site will be available at `http://localhost:3001`
 
 ## 🚀 Deployment
 

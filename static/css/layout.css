@@ -1,104 +1,176 @@
-
-/* Header styles */
+/* Header Layout */
 header {
-  background: var(--shade);
-  color: var(--accent);
-  padding: 1.5rem;
-  position: sticky;
-  z-index: 1000;
-  top: 0;
-  border-bottom: 0.4rem solid var(--primary); 
-} 
-
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  max-width: 75rem;
-  max-height: 2.5rem;
-  margin: 0 auto;
+  width: 100%;
 }
 
+/* Top row with logo, nav, and social */
+.header-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  max-width: 100%;
+  background: var(--shade);
+  height: 4rem;
+
+}
+
+/* Logo */
+.logo {
+  flex-shrink: 0;
+}
 
 #logo-icon {
-  width: 6rem;
-  height: auto;
+  height: 3rem;
+  width: auto;
+}
+
+/* Navigation */
+nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-list .menu-item {
+  color: var(--black);
+  font-size: 2.5rem;
+  text-decoration: none;
+  padding: 0.5rem;
+  font-family: 'Dancing Script', cursive;
+  white-space: nowrap; /* Prevent menu items from wrapping */
 }
 
 
+/* Social Icons */
+.header-social-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center ;
+}
+
+.social-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Bottom row with heading and button */
+.header-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  background: var(--shade);
+  gap: 5rem;
+  padding-bottom: 1rem;
+}
+
+.header-bottom h1 {
+  font-family: 'Dancing Script', cursive;
+  font-style: italic;
+  font-size: 3rem;
+  color: var(--black);
+  margin-left: 2rem;
+}
+
+.signup-btn {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 0.17rem solid var(--black);
+  color: var(--black);
+  font-size: 1.5rem;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 2rem;
+}
+
+.signup-btn:hover {
+  background: var(--shade);
+}
+
+/* Main Content */
 main {
   padding: 0.8rem;
-  margin:  0.2rem;
+  margin: 0.2rem;
   text-align: center;
   font-size: 1.5rem;
 }
 
-
-
-/* Footer styles */
+/* Footer Layout */
 footer {
   background: var(--shade);
   padding: 2.5rem 1.25rem;
- }
- 
- .footer-grid {
+}
+
+.footer-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   max-width: 75rem;
   margin: 0 auto;
- }
- 
- .footer-col h3 {
+} 
+
+.footer-col h3 {
   font-size: 2rem;
   margin-bottom: 1rem;
- }
- 
- .footer-col ul {
+}
+
+.footer-col ul {
   list-style: none;
   padding: 0;
- }
- 
- .footer-col li {
+}
+
+.footer-col li {
   margin-bottom: 0.75rem;
- }
- 
- .footer-col a {
+}
+
+.footer-col a {
   font-size: 1.5rem;
   text-decoration: none;
   color: var(--black);
   transition: color 0.3s ease;
- }
- 
- .footer-col a:hover {
-  color: var(--accent);
- }
+}
 
- .social {
-  width: 2rem;
-  height: auto;
- }
- 
- .social-links {
+.footer-col a:hover {
+  color: var(--accent);
+}
+
+/* Footer social links */
+.footer-social-links {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  align-items: left;
- }
+  align-items: flex-start;
+}
 
-  .social-links a {
-    display: inline-flex;
-    gap: 1rem;
-    font-size: 1.5rem;
-    text-decoration: none;
-    color: var(--black);
-  }
-   
- .footer-bottom {
+.footer-social-links a {
+  display: inline-flex;
+  gap: 1rem;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: var(--black);
+}
+
+.social {
+  width: 2rem;
+  height: auto;
+}
+
+.footer-bottom {
   text-align: center;
   margin-top: 2rem;
   padding-top: 1rem;
   border-top: 1px solid var(--black);
- }
- 
+}
