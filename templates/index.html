@@ -8,8 +8,9 @@
         content="Swing Society - Learn swing dance with us"
       />
       <title>Swing Society</title>
+      <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Forum&family=Merriweather:wght@300;400;700&display=swap&subset=latin,cyrillic" rel="stylesheet">
       <link rel="stylesheet" href="/css/style.css" />
-        <link rel="icon" type="images/icon" href="/assets/images/fav-icon/favicon-32x32.png" />
+      <link rel="icon" type="images/icon" href="/assets/images/fav-icon/favicon-32x32.png" />
       <link rel="apple-touch-icon" type="images/icon" href="/assets/images/fav-icon/apple-touch-icon.png" />
       <link rel="android-chrome" type="images/icon" href="/assets/images/fav-icon/android-chrome-192x192.png" />
       <script src="https://unpkg.com/htmx.org@1.9.10"></script>
@@ -25,57 +26,76 @@
   <header>
     <!-- Top row with logo, nav, and social -->
     <div class="header-top">
-    <section class="row-left">
-      <a href="/" class="logo" id="logo-link">
-        <img src="/static/assets/images/logo.png" alt="Swing Society" id="logo-icon"/>
-      </a>  
-    </section>        
-    <section class="row-center">
-      <nav class="header-nav">
-        <div class="hamburger" id="hamburger">☰</div>
-        <ul class="nav-list" id="nav-list">
-          <li class="has-submenu">
-            <a href="#" class="menu-item">Classes</a>
-            <ul class="submenu">
-              <li><a href="#" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo-jazz">Solo Jazz</a></li>
-              <li><a href="#" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/lindy-hop">Lindy Hop</a></li>
-              <li><a href="#" hx-get="/templates/classes/oldclips.html" hx-target="#main-view" hx-push-url="/classes/old-clips">Old Clips</a></li>
-            </ul>
-          </li>
-          <li class="dot">•</li>
-          <li class="has-submenu">
-            <a href="#" class="menu-item">Events</a>
-            <ul class="submenu">
-              <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/Party">Parties</a></li>
-              <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/Festivals">Festivals</a></li>
-              <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/Workshops">Workshops</a></li>
-            </ul>
-          </li>
-          <li class="dot">•</li>
-          <li>
-            <a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">About Us</a>
-          </li>
-        </ul>
-      </nav>
-    </section>
-    <section class="row-right">
-      <div class="header-social-links">
-        <a href="https://www.facebook.com/swingsocietybg/" target="_blank" aria-label="Facebook">
-          <img src="/static/assets/fb-bw.svg" alt="Facebook" class="social-icon">
-        </a>
-        <a href="https://www.instagram.com/bgswingsociety/" target="_blank" aria-label="Instagram">
-          <img src="/static/assets/ig-bw.svg" alt="Instagram" class="social-icon">
-        </a>
-        <a href="https://www.youtube.com/@bgswingsociety" target="_blank" aria-label="YouTube">
-          <img src="/static/assets/yt-bw.svg" alt="YouTube" class="social-icon">
-        </a>
-        <a href="https://www.tiktok.com/@swing_society5" target="_blank" aria-label="TikTok">
-          <img src="/static/assets/tt-bw.svg" alt="TikTok" class="social-icon">
-        </a>
+      <div class="row-left-logo">
+        <a href="/" class="logo" id="logo-link">
+          <img src="/static/assets/images/logo.png" alt="Swing Society" id="logo-icon"/>
+        </a>  
+      </div>        
+      <div class="row-center-nav">  
+        <nav class="main-nav">  
+          <ul class="nav-list" id="nav-list" data-visible="false">
+            <li class="has-submenu">
+              <a class="nav-link dropdown-toggle">
+                <span>Classes</span>
+                <span class="dropdown-icon">▼</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo-jazz">Solo Jazz</a></li>
+                <li><a href="#" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/lindy-hop">Lindy Hop</a></li>
+                <li><a href="#" hx-get="/templates/classes/oldclips.html" hx-target="#main-view" hx-push-url="/classes/old-clips">Old Clips</a></li>
+              </ul>
+            </li>
+            <li class="has-submenu">
+              <a class="nav-link dropdown-toggle">
+                <span>Events</span>
+                <span class="dropdown-icon">▼</span>
+              </a>   
+              <ul class="dropdown-menu">
+                <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/Party">Parties</a></li>
+                <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/Festivals">Festivals</a></li>
+                <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/Workshops">Workshops</a></li>
+              </ul>
+            </li> 
+            <li class="has-submenu"> 
+              <a class="nav-link dropdown-toggle">
+                <span>About</span>
+                <span class="dropdown-icon">▼</span>
+              </a> 
+              <ul class="dropdown-menu">
+                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">About Us</a>
+                </li>
+                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">Prices</a>
+                </li>
+                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">Rules</a>
+                </li>
+                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">FAQ</a>
+                </li>
+              </ul>
+            </li> 
+          </ul>
+        </nav>
       </div>
-    </section>
+      <div class="row-right-social">
+          <a href="https://www.facebook.com/swingsocietybg/" target="_blank" aria-label="Facebook">
+            <img src="/static/assets/fb-bw.svg" alt="Facebook" class="social-icon">
+          </a>
+          <a href="https://www.instagram.com/bgswingsociety/" target="_blank" aria-label="Instagram">
+            <img src="/static/assets/ig-bw.svg" alt="Instagram" class="social-icon">
+          </a>
+          <a href="https://www.youtube.com/@bgswingsociety" target="_blank" aria-label="YouTube">
+            <img src="/static/assets/yt-bw.svg" alt="YouTube" class="social-icon">
+          </a>
+          <a href="https://www.tiktok.com/@swing_society5" target="_blank" aria-label="TikTok">
+            <img src="/static/assets/tt-bw.svg" alt="TikTok" class="social-icon">
+          </a>
+      </div>
+      <div class="hamburger-menu">
+        <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+          <span class="sr-only">Menu</span>
+          <span class="hamburger">☰</span>
+        </button>
+      </div>
     </div>
-
     <!-- Bottom row with heading and button -->
     <div class="header-bottom">
       <h1>Swing Society Where Jazz Happens</h1>
@@ -92,9 +112,9 @@
 
     <!-- Hero Section -->
     <section id="hero">
-      <img src="/static/assets/images/the founders.jpg" alt="Swing Society Founders">
+      <img src="/static/assets/images/the founders.jpg" alt="Swing Society Founders" class="hero-img" />
       <div class="hero-overlay">
-        <p class="hero-text">Хората, които го стартираха!</p>
+        <h2 class="hero-text hero-text-top">Хората, които го стартираха!</h2>
         <button 
           class="hero-btn"
           hx-get="/templates/about.html" 

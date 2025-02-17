@@ -91,10 +91,11 @@ cd server
 go mod tidy
 ```
 
-4. **Run Locally**
+4. **Run Locally** 
+// for development dynamic reloading as you make changes
 ```bash
 go run main.go 
-/go/bin/air -c air.toml // for development dynamic reloading as you make changes
+~/go/bin/air -c air.toml 
 ```
 The site will be available at `http://localhost:3001`
 

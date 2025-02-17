@@ -1,0 +1,129 @@
+
+/* Mobile only (<= 480px) */
+@media (max-width: 30rem) {
+  html { font-size: 1rem; } 
+  h1, h2, h3 { font-size: 4rem; } 
+  p { font-size: 2rem; }
+  a { font-size: 1.5rem; }
+
+  .row-right-social {
+    display: none;
+  }
+
+  .hamburger-menu {
+    margin: 0rem 0.7rem;
+  }
+   
+  .logo {
+    font-size: 2rem;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .header-top .social-icons {
+    display: none;
+  }
+
+  .hamburger {
+    position: relative;
+  }
+
+  
+
+  .header-bottom {
+    display: none;
+  }
+
+  .nav-list {
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--shade);
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.1);
+    width: 8rem;
+    top: 0;          /* Changed to cover full screen */
+    right: 0;
+    bottom: 0;
+    padding: 1rem;
+    margin: 0;
+    z-index: 1000;
+  }
+
+  .nav-list[data-visible="true"] {
+    display: flex;
+  }
+
+  .nav-list > li {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Hover and active states - Adjustable for visual preference */
+  .nav-link:hover,
+  .dropdown-toggle:hover,
+  .dropdown-menu a:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Dropdown menu mobile specific */
+  .dropdown-menu {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .dropdown-menu a {
+    padding-left: 3rem;
+  }
+
+
+  .has-submenu.active .dropdown-menu {
+    display: block;
+  }
+
+  .dot {
+    display: none;
+  }
+
+  .hero-text {
+    font-size: 0.5rem;
+  }
+
+
+  .hero-btn {
+    font-size: 1.3rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .modal-content {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 1.125rem;
+    padding: 0.875rem;
+  }
+
+  .btn { 
+    font-size: 3rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .form-container {
+    margin: 0.1rem;
+    padding: 1rem;
+  }
+
+  .form-container label { 
+    font-size: 1rem; 
+  }
+
+  .footer-grid { 
+    grid-template-columns: 1fr; 
+  }
+}

@@ -1,57 +1,89 @@
+/* Import external styles */
 @import 'layout.css';
-@import 'navigation.css';
+/* @import 'navigation.css'; */
 @import 'components.css';
-@import 'responsive.css';
+@import 'resp-mobile.css';
+@import 'resp-tablet.css';
+@import 'resp-desktop.css';
 
-/* Consider creating a separate utilities.css for common utility classes
-Consider splitting components.css further if it grows larger
-Keep related styles together (e.g., all hero styles in one place) */
+/* ✅ Consider creating a utilities.css for common utility classes */
+/* ✅ Keep related styles together (e.g., hero styles in one place) */
 
-/* General reset */
+/* ======================== */
+/* 🎨 1. Global Variables   */
+/* ======================== */
+:root {
+  /* 🎨 Color Palette */
+  --primary: #d4c4c4;  
+  --secondary: #ffce1b;
+  --white: #fff;
+  --black: #000;
+  --accent: #ad9fd3;
+  --shade: #f0c0c0;
+
+  /* 🔤 Fonts */
+  --heading-font-latin: 'Righteous', cursive;
+  --heading-font-cyrillic: 'Poiret One', cursive; /* Use 'Forum' if needed */
+  --body-font: 'Merriweather', serif;
+}
+
+/* ======================== */
+/* 🛠 2. Reset & Base Styles */
+/* ======================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Base styles */
 html, body {
-  font-family: 'Dancing Script', cursive;
-  font-size: 16px;
+  font-family: var(--body-font);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);  /* ✅ Dynamic scaling */
   overflow-x: hidden;
-  margin: 0;
-  padding: 0;
+  margin: 0.1rem;
+  padding: 0.1rem;
   background: var(--primary);
   position: relative;
   min-height: 100vh;
-  overscroll-behavior: none;
+  overscroll-behavior: none;  /* Prevents rubber-band scrolling */
 }
 
-h1, h2, h3 {
-  font-family: 'Lobster', cursive;
-  font-size: 3rem;
+/* ======================== */
+/* 🔤 3. Typography         */
+/* ======================== */
+h1 {
+  font-family: var(--heading-font-latin);
+  font-size: clamp(2rem, 5vw, 4rem); /* ✅ Dynamically adjusts */
   color: var(--black);
+}
 
+h2 {
+  font-family: var(--heading-font-latin);
+  color: var(--black);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+h3 {
+  font-family: var(--heading-font-latin);
+  color: var(--black);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+
+html:lang(bg) h1,  
+html:lang(bg) h2,  
+html:lang(bg) h3 {
+  font-family: var(--heading-font-cyrillic);
 }
 
 p {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 2vw, 1.5rem);
   margin-bottom: 1.5rem;
   color: var(--black);
 }
 
 a {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   text-decoration: none;
   color: var(--black);
-}
-
-/* color palette */
-:root {
-  --primary: #cf7878;    
-  --secondary: #ffce1b;  
-  --white: #fff;     
-  --black: #000;    
-  --accent: #9b80e2;    
-  --shade: #d39a9a;     
 }

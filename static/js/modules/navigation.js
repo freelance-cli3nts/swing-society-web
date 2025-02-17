@@ -1,45 +1,120 @@
 export function initNavigation() {
-  const setupMobileNav = () => {
-      const hamburger = document.getElementById('hamburger');
-      const navList = document.getElementById('nav-list');
-      const menuItems = document.querySelectorAll('.has-submenu');
+  const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+  const navList = document.querySelector('.nav-list');
+  const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
-      // Toggle hamburger menu
-      hamburger.addEventListener('click', () => {
-          navList.classList.toggle('open');
-          hamburger.textContent = navList.classList.contains('open') ? '✕' : '☰';
-      });
+  if (!mobileNavToggle || !navList) return;
 
-      // Handle submenu clicks on mobile
-      menuItems.forEach(item => {
-          const link = item.querySelector('a');
-          link.addEventListener('click', (e) => {
-              if (window.innerWidth <= 768) {
-                  e.preventDefault();
-                  const subMenu = item.querySelector('.submenu');
-                  subMenu.classList.toggle('open');
-              }
-          });
-      });
+  // Toggle mobile menu
+  mobileNavToggle.addEventListener('click', () => {
+    const isVisible = navList.getAttribute('data-visible') === 'true';
+    navList.setAttribute('data-visible', !isVisible);
+    mobileNavToggle.setAttribute('aria-expanded', !isVisible);
+    mobileNavToggle.querySelector('.hamburger').textContent = isVisible ? '☰' : '✕';
+  });
 
-      // Close menu when clicking outside
-      document.addEventListener('click', (e) => {
-          if (!navList.contains(e.target) && !hamburger.contains(e.target)) {
-              navList.classList.remove('open');
-              hamburger.textContent = '☰';
-              menuItems.forEach(item => item.classList.remove('active'));
+  // Handle dropdown toggles
+  dropdownToggles.forEach(toggle => {
+    toggle.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        const parent = toggle.closest('.has-submenu');
+        
+        // Close other dropdowns
+        document.querySelectorAll('.has-submenu').forEach(item => {
+          if (item !== parent && item.classList.contains('active')) {
+            item.classList.remove('active');
           }
-      });
+        });
+        
+        // Toggle current dropdown
+        parent.classList.toggle('active');
+      }
+    });
+  });
+
+  // Handle arrow clicks separately if needed
+  document.querySelectorAll('.dropdown-icon').forEach(arrow => {
+    arrow.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        e.preventDefault();
+        e.stopPropagation(); // Prevent triggering the button click
+        const parent = arrow.closest('.has-submenu');
+        parent.classList.toggle('active');
+      }
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!navList.contains(e.target) && !mobileNavToggle.contains(e.target)) {
+      navList.setAttribute('data-visible', 'false');
+      mobileNavToggle.setAttribute('aria-expanded', 'false');
+      mobileNavToggle.querySelector('.hamburger').textContent = '☰';
       
-      // Reset menu state on window resize
-      window.addEventListener('resize', () => {
-          if (window.innerWidth > 768) {
-              navList.classList.remove('open');
-              hamburger.textContent = '☰';
-              menuItems.forEach(item => item.classList.remove('active'));
-          }
+      // Close all dropdowns
+      document.querySelectorAll('.has-submenu').forEach(item => {
+        item.classList.remove('active');
       });
-  };
-
-  document.addEventListener('DOMContentLoaded', setupMobileNav);
+    }
+  });
 }
+
+// export function initNavigation() {
+//   const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+//   const navList = document.querySelector('.nav-list');
+//   const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+//   if (!mobileNavToggle || !navList) return;
+
+//   // Toggle mobile menu
+//   mobileNavToggle.addEventListener('click', () => {
+//     const isVisible = navList.getAttribute('data-visible') === 'true';
+//     navList.setAttribute('data-visible', !isVisible);
+//     mobileNavToggle.setAttribute('aria-expanded', !isVisible);
+//     mobileNavToggle.querySelector('.hamburger').textContent = isVisible ? '☰' : '✕';
+//   });
+
+//   // Handle dropdown toggles
+//   dropdownToggles.forEach(toggle => {
+//     toggle.addEventListener('click', (e) => {
+//       if (window.innerWidth <= 768) {
+//         e.preventDefault();
+//         const parent = toggle.closest('.has-submenu');
+        
+//         // Close other dropdowns
+//         document.querySelectorAll('.has-submenu').forEach(item => {
+//           if (item !== parent) {
+//             item.classList.remove('active');
+//           }
+//         });
+        
+//         parent.classList.toggle('active');
+//       }
+//     });
+//   });
+
+//   // Close menu when clicking outside
+//   document.addEventListener('click', (e) => {
+//     if (!navList.contains(e.target) && !mobileNavToggle.contains(e.target)) {
+//       navList.setAttribute('data-visible', 'false');
+//       mobileNavToggle.setAttribute('aria-expanded', 'false');
+//       mobileNavToggle.querySelector('.hamburger').textContent = '☰';
+//       document.querySelectorAll('.has-submenu').forEach(item => {
+//         item.classList.remove('active');
+//       });
+//     }
+//   });
+
+//   // Handle window resize
+//   window.addEventListener('resize', () => {
+//     if (window.innerWidth > 768) {
+//       navList.setAttribute('data-visible', 'true');
+//       document.querySelectorAll('.has-submenu').forEach(item => {
+//         item.classList.remove('active');
+//       });
+//     } else {
+//       navList.setAttribute('data-visible', 'false');
+//     }
+//   });
+// } 
