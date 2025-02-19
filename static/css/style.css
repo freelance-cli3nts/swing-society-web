@@ -22,7 +22,7 @@
   --shade: #f0c0c0;
 
   /* 🔤 Fonts */
-  --heading-font-latin: 'Righteous', cursive;
+  --heading-font-latin: 'Righteous', serif;
   --heading-font-cyrillic: 'Poiret One', cursive; /* Use 'Forum' if needed */
   --body-font: 'Merriweather', serif;
 }

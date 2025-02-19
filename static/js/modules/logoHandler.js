@@ -22,6 +22,7 @@ export function initLogoHandling() {
       }
   };
 
-  document.addEventListener("DOMContentLoaded", handleLogoLogic);
-  document.body.addEventListener("htmx:afterSwap", handleLogoLogic);
 }
+
+document.addEventListener("DOMContentLoaded", handleLogoLogic);
+document.body.addEventListener("htmx:afterSwap", handleLogoLogic);

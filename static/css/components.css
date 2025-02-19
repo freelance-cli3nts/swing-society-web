@@ -89,19 +89,38 @@
 }
 
 /* Class cards */
-.class-card {
+.class-view {
   background: #f9f9f9;
   border-radius: 0.5rem;
   padding: 1.5rem;
   margin: 1.5rem auto;
-  width: 80%;
+  width: 90%;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
   text-align: center;
+}
+
+.class-card {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.class-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
 }
 
 .lindyhop { border-left: 0.3125rem solid var(--primary); }
 .solo-jazz { border-left: 0.3125rem solid var(--secondary); }
 .old-clips { border-left: 0.3125rem solid var(--accent); }
+
+.class-image{
+  width: 10rem;
+  height: auto;
+  border-radius: 0.3125rem;
+}
 
 /* Modal Component */
 .modal {
@@ -305,6 +324,75 @@ input[type="radio"]:checked::before {
   width: 100%;
   height: 100%;
 }
+
+
+/* carousel style */
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 50rem; /* Adjust as needed */
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  min-width: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  box-sizing: border-box;
+}
+
+.carousel-item.active {
+  opacity: 1;
+}
+
+.carousel-item img 
+.carousel-item video 
+.carousel-item iframe {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.carousel-item video 
+.carousel-item iframe {
+  width: 100%;
+  height: auto;
+  background: var(--black);
+}
+
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.carousel-control:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-control.prev {
+  left: 0;
+}
+
+.carousel-control.next {
+  right: 0;
+}
+
 
 /* Schedule section */
 #schedule {

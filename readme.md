@@ -119,7 +119,8 @@ gcloud run deploy ss-go \
   --image gcr.io/swingsociety-backend/ss-go \
   --platform managed \
   --region us-central1 \ 
-  --allow-unauthenticated 
+  --allow-unauthenticated
+
 ```
 
 ## 📝 Development Tasks

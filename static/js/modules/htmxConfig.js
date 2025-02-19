@@ -1,6 +1,5 @@
 // Wait for both DOM and HTMX to be ready
 export function initHtmxConfig() {
-  const configureHtmx = () =>  {
     if (window.htmx) {
     htmx.config.ignoreFeatureWarnings = true;
       
@@ -24,7 +23,7 @@ export function initHtmxConfig() {
       // If HTMX isn't loaded yet, wait a bit and try again
       setTimeout(configureHtmx, 50);
   }
+};
 
-  document.addEventListener('DOMContentLoaded', configureHtmx);
-  }
-}; 
+document.addEventListener('DOMContentLoaded', initHtmxConfig);
+document.body.addEventListener('htmx:afterSwap', initHtmxConfig);
