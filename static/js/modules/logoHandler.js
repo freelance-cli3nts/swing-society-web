@@ -1,5 +1,4 @@
 export function initLogoHandling() {
-  const handleLogoLogic = () => {
       const logoLink = document.getElementById("logo-link");
       const currentPath = window.location.pathname;
 
@@ -20,9 +19,4 @@ export function initLogoHandling() {
         // Remove any existing click listeners          
           logoLink.replaceWith(logoLink.cloneNode(true));
       }
-  };
-
 }
-
-document.addEventListener("DOMContentLoaded", handleLogoLogic);
-document.body.addEventListener("htmx:afterSwap", handleLogoLogic);

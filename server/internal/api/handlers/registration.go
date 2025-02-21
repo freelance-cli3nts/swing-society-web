@@ -1,13 +1,26 @@
+// internal/api/handlers/registration.go
 package handlers
 
 import (
-    "encoding/json"
     "log"
     "net/http"
     "swing-society-website/server/internal/api/models"
+    "swing-society-website/server/internal/api/response"
+    customerrors "swing-society-website/server/internal/errors"
+    "swing-society-website/server/internal/storage"
 )
 
-func HandleRegistration(w http.ResponseWriter, r *http.Request) {
+type RegistrationHandler struct {
+    storage storage.RegistrationStorage
+}
+
+func NewRegistrationHandler(storage storage.RegistrationStorage) *RegistrationHandler {
+    return &RegistrationHandler{
+        storage: storage,
+    }
+}
+
+func (h *RegistrationHandler) HandleRegistration(w http.ResponseWriter, r *http.Request) {
     log.Printf("Registration form request received: %s", r.Method)
 
     // Set CORS headers
@@ -21,37 +34,57 @@ func HandleRegistration(w http.ResponseWriter, r *http.Request) {
     }
 
     if r.Method != http.MethodPost {
-        http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+        response.Error(w, customerrors.NewValidationError(
+            "Method not allowed",
+            map[string]string{"method": "Only POST method is allowed"},
+        ))
         return
     }
 
     // Parse form
     var form models.RegistrationForm
     if err := r.ParseForm(); err != nil {
-        log.Printf("Error parsing form: %v", err)
-        http.Error(w, "Error parsing form", http.StatusBadRequest)
+        response.Error(w, customerrors.NewValidationError(
+            "Error parsing form",
+            map[string]string{"form": "Invalid form data"},
+        ))
         return
     }
 
     form.Name = r.FormValue("name")
     form.Email = r.FormValue("email")
 
-    if errors := form.Validate(); len(errors) > 0 {
-        log.Printf("Form validation failed: %v", errors)
-        w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusBadRequest)
-        json.NewEncoder(w).Encode(errors)
+    if validationErrors := form.Validate(); len(validationErrors) > 0 {
+        response.Error(w, customerrors.NewValidationError(
+            "Form validation failed",
+            validationErrors,
+        ))
         return
     }
 
-    log.Printf("Successful registration: %+v", form)
+    // Store registration
+    if err := h.storage.StoreRegistration(&form); err != nil {
+        response.Error(w, customerrors.NewInternalError(
+            "Failed to store registration",
+            err,
+        ))
+        return
+    }
 
-    w.Header().Set("Content-Type", "text/html; charset=utf-8")
-    w.Write([]byte(`
-        <div class="success-message show" role="alert">
-            <h3>Благодарим за регистрацията!</h3>
-            <p>Ще се свържем с вас скоро.</p>
-            <button class="close-btn" hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;</button>
-        </div>
-    `))
+    // Handle HTMX request
+    if r.Header.Get("HX-Request") == "true" {
+        response.HTMLFragment(w, http.StatusOK, `
+            <div class="success-message show" role="alert">
+                <h3>Благодарим за регистрацията!</h3>
+                <p>Ще се свържем с вас скоро.</p>
+                <button class="close-btn" hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;</button>
+            </div>
+        `)
+        return
+    }
+
+    // Regular API response
+    response.JSON(w, http.StatusOK, map[string]string{
+        "message": "Registration successful",
+    })
 }

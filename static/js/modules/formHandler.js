@@ -71,8 +71,3 @@ export function initFormHandling() {
 
   document.addEventListener('htmx:afterSettle', setupRealTimeValidation);
 };
-
-
-// Add event listeners outside the function
-document.addEventListener("DOMContentLoaded", initFormHandling);
-document.body.addEventListener("htmx:afterSwap", initFormHandling);

@@ -1,104 +1,230 @@
-<header>
-  <div class="header-container">
-    <a href="/" class="logo" id="logo-link">
-      <img
-        src="/static/assets/images/logo.png"
-        alt="Swing Society"
-        id="logo-icon"
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no" />
+      <meta
+        name="description"
+        content="Swing Society - Learn swing dance with us"
       />
-    </a>
-    <nav>
-      <div class="hamburger" id="hamburger">☰</div>
-      <ul class="nav-list" id="nav-list">
-        <li class="has-submenu">
-          <a href="#" class="menu-item">Класове</a>
-          <ul class="submenu">
-            <li>
-              <a
-                href="#"
-                hx-get="/templates/classes/solojazz.html"
-                hx-target="#main-view"
-                hx-push-url="/classes/solo-jazz"
-                hx-trigger="click"
-                >Соло Джаз</a
-              >
+      <title>Swing Society</title>
+      <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Forum&family=Merriweather:wght@300;400;700&display=swap&subset=latin,cyrillic" rel="stylesheet">
+      <link rel="stylesheet" href="/css/style.css" />
+      <link rel="icon" type="images/icon" href="/assets/images/fav-icon/favicon-32x32.png" />
+      <link rel="apple-touch-icon" type="images/icon" href="/assets/images/fav-icon/apple-touch-icon.png" />
+      <link rel="android-chrome" type="images/icon" href="/assets/images/fav-icon/android-chrome-192x192.png" />
+      <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              htmx.config.ignoreFeatureWarnings = true;
+          });
+      </script>
+      <script type="module" src="/static/js/main.js" defer></script>    
+    </head>
+  <body>
+    <!-- Header Section -->
+  <header>
+    <!-- Top row with logo, nav, and social -->
+    <div class="header-top">
+      <div class="row-left-logo">
+        <a href="/" class="logo" id="logo-link">
+          <img src="/static/assets/images/logo.png" alt="Swing Society" id="logo-icon"/>
+        </a>  
+      </div>        
+      <div class="row-center-nav">  
+        <nav class="main-nav">  
+          <ul class="nav-list" id="nav-list" data-visible="false">
+            <li class="has-submenu">
+              <a class="nav-link dropdown-toggle">
+                <span>Classes</span>
+                <span class="dropdown-icon">▼</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo-jazz">Solo Dancing</a></li>
+                <li><a href="#" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/lindy-hop">Coupled Dancing</a></li>
+                <li><a href="#" hx-get="/templates/classes/oldclips.html" hx-target="#main-view" hx-push-url="/classes/old-clips">Old Clips</a></li>
+              </ul>
             </li>
-            <li>
-              <a
-                href="#"
-                hx-get="/templates/classes/lindyhop.html"
-                hx-target="#main-view"
-                hx-push-url="/classes/lindy-hop"
-                hx-trigger="click"
-                >Линди Хоп</a
-              >
+            <li class="has-submenu">
+              <a class="nav-link dropdown-toggle">
+                <span>Events</span>
+                <span class="dropdown-icon">▼</span>
+              </a>   
+              <ul class="dropdown-menu">
+                <li><a href="#" hx-get="/templates/events/parties.html" hx-target="#main-view" hx-push-url="/events/party">Parties</a></li>
+                <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/festivals">Festivals</a></li>
+                <li><a href="#" hx-get="/templates/events/" hx-target="#main-view" hx-push-url="/events/workshops">Workshops</a></li>
+              </ul>
+            </li> 
+            <li class="has-submenu"> 
+              <a class="nav-link dropdown-toggle">
+                <span>About</span>
+                <span class="dropdown-icon">▼</span>
+              </a> 
+              <ul class="dropdown-menu">
+                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">About Us</a>
+                </li>
+                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">Prices</a>
+                </li>
+                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">Rules</a>
+                </li>
+                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">FAQ</a>
+                </li>
+              </ul>
+            </li> 
+          </ul>
+        </nav>
+      </div>
+      <div class="row-right-social">
+          <a href="https://www.facebook.com/swingsocietybg/" target="_blank" aria-label="Facebook">
+            <img src="/static/assets/images/social-icons/fb-bw.svg" alt="Facebook" class="social-icon">
+          </a>
+          <a href="https://www.instagram.com/bgswingsociety/" target="_blank" aria-label="Instagram">
+            <img src="/static/assets/images/social-icons/ig-bw.svg" alt="Instagram" class="social-icon">
+          </a>
+          <a href="https://www.youtube.com/@bgswingsociety" target="_blank" aria-label="YouTube">
+            <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" class="social-icon">
+          </a>
+          <a href="https://www.tiktok.com/@swing_society5" target="_blank" aria-label="TikTok">
+            <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" class="social-icon">
+          </a>
+      </div>
+      <div class="hamburger-menu">
+        <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+          <span class="sr-only">Menu</span>
+          <span class="hamburger">☰</span>
+        </button>
+      </div>
+    </div>
+    <!-- Bottom row with heading and button -->
+    <div class="header-bottom">
+      <h1>Swing Society Where Jazz Happens</h1>
+      <button 
+        class="signup-btn"
+        hx-get="/templates/forms/registration-form.html" 
+        hx-trigger="click" 
+        hx-target="#main-view">
+        Sign Up
+      </button>
+    </div>
+  </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+      <img src="/static/assets/images/the founders.jpg" alt="Swing Society Founders" class="hero-img" />
+      <div class="hero-overlay">
+        <h2 class="hero-text hero-text-top">Хората, които го стартираха!</h2>
+        <button 
+          class="hero-btn"
+          hx-get="/templates/about.html" 
+          hx-trigger="click" 
+          hx-target="#main-view">
+          Чуй историята
+        </button>
+      </div>
+    </section>
+      <!-- <div class="video-container">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/OpXc2svVtZM?si=ZyEVIMdwmfnH_33u/?autoplay=1&mute=1&playsinline=1" title="Miro & Stella Dance of the Gremlins" frameborder="0" 
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div> -->
+    <main>
+      <div id="main-view" hx-indicator="#loading-spinner">
+        <!-- content that is swapped based on where user clicks-->
+      </div>
+       
+      <div id="loading-spinner" class="htmx-indicator">Loading...</div>
+      <h1>Календар класове и партита </h1>
+      <div id="schedule">
+        <div
+          hx-get="/static/data/schedule.html"
+          hx-trigger="load"
+          hx-target="#schedule"
+        >
+          Loading schedule...
+        </div>
+      </div>
+    </main>
+    <!-- Footer Section -->
+    <footer>
+      <div class="footer-grid">
+        <!-- Column 1 -->
+        <div class="footer-col">
+          <h3>Контакти</h3>
+          <ul>
+            <li>Адрес: 
+              <a href="https://maps.app.goo.gl/Vhr6hWq7p1xr4wb37" target="_blank">София, ул Сердика 25</a>
             </li>
-            <li>
-              <a
-                href="#"
-                hx-get="/templates/classes/oldclips.html"
-                hx-target="#main-view"
-                hx-push-url="/classes/old-clips"
-                hx-trigger="click"
-                >Олд Клипс</a
-              >
+            <li>Телефон: 
+              <a href="tel:+885554597">0885554597</a>
             </li>
-            <li>
-              <a
-                href="#"
-                hx-get="/templates/prices.html"
-                hx-target="#main-view"
-                hx-trigger="click"
-                >Цени</a
-              >
+            <li>Имейл: 
+              <a href="mailto: mr.anastasov@gmail.com">info@swingsociety.bg</a>
             </li>
           </ul>
-        </li>
-        <li class="has-submenu">
-          <a href="#" class="menu-item">Събития</a>
-          <ul class="submenu">
-            <li>
-              <a
-                href="#"
-                hx-get="/templates/events/"
-                hx-target="#main-view"
-                hx-push-url="/events/Party"
-                hx-trigger="click"
-                >Партита</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                hx-get="/templates/events/"
-                hx-target="#main-view"
-                hx-push-url="/events/Festivals"
-                hx-trigger="click"
-                >Фестивали</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                hx-get="/templates/events/"
-                hx-target="#main-view"
-                hx-push-url="/events/Workshops"
-                hx-trigger="click"
-                >Интензивни курсове</a
-              >
-            </li>
+        </div>
+     
+        <!-- Column 2 -->
+        <div class="footer-col">
+          <h3>Информация</h3>
+          <ul>
+            <li><a href="#">Често Задавани Въпроси</a></li>
+            <li><a href="#">Разписание</a></li>
+            <li><a href="#">Цени</a></li>
+            <li><a href="#">Условия</a></li>
+            <li><a href="#">Политика за поверителност</a></li>
           </ul>
-        </li>
-        <li>
-          <a
-            href="/templates/about.html"
-            hx-get="/templates/about.html"
-            hx-target="#main-view"
-            hx-push-url="/about-us"
-            >За нас</a
-          >
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header>
+        </div>
+     
+        <!-- Column 3 -->
+        <div class="footer-col">
+          <h3>Проекти</h3>
+          <ul>
+            <li><a href="https://swingbuzz.eu/" target="_blank">Swing Buzz</a></li>
+            <li><a href="#">Podcast</a></li>
+            <li><a href="#">Jazz Scene</a></li>
+          </ul>
+        </div>
+     
+        <!-- Column 4 -->
+        <div class="footer-col">
+          <h3>Намерете ни</h3>
+          <div class="footer-social-links">
+            <a href="https://www.facebook.com/swingsocietybg/" target="_blank">
+              <img src="/static/assets/images/social-icons/fb-bw.svg" alt="Facebook" class="social"
+              >
+              <span>Facebook</span>
+            </a>
+            <a href="https://www.instagram.com/bgswingsociety/" target="_blank">
+              <img
+                src="/static/assets/images/social-icons/ig-bw.svg"
+                class="social"
+                alt="instagram"
+              />
+              <span>Instagram</span>
+            </a>
+            <a href="https://www.youtube.com/@bgswingsociety" target="_blank">
+              <img
+                src="/static/assets/images/social-icons/yt-bw.svg"
+                class="social"
+                alt="youtube"
+              />
+              <span>Youtube</span>
+            </a>
+            <a href="https://www.tiktok.com/@swing_society5" target="_blank">
+              <img
+                src="/static/assets/images/social-icons/tt-bw.svg"
+                class="social"
+                alt="tiktok"
+              />
+              <span>TikTok</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Swing Society. All Rights Reserved.</p>
+      </div>
+     </footer>
+
+  </body>
+</html>

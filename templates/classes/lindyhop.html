@@ -32,4 +32,27 @@
       <p><strong>You can join anytime:</strong> But it's best to join and stick to a module.</p>
     </div>
   </div>
+  <div id="carousel-container">
+    <!-- Image Carousel (Auto-Play) -->
+    <h3>Class Images</h3>
+    <div 
+      id="carousel-content" 
+      hx-get="/api/carousel?type=classes" 
+      hx-trigger="load" 
+      hx-swap="innerHTML">
+      <div class="loading-spinner">Loading carousel...</div>
+    </div>
+    <div>
+      CONTENT TO BE LOADED
+    </div>
+    <!-- Text Carousel (Click-to-Change) -->
+     <h3>Class text</h3>
+    <div 
+      id="carousel-content" 
+      hx-get="/api/carousel?type=classes" 
+      hx-trigger="load"
+      hx-swap="innerHTML">
+      <div class="loading-spinner">Loading carousel...</div>
+    </div>
+  </div>
 </div>

@@ -15,6 +15,3 @@ export function initRegistrationForm() {
   });
 
 }
-
-document.addEventListener('DOMContentLoaded', initRegistrationForm);
-document.body.addEventListener('htmx:afterSwap', initRegistrationForm);

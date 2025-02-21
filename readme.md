@@ -94,8 +94,7 @@ go mod tidy
 4. **Run Locally** 
 // for development dynamic reloading as you make changes
 ```bash
-go run main.go 
-~/go/bin/air -c air.toml 
+/go/bin/air -c air.toml 
 ```
 The site will be available at `http://localhost:3001`
 
@@ -115,41 +114,58 @@ docker build -t gcr.io/swingsociety-backend/ss-go .
 docker push gcr.io/swingsociety-backend/ss-go
 
 # Deploy to Cloud Run // make it eu, stop the unauthenticated access
-gcloud run deploy ss-go \
-  --image gcr.io/swingsociety-backend/ss-go \
-  --platform managed \
-  --region us-central1 \ 
-  --allow-unauthenticated
-
+gcloud run deploy ss-go --image gcr.io/swingsociety-backend/ss-go --platform managed --region us-central1 --allow-unauthenticated
 ```
 
 ## 📝 Development Tasks
 
 ### MVP
-- [ ] validate concept
+- [x] validate concept
 - [ ] custom domain setup
 - [ ] implement back-end logic
 
 ### High Priority
-- [ ] Redesign Hero Page that demanding focus
-- [ ] Forms
-  - [ ] Contact form
-  - [ ] Registration form
-  - [ ] Newsletter subscription
-  - [ ] Implement form validation
-  - [ ] email validation and email sending logic
-  - [ ] Complete email notification system
-- [ ] Set up Firestore database
-- [ ] Add main pages & route them
-  - [ ] Classes
+- [ ] Design 
+  - [ ] Redesign Hero Page that demanding focus
+    - [ ] implement the carousel feature 
+    - [ ] fix positioning on mobile/tablet view of button and text
+  - [ ] Add main pages & route them
+    - [ ] Classes
+    - [ ] Forms
+    - [ ] About US
+  - [ ] Fix colors
+  - [ ] Layouts
+    - [x] Coupled Classes
+      - [o] Carousel view - we have problem with image & video loading
+    - [ ] Solo Classes
+    - [ ] Old Clips
+    - [ ] Teachers section
+    - [ ] Founders section
+    - [ ] Organization Concept
+    - [ ] Parties
+    - [ ] Festival Page
+    - [ ] Intense classes Offer
+    - [ ] Podcast 
+  - [ ] Content
+    - [ ] Coupled Classes
+    - [ ] Solo Classes
+    - [ ] Old Clips
+- [ ] Functionality
   - [ ] Forms
-  - [ ] About US
-- [ ] Add proper error handling
+    - [ ] Contact form
+    - [ ] Registration form
+    - [ ] Newsletter subscription
+    - [ ] Implement form validation
+    - [ ] email validation and email sending logic
+    - [ ] Complete email notification system
+  - [ ] Set up Firestore database
+  - [ ] Add proper error handling
+  - [ ] Calendar
 
 ### Medium Priority
 - [ ] Add event scheduling system
 - [ ] Add sub-pages & route them
-  - [ ] prices
+  - [ ] Prices
   - [ ] Terms of Use
   - [ ] GDPR
   - [ ] Privacy policy
@@ -158,6 +174,9 @@ gcloud run deploy ss-go \
 - [ ] Add analytics tracking
 - [ ] CMS or Admin dashboard
 - [ ] Implement user authentication
+- [ ] integration with google calendar & icalendar
+    integration with fb events
+    layout with today, upcoming & past events 
 
 ### Low Priority
 - [ ] Implement logging system
@@ -165,6 +184,16 @@ gcloud run deploy ss-go \
 - [ ] Add performance monitoring
 - [ ] Create backup system
 - [ ] Implement rate limiting
+- [ ] Create automated tests for functionality 
+
+### Testing phase:
+- [ ] Make an alpha test of the website in the Swing Troupe group 
+- [ ] Make a beta test of the website inside the Swing Society Classes group 
+  - [ ] ensure testers with various devices: 
+    - [ ] desktop: 24 inch, 15 inch, 14 inch, 13 inch
+    - [ ] tablet: 10 inch, 8 inch
+    - [ ] mobile: 6 inch, 5 inch 4 inch 
+
 
 ## 🔗 Resources
 - [Project Figma Board](https://www.figma.com/board/YXIM0ao7X6mtGbcUFQQOj8/Swing-Society-web?node-id=7-925&t=weUqv9eMgFAnFSnO-0)

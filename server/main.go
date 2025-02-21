@@ -15,31 +15,30 @@ func main() {
         log.Printf("Warning: .env file not found")
     }
 
-    // Initialize paths
-    config.InitPaths()
-
-    // Create router with Google Cloud project ID
-    projectID := os.Getenv("GOOGLE_CLOUD_PROJECT")
-    if projectID == "" {
-        projectID = "swingsociety-backend" // fallback to your project ID
+    // Load configuration
+    if err := config.LoadConfig(); err != nil {
+        log.Fatalf("Failed to load configuration: %v", err)
     }
 
-    router, err := internal.NewRouter(projectID)
+    // Create router with Google Cloud project ID from config
+    projectID := os.Getenv("GOOGLE_CLOUD_PROJECT")
+    if projectID == "" {
+        projectID = config.AppConfig.External.ProjectID
+    }
+
+    router, err := internal.New(projectID)
     if err != nil {
         log.Fatalf("Failed to create router: %v", err)
     }
 
     // Setup routes
-    router.SetupRoutes()
-
-    // Get port from environment
-    port := os.Getenv("PORT")
-    if port == "" {
-        port = "3001"
+    if err := router.SetupRoutes(); err != nil {
+        log.Fatalf("Failed to setup routes: %v", err)
     }
+
+    // Get port from config
+    port := config.AppConfig.Server.Port
     
     log.Printf("Server starting on port %s", port)
     log.Fatal(http.ListenAndServe(":"+port, nil))
 }
-
-

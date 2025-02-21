@@ -2,24 +2,32 @@
 <html lang="en">
     <head>
       <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=no" />
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta
         name="description"
         content="Swing Society - Learn swing dance with us"
       />
       <title>Swing Society</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
       <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Forum&family=Merriweather:wght@300;400;700&display=swap&subset=latin,cyrillic" rel="stylesheet">
       <link rel="stylesheet" href="/css/style.css" />
       <link rel="icon" type="images/icon" href="/assets/images/fav-icon/favicon-32x32.png" />
       <link rel="apple-touch-icon" type="images/icon" href="/assets/images/fav-icon/apple-touch-icon.png" />
       <link rel="android-chrome" type="images/icon" href="/assets/images/fav-icon/android-chrome-192x192.png" />
-      <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+      <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
+      <script type="module" src="/static/js/main.js" defer></script>    
       <script>
           document.addEventListener('DOMContentLoaded', function() {
-              htmx.config.ignoreFeatureWarnings = true;
+            htmx.config.ignoreFeatureWarnings = true;
           });
       </script>
-      <script type="module" src="/static/js/main.js" defer></script>    
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          document.body.addEventListener("htmx:beforeSwap", function(evt) {
+            console.log("HTMX Response:", evt.detail.xhr.responseText);
+          });
+        });
+      </script>
     </head>
   <body>
     <!-- Header Section -->
@@ -40,8 +48,8 @@
                 <span class="dropdown-icon">▼</span>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="#" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo-jazz">Solo Jazz</a></li>
-                <li><a href="#" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/lindy-hop">Lindy Hop</a></li>
+                <li><a href="#" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo-jazz">Solo Dancing</a></li>
+                <li><a href="#" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/lindy-hop">Coupled Dancing</a></li>
                 <li><a href="#" hx-get="/templates/classes/oldclips.html" hx-target="#main-view" hx-push-url="/classes/old-clips">Old Clips</a></li>
               </ul>
             </li>
@@ -64,11 +72,11 @@
               <ul class="dropdown-menu">
                 <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">About Us</a>
                 </li>
-                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">Prices</a>
+                <li><a href="/templates/prices.html" hx-get="/templates/prices.html" hx-target="#main-view" hx-push-url="/prices" class="menu-item">Prices</a>
                 </li>
-                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">Rules</a>
+                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/rules" class="menu-item">Rules</a>
                 </li>
-                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us" class="menu-item">FAQ</a>
+                <li><a href="/templates/about.html" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/FAQ" class="menu-item">FAQ</a>
                 </li>
               </ul>
             </li> 

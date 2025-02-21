@@ -1,29 +1,59 @@
-	package handlers
+// internal/api/handlers/templates.go
+package handlers
 
-	import (
-			"log"
-			"net/http"
-			"os"
-			"strings"
-			"path/filepath"
-			"swing-society-website/server/internal/config"
-	)
+import (
+    "net/http"
+    "strings"
+    "swing-society-website/server/internal/api/response"
+    customerrors "swing-society-website/server/internal/errors"
+    "swing-society-website/server/internal/storage"
+)
 
-	func HandleTemplate(w http.ResponseWriter, r *http.Request, templatePath string) {
-    // Remove the leading "/templates" from the path since it's already included in TemplatesDir
+type TemplateHandler struct {
+    storage storage.TemplateStorage
+}
+
+func NewTemplateHandler(storage storage.TemplateStorage) *TemplateHandler {
+    return &TemplateHandler{
+        storage: storage,
+    }
+}
+
+func (h *TemplateHandler) HandleTemplate(w http.ResponseWriter, r *http.Request, templatePath string) {
     cleanPath := strings.TrimPrefix(templatePath, "/templates")
-    fullPath := filepath.Join(config.AppPaths.TemplatesDir, cleanPath)
     
-    log.Printf("Serving template: %s", fullPath)
+    w.Header().Set("Cache-Control", "private, max-age=10")
     
-    if _, err := os.Stat(fullPath); os.IsNotExist(err) {
-        log.Printf("Template not found: %s", fullPath)
-        http.NotFound(w, r)
+    if !h.storage.TemplateExists(cleanPath) {
+        response.Error(w, customerrors.NewAppError(
+            customerrors.ErrorTypeFileSystem,
+            "Template not found",
+            nil,
+            map[string]string{"path": cleanPath},
+        ))
         return
     }
     
-    w.Header().Set("Access-Control-Allow-Origin", "*")
-    w.Header().Set("Content-Type", "text/html")
-    
-    http.ServeFile(w, r, fullPath)
+    if r.Header.Get("HX-Request") == "true" {
+        content, err := h.storage.GetTemplate(cleanPath)
+        if err != nil {
+            response.Error(w, customerrors.NewInternalError(
+                "Failed to read template",
+                err,
+            ))
+            return
+        }
+        response.HTMLFragment(w, http.StatusOK, content)
+        return
+    }
+
+    content, err := h.storage.GetIndexTemplate()
+    if err != nil {
+        response.Error(w, customerrors.NewInternalError(
+            "Failed to read index template",
+            err,
+        ))
+        return
+    }
+    response.HTMLFragment(w, http.StatusOK, content)
 }

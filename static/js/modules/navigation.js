@@ -59,6 +59,3 @@ export function initNavigation() {
     }
   });
 }
-
-document.addEventListener('DOMContentLoaded', initNavigation);
-document.body.addEventListener('htmx:afterSwap', initNavigation);

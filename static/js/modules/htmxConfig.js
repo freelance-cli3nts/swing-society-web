@@ -24,6 +24,3 @@ export function initHtmxConfig() {
       setTimeout(configureHtmx, 50);
   }
 };
-
-document.addEventListener('DOMContentLoaded', initHtmxConfig);
-document.body.addEventListener('htmx:afterSwap', initHtmxConfig);

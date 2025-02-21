@@ -3,31 +3,29 @@ package middleware
 import (
 		"log"
     "net/http"
+		"strings"
+		"swing-society-website/server/internal/config"
 )
 
 // SecurityHeaders adds security-related HTTP headers to all responses
 func SecurityHeaders(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			// Define security headers
-			headers := map[string]string{
-				"X-Frame-Options":           "SAMEORIGIN",
-				"X-XSS-Protection":          "1; mode=block",
-				"X-Content-Type-Options":    "nosniff",
-				"Referrer-Policy":           "strict-origin-when-cross-origin",
-				"Content-Security-Policy":   "default-src 'self' https:; " +
-																		"script-src 'self' 'unsafe-inline' https://unpkg.com; " +
-																		"style-src 'self' 'unsafe-inline' https:; " +
-																		"img-src 'self' https: data:; " +
-																		"frame-src 'self' https://www.youtube.com; " +
-																		"connect-src 'self' https:;",
-				"Permissions-Policy":        "microphone=(), camera=()",  // Removed unnecessary restrictions
-				"Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-		}
-
-        // Set all security headers
-        for key, value := range headers {
-            w.Header().Set(key, value)
+        // Use CSP directives from config
+        w.Header().Set("Content-Security-Policy", config.AppConfig.Security.CSPDirectives)
+        
+        // Use allowed origins from config
+        if len(config.AppConfig.Security.AllowedOrigins) > 0 {
+            w.Header().Set("Access-Control-Allow-Origin", 
+                strings.Join(config.AppConfig.Security.AllowedOrigins, ", "))
         }
+
+        // Standard security headers
+        w.Header().Set("X-Frame-Options", "SAMEORIGIN")
+        w.Header().Set("X-XSS-Protection", "1; mode=block")
+        w.Header().Set("X-Content-Type-Options", "nosniff")
+        w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
+        w.Header().Set("Permissions-Policy", "microphone=(), camera=()")
+        w.Header().Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
 
         next.ServeHTTP(w, r)
     })

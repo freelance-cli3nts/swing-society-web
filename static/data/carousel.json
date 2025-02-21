@@ -1,0 +1,36 @@
+{
+  "classes": [
+    {
+      "image_url": "/static/assets/images/Miro&Kalina.jpg",
+      "caption": "Learn the basics of Lindy Hop!",
+      "type": "classes"
+    },
+    {
+      "image_url": "/static/assets/images/Mitko&Leni.jpg",
+      "caption": "Perfect your swing-out moves!",
+      "type": "classes"
+    },
+    {
+      "image_url": "/static/images/lindyhop3.jpg",
+      "caption": "Join our vibrant swing community!",
+      "type": "classes"
+    }
+  ],
+  "events": [
+    {
+      "image_url": "/static/assets/images/DJ-Miro&Mitko.jpg",
+      "caption": "Swing party every Friday night!",
+      "type": "events"
+    },
+    {
+      "image_url": "/static/assets/images/DJ-Mitko.jpg",
+      "caption": "Special guest workshops this weekend!",
+      "type": "events"
+    },
+    {
+      "image_url": "/static/assets/images/DJ-Rosi.jpg",
+      "caption": "Live band performance at our next social!",
+      "type": "events"
+    }
+  ]
+}
