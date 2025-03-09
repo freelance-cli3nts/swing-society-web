@@ -50,6 +50,18 @@ curl -i -X POST http://localhost:3001/api/register \
 
 sleep 1
 
+# Test Coupled Classes
+echo -e "\n\n${GREEN}Testing Coupled Classes...${NC}"
+curl -i http://localhost:3001/api/class/coupled
+
+sleep 1
+
+# Test Solo Classes
+echo -e "\n\n${GREEN}Testing Solo Classes...${NC}"
+curl -i http://localhost:3001/api/class/solo
+
+sleep 1
+
 # Test Carousel
 echo -e "\n\n${GREEN}Testing Carousel Data...${NC}"
 curl -i http://localhost:3001/api/carousel/general

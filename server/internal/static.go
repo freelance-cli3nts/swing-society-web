@@ -23,6 +23,9 @@ func init() {
 
 func ServeFiles() {
 	fs := http.FileServer(http.Dir(config.AppConfig.Paths.StaticDir))
+	
+	log.Printf("Entered ServeFiles function: %s", config.AppConfig.Paths.StaticDir)
+
 
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			path := filepath.Clean(r.URL.Path)
@@ -32,6 +35,7 @@ func ServeFiles() {
 					w.Header().Set("Content-Type", mimeType)
 			}
 
+			log.Printf("Entered handler function. Path: %s", path)
 			// Cache control based on environment
 			if config.AppConfig.Environment == "development" {
 					w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")

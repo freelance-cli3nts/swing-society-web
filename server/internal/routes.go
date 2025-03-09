@@ -1,10 +1,13 @@
+// internal/routes.go
 package internal
 
 import (
+    "log"
+		"os"
+		"encoding/json"
     "net/http"
     "path/filepath"
-		"strings"
-
+    "strings"
     "swing-society-website/server/internal/api/handlers"
     "swing-society-website/server/internal/config"
     "swing-society-website/server/internal/middleware"
@@ -14,105 +17,232 @@ import (
 type Router struct {
     mw          *middleware.MiddlewareManager
     rateLimiter *middleware.IPRateLimiter
-    handlers    map[string]http.Handler
-    middleware  map[string]*middleware.Chain
 }
 
-func New(projectID string) (*Router, error) {
+func NewRouter(projectID string) (*Router, error) {
     r := &Router{
         mw:          middleware.NewMiddlewareManager(),
         rateLimiter: middleware.NewIPRateLimiter(),
-        handlers:    make(map[string]http.Handler),
-        middleware:  make(map[string]*middleware.Chain),
     }
 
-    // Initialize middleware chains
-    r.setupMiddlewareChains()
-    
-    // Initialize storage and handlers
-    r.setupHandlers()
-
-    return r, nil
-}
-
-func (r *Router) setupMiddlewareChains() {
-    // Global middleware
+    // Add global middleware
     r.mw.UseGlobal(
         middleware.SecurityHeaders,
         middleware.Logger,
     )
 
-    // API middleware chain
-    r.middleware["api"] = middleware.NewChain().
-        Add(r.rateLimiter.RateLimitMiddleware)
-
-    // Static middleware chain
-    r.middleware["static"] = middleware.NewChain().
-        Add(r.rateLimiter.RateLimitMiddleware)
+    return r, nil
 }
 
-func (r *Router) setupHandlers() {
-    // Initialize storages
-    storages := r.initializeStorages()
-    
-    // Initialize handlers
-    handlers := r.initializeHandlers(storages)
-    
-    // Store handlers for routes
-    r.handlers = handlers
+func createFileServer(dir, contentType string) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Get the requested path
+			path := r.URL.Path
+			fullPath := filepath.Join(dir, path)
+			
+			log.Printf("Base static directory: %s", dir)
+			log.Printf("Requested path: %s", path)
+			
+			// Determine content type based on file extension if not specified
+			if contentType == "" {
+					ext := filepath.Ext(path)
+					switch ext {
+					case ".css":
+							contentType = "text/css"
+					case ".js":
+							contentType = "application/javascript"
+					case ".html":
+							contentType = "text/html"
+					case ".json":
+							contentType = "application/json"
+					}
+			}
+			
+			// Set content type if determined
+			if contentType != "" {
+					w.Header().Set("Content-Type", contentType)
+			}
+			
+			// Check if file exists
+			if _, err := os.Stat(fullPath); os.IsNotExist(err) {
+					http.NotFound(w, r)
+					return
+			}
+			
+			// Serve the file
+			http.ServeFile(w, r, fullPath)
+	})
 }
 
-func (r *Router) initializeStorages() map[string]interface{} {
-    return map[string]interface{}{
-        "carousel":     []storage.CarouselStorage{
-            storage.NewGoogleSheetsStorage(config.AppConfig.External.GoogleSheetsURL),
-            storage.NewJSONFileStorage(filepath.Join(config.AppConfig.Paths.DataDir, "carousel.json")),
-        },
-        "registration": storage.NewSimpleRegistrationStorage(),
-        "class":        storage.NewSimpleClassStorage(),
-        "template":     storage.NewFileTemplateStorage(),
-        "newsletter":   storage.NewSimpleNewsletterStorage(),
-        "contact":      storage.NewSimpleContactStorage(),
-    }
+
+func DirectCSSHandler(staticDir string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+			// Extract the CSS file path
+			path := strings.TrimPrefix(r.URL.Path, "/css/")
+			fullPath := filepath.Join(staticDir, "css", path)
+			
+			// Log the path for debugging
+			log.Printf("Serving CSS file: %s from %s", path, fullPath)
+			
+			// Always set the correct MIME type
+			w.Header().Set("Content-Type", "text/css")
+			
+			// Check if file exists
+			_, err := os.Stat(fullPath)
+			if os.IsNotExist(err) {
+					log.Printf("CSS file not found: %s", fullPath)
+					http.NotFound(w, r)
+					return
+			}
+			
+			// Read the file content
+			content, err := os.ReadFile(fullPath)
+			if err != nil {
+					log.Printf("Error reading CSS file: %v", err)
+					http.Error(w, "Error reading CSS file", http.StatusInternalServerError)
+					return
+			}
+			
+			// Write the CSS content directly
+			w.Write(content)
+	}
 }
 
-func (r *Router) initializeHandlers(storages map[string]interface{}) map[string]http.Handler {
-    return map[string]http.Handler{
-        "/health":          http.HandlerFunc(handlers.HandleHealth),
-        "/api/carousel/":   http.HandlerFunc(handlers.NewCarouselHandler(
-            storages["carousel"].([]storage.CarouselStorage)[0],
-            storages["carousel"].([]storage.CarouselStorage)[1],
-        ).ServeCarousel),
-        "/api/register":    http.HandlerFunc(handlers.NewRegistrationHandler(
-            storages["registration"].(storage.RegistrationStorage),
-        ).HandleRegistration),
-        "/api/class":      http.HandlerFunc(handlers.NewClassHandler(
-            storages["class"].(storage.ClassStorage),
-        ).HandleClass),
-        "/api/newsletter": http.HandlerFunc(handlers.NewNewsletterHandler(
-            storages["newsletter"].(storage.NewsletterStorage),
-        ).HandleNewsletter),
-        "/api/contact":    http.HandlerFunc(handlers.NewContactHandler(
-            storages["contact"].(storage.ContactStorage),
-        ).HandleContact),
-				"/templates/": 		 http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-    		handlers.NewTemplateHandler(storages["template"].(storage.TemplateStorage)).
-        HandleTemplate(w, r, r.URL.Path)}),
-        "/static/":        http.StripPrefix("/static/", 
-            http.FileServer(http.Dir(config.AppConfig.Paths.StaticDir))),
-        "/css/":          http.StripPrefix("/css/", 
-            http.FileServer(http.Dir(config.AppConfig.Paths.StaticDir))),
-        "/js/":           http.StripPrefix("/js/", 
-            http.FileServer(http.Dir(config.AppConfig.Paths.StaticDir))),
-    }
-}
 
 func (r *Router) SetupRoutes() error {
-    // Register all routes with appropriate middleware
-    for path, handler := range r.handlers {
-        chain := r.getMiddlewareChain(path)
-        r.mw.AddHandler(path, handler, chain.GetMiddlewares()...)
-    }
+    // Create middleware chains
+    apiChain := middleware.NewChain().
+        Add(r.rateLimiter.RateLimitMiddleware).
+				Add(middleware.TimestampMiddleware)
+
+    staticChain := middleware.NewChain().
+        Add(r.rateLimiter.RateLimitMiddleware)
+
+    // Initialize all storage implementations
+    googleStorage := storage.NewGoogleSheetsStorage(config.AppConfig.External.GoogleSheetsURL)
+    jsonStorage := storage.NewJSONFileStorage(filepath.Join(config.AppConfig.Paths.DataDir, "carousel.json"))
+    registrationStorage := storage.NewSimpleRegistrationStorage()
+    classStorage := storage.NewSimpleClassStorage()
+    templateStorage := storage.NewFileTemplateStorage()
+    newsletterStorage := storage.NewSimpleNewsletterStorage()
+    contactStorage := storage.NewSimpleContactStorage()
+    
+    // Initialize all handlers with their dependencies
+    carouselHandler := handlers.NewCarouselHandler(googleStorage, jsonStorage)
+    registrationHandler := handlers.NewRegistrationHandler(registrationStorage)
+    classHandler := handlers.NewClassHandler(classStorage)
+    templateHandler := handlers.NewTemplateHandler(templateStorage)
+    newsletterHandler := handlers.NewNewsletterHandler(newsletterStorage)
+    contactHandler := handlers.NewContactHandler(contactStorage)
+
+    // Health check endpoint (no rate limiting)
+    r.mw.AddHandler("/health", http.HandlerFunc(handlers.HandleHealth))
+
+		// Firebase health check endpoint
+		r.mw.AddHandler("/health/firebase", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Force Firebase check by adding query param
+		r.URL.Query().Set("check_firebase", "true")
+		handlers.HandleHealth(w, r)
+		}))
+
+
+		r.mw.AddHandler("/api/test-firebase", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Initialize Firebase client
+			firebase, err := storage.NewFirebaseClient()
+			if err != nil {
+					http.Error(w, "Failed to initialize Firebase: "+err.Error(), http.StatusInternalServerError)
+					return
+			}
+			
+			// Test connection
+			data, err := firebase.TestConnection(r.Context())
+			if err != nil {
+					http.Error(w, "Failed to connect to Firebase: "+err.Error(), http.StatusInternalServerError)
+					return
+			}
+			
+			// Write success response
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(map[string]interface{}{
+					"status": "success",
+					"message": "Firebase connection established",
+					"data": data,
+			})
+	}), apiChain.GetMiddlewares()...)
+
+
+
+    // API routes (with rate limiting)
+		
+		// Routes for dynamic email validation
+		r.mw.AddHandler("/api/validate-email", 
+				http.HandlerFunc(registrationHandler.ValidateEmail), 
+				apiChain.GetMiddlewares()...)
+		// Routes for dynamic phone validation
+		r.mw.AddHandler("/api/validate-phone", 
+				http.HandlerFunc(registrationHandler.ValidatePhone), 
+				apiChain.GetMiddlewares()...)
+		// Routes for dynamic name validation
+		r.mw.AddHandler("/api/validate-name", 
+				http.HandlerFunc(registrationHandler.ValidateName), 
+				apiChain.GetMiddlewares()...)
+
+    r.mw.AddHandler("/api/carousel/", 
+        http.HandlerFunc(carouselHandler.ServeCarousel), 
+        apiChain.GetMiddlewares()...)
+    
+    r.mw.AddHandler("/api/register", 
+        http.HandlerFunc(registrationHandler.HandleRegistration), 
+        apiChain.GetMiddlewares()...)
+    
+    r.mw.AddHandler("/api/class", 
+        http.HandlerFunc(classHandler.HandleClass), 
+        apiChain.GetMiddlewares()...)
+    
+    r.mw.AddHandler("/api/newsletter", 
+        http.HandlerFunc(newsletterHandler.HandleNewsletter), 
+        apiChain.GetMiddlewares()...)
+    
+    r.mw.AddHandler("/api/contact", 
+        http.HandlerFunc(contactHandler.HandleContact), 
+        apiChain.GetMiddlewares()...)
+
+		// In your SetupRoutes method, replace the static handlers with:
+		staticDir := config.AppConfig.Paths.StaticDir
+
+		// Static file handlers (with caching and rate limiting)
+		staticHandler := http.StripPrefix("/static/", createFileServer(staticDir, ""))
+		r.mw.AddHandler("/static/", staticHandler, staticChain.GetMiddlewares()...)
+
+		// CSS files handler with proper MIME type
+		cssHandler := http.StripPrefix("/css/", DirectCSSHandler(staticDir))
+		r.mw.AddHandler("/css/", cssHandler, staticChain.GetMiddlewares()...)
+
+		// JavaScript files handler with proper MIME type
+		jsHandler := http.StripPrefix("/js/", createFileServer(staticDir, "application/javascript"))
+		r.mw.AddHandler("/js/", jsHandler, staticChain.GetMiddlewares()...)
+
+    // Template route
+    r.mw.AddHandler("/templates/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        templateHandler.HandleTemplate(w, r, r.URL.Path)
+    }))
+
+    // Root handler - must be registered last to avoid overriding other routes
+    r.mw.AddHandler("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        // Skip API and other specific paths
+        if strings.HasPrefix(r.URL.Path, "/api/") || 
+           strings.HasPrefix(r.URL.Path, "/static/") ||
+           strings.HasPrefix(r.URL.Path, "/css/") ||
+           strings.HasPrefix(r.URL.Path, "/js/") ||
+           strings.HasPrefix(r.URL.Path, "/templates/") {
+            return
+        }
+        
+        log.Printf("Root handler serving index.html for path: %s", r.URL.Path)
+        indexPath := filepath.Join(config.AppConfig.Paths.TemplatesDir, "index.html")
+        http.ServeFile(w, r, indexPath)
+    }))
 
     // Register all handlers with http package
     registeredHandlers := r.mw.GetHandlers()
@@ -121,17 +251,6 @@ func (r *Router) SetupRoutes() error {
         http.Handle(h.Path, handler)
     }
 
-    return nil
-}
 
-func (r *Router) getMiddlewareChain(path string) *middleware.Chain {
-    if strings.HasPrefix(path, "/api/") {
-        return r.middleware["api"]
-    }
-    if strings.HasPrefix(path, "/static/") || 
-       strings.HasPrefix(path, "/css/") || 
-       strings.HasPrefix(path, "/js/") {
-        return r.middleware["static"]
-    }
-    return middleware.NewChain() // Empty chain for other routes
+    return nil
 }

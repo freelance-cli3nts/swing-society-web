@@ -7,9 +7,8 @@ import (
 	"strings"
 	"sync"
 	"time"
-
+	"context"
 	"swing-society-website/server/internal/config"
-
 	"golang.org/x/time/rate"
 )
 
@@ -115,3 +114,13 @@ func (i *IPRateLimiter) RateLimitMiddleware(next http.Handler) http.Handler {
 	})
 }
 
+
+// TimestampMiddleware adds the current timestamp to the request context
+func TimestampMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			// Add current time to context
+			ctx := context.WithValue(r.Context(), "requestTime", time.Now().Unix())
+			// Call next handler with updated context
+			next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}

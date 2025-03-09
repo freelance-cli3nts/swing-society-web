@@ -4,6 +4,8 @@ SERVICE_NAME="ss-go"
 REGION="europe-west1"  # Changed to eu region as per your request
 ALLOW_UNAUTHENTICATED=false  # Set to false to stop unauthenticated access
 
+
+
 # Step 1: Build the Docker container
 echo "Building Docker container..."
 docker build -t $IMAGE_NAME .

@@ -6,6 +6,7 @@ import (
     "os"
     "github.com/joho/godotenv"
     "swing-society-website/server/internal"
+
     "swing-society-website/server/internal/config"
 )
 
@@ -26,7 +27,7 @@ func main() {
         projectID = config.AppConfig.External.ProjectID
     }
 
-    router, err := internal.New(projectID)
+    router, err := internal.NewRouter(projectID)
     if err != nil {
         log.Fatalf("Failed to create router: %v", err)
     }

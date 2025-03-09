@@ -21,7 +21,6 @@ func NewRegistrationHandler(storage storage.RegistrationStorage) *RegistrationHa
 }
 
 func (h *RegistrationHandler) HandleRegistration(w http.ResponseWriter, r *http.Request) {
-    log.Printf("Registration form request received: %s", r.Method)
 
     // Set CORS headers
     w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -53,6 +52,13 @@ func (h *RegistrationHandler) HandleRegistration(w http.ResponseWriter, r *http.
 
     form.Name = r.FormValue("name")
     form.Email = r.FormValue("email")
+		form.Phone = r.FormValue("phone")
+			// roles := r.Form["roles[]"]
+			// registerAlone := r.FormValue("registerAlone")
+			// partnerName := r.FormValue("partner-name")
+			// source := r.FormValue("source")
+			// message := r.FormValue("message")
+		
 
     if validationErrors := form.Validate(); len(validationErrors) > 0 {
         response.Error(w, customerrors.NewValidationError(
@@ -88,3 +94,196 @@ func (h *RegistrationHandler) HandleRegistration(w http.ResponseWriter, r *http.
         "message": "Registration successful",
     })
 }
+
+
+// ValidateEmail handles the email validation for real-time inline validation
+func (h *RegistrationHandler) ValidateEmail(w http.ResponseWriter, r *http.Request) {
+	var form models.RegistrationForm
+	
+	// Set CORS headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	
+	if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+	}
+	
+
+	// Handle form-encoded request (from HTMX)
+	if err := r.ParseForm(); err != nil {
+			log.Printf("Error parsing form: %v", err)
+			if r.Header.Get("HX-Request") == "true" {
+				w.Header().Set("Content-Type", "text/html")
+				w.Write([]byte("<span class='error'>Invalid form data</span>"))
+		} else {
+				response.Error(w, customerrors.NewValidationError(
+						"Invalid form format",
+						map[string]string{"format": "Invalid form data"},
+				))
+		}
+		return
+	}
+
+	form.Email = r.FormValue("email")
+	log.Printf("Processing email validation for: %s", form.Email)
+	
+	// Run validation
+	validationErrors := form.Validate()
+	
+ // If there are validation errors for email, return the error
+ if emailError, exists := validationErrors["email"]; exists {
+		if r.Header.Get("HX-Request") == "true" {
+				// For HTMX requests, return HTML error message
+				w.Header().Set("Content-Type", "text/html")
+				w.Write([]byte("<span class='error'>" + emailError + "</span>"))
+		} else {
+				// For API requests, return JSON error
+				response.Error(w, customerrors.NewValidationError(
+						"Please enter a valid email address",
+						map[string]string{"email": emailError},
+				))
+		}
+			return
+	}
+	
+	// If no validation errors for email, send success response
+	if r.Header.Get("HX-Request") == "true" {
+			// If it's an HTMX request, return empty to clear the error message
+			w.Header().Set("Content-Type", "text/html")
+			w.Write([]byte(""))
+	} else {
+			// Regular API response
+			response.JSON(w, http.StatusOK, map[string]string{"message": "Valid email"})
+	}
+}
+
+// ValidateName handles the name validation for real-time inline validation
+func (h *RegistrationHandler) ValidateName(w http.ResponseWriter, r *http.Request) {
+	var form models.RegistrationForm
+	
+	// Set CORS headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+	}
+
+	// Handle form-encoded request (from HTMX)
+	if err := r.ParseForm(); err != nil {
+			log.Printf("Error parsing form: %v", err)
+			if r.Header.Get("HX-Request") == "true" {
+				w.Header().Set("Content-Type", "text/html")
+				w.Write([]byte("<span class='error'>Invalid form data</span>"))
+			} else
+			{
+				response.Error(w, customerrors.NewValidationError(
+						"Invalid form format",
+						map[string]string{"format": "Invalid form data"},
+				))
+			}
+			return
+	}
+
+	form.Name = r.FormValue("name")
+	log.Printf("Processing name validation for: %s", form.Name)
+
+	// Run validation
+	validationErrors := form.Validate()
+
+	// If there are validation errors for name, return the error
+	if nameError, exists := validationErrors["name"]; exists {
+			if r.Header.Get("HX-Request") == "true" {
+					// For HTMX requests, return HTML error message
+					w.Header().Set("Content-Type", "text/html")
+					w.Write([]byte("<span class='error'>" + nameError + "</span>"))
+			} else
+			{
+					// For API requests, return JSON error
+					response.Error(w, customerrors.NewValidationError(
+							"Please enter a valid name",
+							map[string]string{"name": nameError},
+					))
+			}
+			return
+	}
+
+	// If no validation errors for name, send success response
+	if r.Header.Get("HX-Request") == "true" {
+			// If it's an HTMX request, return empty to clear the error message
+			w.Header().Set("Content-Type", "text/html")
+			w.Write([]byte(""))
+	} else {
+			// Regular API response
+			response.JSON(w, http.StatusOK, map[string]string{"message": "Valid name"})
+	}
+}
+
+
+// ValidatePhone handles the phone validation for real-time inline validation
+func (h *RegistrationHandler) ValidatePhone(w http.ResponseWriter, r *http.Request) {
+	var form models.RegistrationForm
+	
+	// Set CORS headers
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	
+	if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+	}
+	
+	// Handle form-encoded request (from HTMX)
+	if err := r.ParseForm(); err != nil {
+			log.Printf("Error parsing form: %v", err)
+			if r.Header.Get("HX-Request") == "true" {
+					w.Header().Set("Content-Type", "text/html")
+					w.Write([]byte("<span class='error'>Invalid form data</span>"))
+			} else {
+					response.Error(w, customerrors.NewValidationError(
+							"Invalid form format",
+							map[string]string{"format": "Invalid form data"},
+					))
+			}
+			return
+	}
+	
+	form.Phone = r.FormValue("phone")
+	log.Printf("Processing phone validation for: %s", form.Phone)
+	
+	// Run validation
+	validationErrors := form.Validate()
+	
+	// If there are validation errors for phone, return the error
+	if phoneError, exists := validationErrors["phone"]; exists {
+			if r.Header.Get("HX-Request") == "true" {
+					// For HTMX requests, return HTML error message
+					w.Header().Set("Content-Type", "text/html")
+					w.Write([]byte("<span class='error'>" + phoneError + "</span>"))
+			} else {
+					// For API requests, return JSON error
+					response.Error(w, customerrors.NewValidationError(
+							"Please enter a valid phone number",
+							map[string]string{"phone": phoneError},
+					))
+			}
+			return
+	}
+	
+	// If no validation errors for phone, send success response
+	if r.Header.Get("HX-Request") == "true" {
+			// If it's an HTMX request, return empty to clear the error message
+			w.Header().Set("Content-Type", "text/html")
+			w.Write([]byte(""))
+	} else {
+			// Regular API response
+			response.JSON(w, http.StatusOK, map[string]string{"message": "Valid phone"})
+	}
+}
+
+

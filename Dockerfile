@@ -1,5 +1,5 @@
 # Start from golang base image
-FROM golang:1.21-alpine AS builder
+FROM golang:1.23-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -24,9 +24,15 @@ WORKDIR /app
 # Copy the binary from builder
 COPY --from=builder /app/server/main .
 
+# Copy go.mod file for root directory detection
+COPY --from=builder /app/go.mod .
+
 # Copy static and template files from the root of the project
 COPY --from=builder /app/static/ ./static/
 COPY --from=builder /app/templates/ ./templates/
+
+# # Copy config.json (if needed)
+COPY --from=builder /app/config.json ./
 
 # Set environment variable to indicate we're in a container
 ENV DOCKER_CONTAINER=true

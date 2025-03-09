@@ -92,11 +92,12 @@ func setDefaults(config *Config) {
         "default":  "60-M",   // 60 requests per minute
     }
     config.Security.CSPDirectives = "default-src 'self' https:; " +
-        "script-src 'self' 'unsafe-inline' https://unpkg.com; " +
+        "script-src 'self'  https://unpkg.com; 'strict-dynamic' 'unsafe-inline' " +
         "style-src 'self' 'unsafe-inline' https:; " +
         "img-src 'self' https: data:; " +
         "frame-src 'self' https://www.youtube.com; " +
         "connect-src 'self' https:;"
+
 
     config.Environment = "development"
 }
@@ -110,9 +111,14 @@ func loadConfigFile(config *Config) error {
     }
 
     file, err := os.Open(configPath)
-    if err != nil {
-        return fmt.Errorf("could not open config file: %v", err)
-    }
+		if err != nil {
+			// In production, just log a warning instead of returning an error
+			if os.Getenv("ENVIRONMENT") == "production" || os.Getenv("DOCKER_CONTAINER") == "true" {
+					log.Printf("Warning: Could not open config file: %v. Using environment variables and defaults.", err)
+					return nil
+			}
+			return fmt.Errorf("could not open config file: %v", err)
+		}
     defer file.Close()
 
     decoder := json.NewDecoder(file)
@@ -188,6 +194,12 @@ func validateConfig(config *Config) error {
 
 // findProjectRoot dynamically determines the root directory
 func findProjectRoot() string {
+		// Check if we're running in a Docker container
+		if os.Getenv("DOCKER_CONTAINER") == "true" {
+			// When in container, use the working directory as root
+			return "/app"
+		}
+
     cwd, err := os.Getwd()
     if err != nil {
         log.Fatalf("Error getting current directory: %v", err)

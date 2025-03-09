@@ -1,123 +1,166 @@
+<!-- Registration Form Container -->
 <div class="form-container" id="registration-form-container">
-  <h2>Регистрация</h2>
-  <p>    🎶 Нова група по SWING танци за начинаещи! 
-    🎶🗓️ Дата на старт: 15 януари 2025
-    🕢 Време: всеки понеделник и сряда от 19:30 ч.
-    📍 Локация: ул. Сердика 25: https://maps.app.goo.gl/6FUq5nkWctsXrxMQA💃🕺 
-    Предишен опит не е необходим. Няма нужда и от партньор.
-    🎷 Искаш ли да танцуваш един от най-забавните и социални танци? Ще учим най-популярния SWING танц - Линди Хоп, който се появил в Ню Йорк през 30-те години на миналия век.
-    📅 Курсът се състои от 16 класа по 70 минути.
-    💲 Цена на курса: 100 лв на месец или 180 лв за целия курс
-    🎉 Предизвикай себе си и стани част от световното SWING и JAZZ танцувално общество, в което те очакват ритъм, стил и много нови приятели!
-    </p>
-    <button class="close-btn" hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;
-    </button>
-  <div class="steps">
-      <p>За да се запишете за часове:</p>
-      <ol>
-          <li>Попълнете формуляра и прочетете практическата информация</li>
-          <li>Регистрирайте се и изчакайте максимум 4 дни за потвърждение по имейл</li>
-          <li>Платете за часовете и елате на първия час</li>
-      </ol>
-      <p>Моля, отговорете на следните въпроси и ще се видим в час!</p>
-  </div>
+  <!-- Course Information -->
+  <section class="course-info">
+    <h3>Нова група по SWING танци за начинаещи!</h3>
+    <ul class="info-list">
+      <li><span class="icon">🗓️</span> <strong>Дата на старт:</strong> 15 януари 2025</li>
+      <li><span class="icon">🕢</span> <strong>Време:</strong> всеки понеделник и сряда от 19:30 ч.</li>
+      <li><span class="icon">📍</span> <strong>Локация:</strong> <a href="https://maps.app.goo.gl/6FUq5nkWctsXrxMQA" target="_blank">ул. Сердика 25</a></li>
+      <li><span class="icon">💃🕺</span> Предишен опит не е необходим. Няма нужда и от партньор.</li>
+      <li><span class="icon">🎷</span> Ще учим най-популярния SWING танц - Линди Хоп, който се появил в Ню Йорк през 30-те години на миналия век.</li>
+      <li><span class="icon">📅</span> <strong>Курсът се състои от:</strong> 16 класа по 70 минути.</li>
+      <li><span class="icon">💲</span> <strong>Цена на курса:</strong> 100 лв на месец или 180 лв за целия курс</li>
+    </ul>
+    <p class="highlight-text">🎉 Предизвикай себе си и стани част от световното SWING и JAZZ танцувално общество, в което те очакват ритъм, стил и много нови приятели!</p>
+  </section>
 
-  <form id="registration-form" hx-post="api/registerAlone"  hx-target="this" hx-swap="outerHTML" hx-indicator="#loading-spinner">
-      <div class="form-group">
-          <label for="email">Имейл адрес*</label>
-          <input type="email" id="email" name="email" required>
-      </div>
+  <!-- Registration Steps -->
+  <section class="registration-steps">
+    <h3>За да се запишете за часове:</h3>
+    <ol>
+      <li>Попълнете формуляра и прочетете практическата информация</li>
+      <li>Регистрирайте се и изчакайте максимум 4 дни за потвърждение по имейл</li>
+      <li>Платете за часовете и елате на първия час</li>
+    </ol>
+    <p>Моля, отговорете на следните въпроси и ще се видим в час!</p>
+  </section>
 
-      <div class="form-group">
-          <label for="phone">Телефонен номер</label>
-          <input type="tel" id="phone" name="phone">
-      </div>
-
-      <div class="form-group">
-          <label for="name">Име и фамилия</label>
-          <input type="text" id="name" name="name">
-      </div>
-
-      <div class="form-container" id="registration-form-container">
-        <div class="form-question">
-            <p>Имаш ли предпочитана роля?</p>
-            <div class="checkbox-line">
-                <label class="option-label">
-                    <input type="checkbox" name="roles[]" value="leader">
-                    Лидер
-                </label>
-                <label class="option-label">
-                    <input type="checkbox" name="roles[]" value="follower">
-                    Фолоуър
-                </label>
-                <label class="option-label">
-                    <input type="checkbox" name="roles[]" value="solo">
-                    Соло танци
-                </label>
-            </div>
-        </div>
-    
-        <div class="form-question">
-            <p>Самостоятелно ли се записваш?</p>
-            <div class="radio-line">
-                <label class="option-label">
-                    <input type="radio" name="registerAlone" value="yes">
-                    Да
-                </label>
-                <label class="option-label">
-                    <input type="radio" name="registerAlone" value="no">
-                    Не
-                </label>
-            </div>
-        </div>
-    
-        <div class="form-group partner-name" id="partner-name-group" style="display: none;">
-            <label for="partner-name">Име на партньор/ка</label>
-            <input type="text" id="partner-name" name="partner-name">
-        </div>
-      </div>
-
-      <div class="form-container">
-        <div class="form-row">
-            <input type="checkbox" id="regulations" name="regulations" required>
-            <label for="regulations">Запознах се с правилата и съм съгласен</label>
-        </div>
-        
-        <div class="form-section">
-            <div class="section-title">От къде научихте за нас?</div>
-            <div class="radio-options">
-                <div class="radio-row">
-                    <input type="radio" id="source-fb" name="source" value="fb">
-                    <label for="source-fb">FB</label>
-                </div>
-                <div class="radio-row">
-                    <input type="radio" id="source-google" name="source" value="google">
-                    <label for="source-google">Google</label>
-                </div>
-                <div class="radio-row">
-                    <input type="radio" id="source-friend" name="source" value="friend">
-                    <label for="source-friend">Приятел</label>
-                </div>
-                <div class="radio-row">
-                    <input type="radio" id="source-other" name="source" value="other">
-                    <label for="source-other">Друго</label>
-                </div>
-            </div>
-        </div>
-      </div>
+  <!-- Registration Form -->
+  <form id="registration-form" 
+        hx-post="/api/registerAlone" 
+        hx-target="this" 
+        hx-swap="outerHTML" 
+        hx-indicator="#loading-spinner">
+    <div class="form-section personal-info">
+      <h3>Лична информация</h3>
       
+      <div class="form-group">
+        <label for="email">Имейл адрес*</label>
+        <input type="email" id="email" name="email" required 
+               hx-post="/api/validate-email"  
+               hx-target="#email-error" 
+               hx-swap="innerHTML" 
+               hx-indicator="#loading-spinner" 
+               hx-trigger="blur, keyup changed delay:500ms">
+        <small class="error-message" id="email-error"></small>
+      </div>
 
       <div class="form-group">
-          <label for="message">Искате ли да ни кажете нещо?</label>
-          <textarea id="message" name="message" rows="4"></textarea>
+        <label for="name">Име и фамилия</label>
+        <input type="text" id="name" name="name" required
+                hx-post="/api/validate-name" 
+                hx-target="#name-error" 
+                hx-swap="innerHTML" 
+                hx-indicator="#loading-spinner" 
+                hx-trigger="blur, keyup changed delay:500ms">
+        <small class="error-message" id="name-error"></small>
       </div>
-      
 
-      <button type="submit">Регистрация</button>
+      <div class="form-group">
+        <label for="phone">Телефонен номер</label>
+        <input type="tel" id="phone" name="phone" 
+               hx-post="/api/validate-phone" required
+               hx-target="#phone-error" 
+               hx-swap="innerHTML" 
+               hx-indicator="#loading-spinner" 
+               hx-trigger="blur, keyup changed delay:500ms">
+        <small class="error-message" id="phone-error"></small>
+      </div>
+    </div>
+
+    <div class="form-section dance-preferences">
+      <h3>Танцови предпочитания</h3>
+      
+      <div class="form-question">
+        <p>Имаш ли предпочитана роля?</p>
+        <div class="checkbox-group">
+          <label class="option-label">
+            <input type="checkbox" name="roles[]" value="leader">
+            Лидер
+          </label>
+          <label class="option-label">
+            <input type="checkbox" name="roles[]" value="follower">
+            Фолоуър
+          </label>
+          <label class="option-label">
+            <input type="checkbox" name="roles[]" value="solo">
+            Соло танци
+          </label>
+        </div>
+      </div>
+
+      <div class="form-question">
+        <p>Самостоятелно ли се записваш?</p>
+        <div class="radio-group">
+          <label class="option-label">
+            <input type="radio" name="registerAlone" value="yes" onchange="togglePartnerField(true)">
+            Да
+          </label>
+          <label class="option-label">
+            <input type="radio" name="registerAlone" value="no" onchange="togglePartnerField(false)">
+            Не
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group" id="partner-name-group" style="display: none;">
+        <label for="partner-name">Име на партньор/ка</label>
+        <input type="text" id="partner-name" name="partner-name">
+      </div>
+    </div>
+
+    <div class="form-section additional-info">
+      <h3>Допълнителна информация</h3>
+      
+      <div class="form-question">
+        <p>От къде научихте за нас?</p>
+        <div class="radio-group source-options">
+          <label class="option-label">
+            <input type="radio" id="source-fb" name="source" value="fb">
+            FB
+          </label>
+          <label class="option-label">
+            <input type="radio" id="source-google" name="source" value="google">
+            Google
+          </label>
+          <label class="option-label">
+            <input type="radio" id="source-friend" name="source" value="friend">
+            Приятел
+          </label>
+          <label class="option-label">
+            <input type="radio" id="source-other" name="source" value="other">
+            Друго
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Искате ли да ни кажете нещо?</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+      </div>
+
+      <div class="form-group terms-agreement">
+        <input type="checkbox" id="regulations" name="regulations" required>
+        <label for="regulations">Запознах се с <a href="/terms-of-use.html" target="_blank" class="terms-link">правилата и условията</a> и съм съгласен</label>
+      </div>
+      <div class="form-group gdpr">
+        <input type="checkbox" id="gdpr" name="gdpr" required>
+        <label for="gdpr">Съгласен съм с <a href="/gdpr.html" target="_blank" class="terms-link">GDPR</a></label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="submit-btn">Регистрация</button>
+      <div id="loading-spinner" class="htmx-indicator">
+        <div class="spinner"></div>
+      </div>
+    </div>
   </form>
 </div>
 
-<div class="success-message" id="success-message">
+<!-- Success Message (Initially Hidden) -->
+<div class="success-message" id="success-message" style="display: none;">
   <h3>Благодарим за регистрацията!</h3>
   <p>Ще получите потвърждение по имейл до 4 работни дни.</p>
 </div>

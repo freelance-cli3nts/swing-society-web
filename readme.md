@@ -114,7 +114,8 @@ docker build -t gcr.io/swingsociety-backend/ss-go .
 docker push gcr.io/swingsociety-backend/ss-go
 
 # Deploy to Cloud Run // make it eu, stop the unauthenticated access
-gcloud run deploy ss-go --image gcr.io/swingsociety-backend/ss-go --platform managed --region us-central1 --allow-unauthenticated
+gcloud run deploy ss-go --image gcr.io/swingsociety-backend/ss-go --platform managed --region us-central1 --allow-unauthenticated  --set-env-vars GOOGLE_CLOUD_PROJECT=swingsociety-backend
+--set-env-vars "GOOGLE_CREDENTIALS=$(cat swing-society-realtime-firebase-adminsdk.json)" --timeout=5m
 ```
 
 ## 📝 Development Tasks

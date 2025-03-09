@@ -1,10 +1,11 @@
 /* Import external styles */
-@import 'layout.css';
-/* @import 'navigation.css'; */
+@import 'bulma-custom.css';
+@import 'responsive.css';
+/* @import 'layout.css';
 @import 'components.css';
 @import 'resp-mobile.css';
 @import 'resp-tablet.css';
-@import 'resp-desktop.css';
+@import 'resp-desktop.css'; */
 
 /* ✅ Consider creating a utilities.css for common utility classes */
 /* ✅ Keep related styles together (e.g., hero styles in one place) */
@@ -87,3 +88,4 @@ a {
   text-decoration: none;
   color: var(--black);
 }
+

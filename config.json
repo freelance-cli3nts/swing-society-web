@@ -1,10 +1,13 @@
 {
   "server": {
-      "port": "3001",
+      "port": "8080",
       "host": "localhost",
       "read_timeout": 15000000000,
       "write_timeout": 15000000000
   },
+  "firebase": {
+    "credentials_file": "./swing-society-realtime-firebase-adminsdk.json"
+  },  
   "paths": {
       "root_dir": "",
       "templates_dir": "templates",

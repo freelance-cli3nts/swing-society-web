@@ -1,28 +1,25 @@
 import { initHtmxConfig } from './modules/htmxConfig.js';
 import { initLogoHandling } from './modules/logoHandler.js';
 import { initNavigation } from './modules/navigation.js';
+import { initModalHandling } from './modules/modal.js';
 import { initCarousels } from './modules/carousel.js';
 import { initCarousel } from './modules/carousel-js.js';
-import { initFormHandling } from './modules/formHandler.js';
-import { initRegistrationForm } from './modules/registrationForm.js';
+
 
 // Initialize all modules
 document.addEventListener('DOMContentLoaded', () =>{
   initHtmxConfig();
   initLogoHandling();
   initNavigation();
+  initModalHandling();
   initCarousels();
   initCarousel();
-  initFormHandling();
-  initRegistrationForm();
 })
 
 document.body.addEventListener('htmx:afterSwap', () => {
   // Only call functions that need to work with newly loaded content
   initCarousel();
   initCarousels();
-  initFormHandling();
-  initRegistrationForm();
 });
 
 
@@ -35,3 +32,9 @@ document.body.addEventListener('htmx:beforeSwap', () => {
     carouselCleanup = null;
   }
 });
+
+
+function togglePartnerField(isAlone) {
+  const partnerField = document.getElementById('partner-name-group');
+  partnerField.style.display = isAlone ? 'none' : 'block';
+}

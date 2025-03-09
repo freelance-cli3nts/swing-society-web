@@ -25,6 +25,7 @@ go.work
 
 # Dependencies
 /vendor/
+node_modules/
 
 # Logs
 *.log
@@ -54,6 +55,7 @@ coverage.html
 # Database
 *.db
 *.sqlite
+.swing-society-realtime-firebase-adminsdk.json
 
 # Temporary files
 *.tmp

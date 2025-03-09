@@ -1,0 +1,740 @@
+/* bulma-custom.css - Slim CSS with Bulma integration */
+
+/* 1. Define brand variables */
+:root {
+  /* Brand colors */
+  --swing-primary: #d4c4c4;
+  --swing-secondary: #ffce1b;
+  --swing-accent: #ad9fd3;
+  --swing-shade: #f0c0c0;
+  
+  /* Typography */
+  --heading-font-latin: 'Righteous', serif;
+  --heading-font-cyrillic: 'Poiret One', cursive;
+  --body-font: 'Merriweather', serif;
+}
+
+/* 2. Bulma customization */
+.is-swing-primary {
+  background-color: var(--swing-primary) !important;
+  color: #fff !important;
+}
+
+.is-swing-secondary {
+  background-color: var(--swing-secondary) !important;
+  color: #000 !important;
+}
+
+.has-swing-accent {
+  color: var(--swing-accent) !important;
+}
+
+/* 3. Typography customization */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font-latin);
+}
+
+html:lang(bg) h1,  
+html:lang(bg) h2,  
+html:lang(bg) h3 {
+  font-family: var(--heading-font-cyrillic);
+}
+
+body {
+  font-family: var(--body-font);
+}
+
+/* 4. Custom components that Bulma doesn't provide */
+
+/* Class cards - simplified but keeping unique design */
+.class-card {
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.class-card.swing-foundation {
+  border-left: 5px solid var(--swing-primary);
+}
+
+.class-card.swing-basics {
+  border-left: 5px solid var(--swing-secondary);
+}
+
+.class-card.swing-variations {
+  border-left: 5px solid var(--swing-accent);
+}
+
+/* Carousel - keeping but simplifying */
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  min-width: 100%;
+}
+
+.carousel-item img,
+.carousel-item video {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 1rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-control.prev {
+  left: 0;
+}
+
+.carousel-control.next {
+  right: 0;
+}
+
+
+/* 6. Custom hero styling for swing society */
+.hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.has-text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* 7. Loading spinner for HTMX */
+.htmx-indicator {
+  display: none;
+}
+
+.htmx-request .htmx-indicator {
+  display: inline;
+}
+
+.htmx-request.htmx-indicator {
+  display: inline;
+}
+
+/* 8. Fix for the footer */
+.footer-social-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.social-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+
+/* 5. Navigation styles */
+.navbar {
+  background-color: #00d1b2;
+}
+
+.navbar-brand img {
+  max-height: 40px;
+}
+
+/* Mobile menu when expanded */
+.mobile-menu {
+  position: absolute;
+  top: 52px;
+  left: 0;
+  right: 0;
+  background-color: #f5f5f5;
+  z-index: 30;
+  overflow-y: auto;
+  display: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.mobile-menu.is-active {
+  display: block;
+}
+
+/* Main menu items */
+.menu-item {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  font-weight: 500;
+  position: relative;
+  color: #4a4a4a;
+  text-decoration: none;
+}
+
+/* Down arrow for expandable items */
+.menu-item.has-submenu::after {
+  content: "▼";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.menu-item.has-submenu.is-active::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Submenu styling */
+.submenu {
+  display: none;
+  background-color: #f0f0f0;
+}
+
+.submenu.is-active {
+  display: block;
+}
+
+.submenu-item {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  color: #4a4a4a;
+  text-decoration: none;
+}
+
+/* Close button (X) in navbar */
+.close-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+  width: 52px;
+  height: 52px;
+  font-size: 20px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 31;
+}
+
+.close-menu.is-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* old clips */
+.swing-history-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.swing-history-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.modal-card-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.history-image {
+  object-fit: cover;
+  height: 180px;
+  width: 100%;
+}
+.has-text-shadow {
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+.content-overlay {
+  background: rgba(0,0,0,0.4);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+
+/* Modals */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-card {
+  width: 90vw;          /* Modal width will be 90% of the viewport */
+  max-width: 600px;     /* Max width is 600px */
+  margin: auto;         /* Center the modal */
+  padding: 1rem;        /* Add padding for aesthetics */
+}
+
+.modal.is-active {
+  display: flex;
+}
+
+/* Optional: Add a max-height for the body of the modal */
+.modal-card-body {
+  max-height: 80vh;     /* Max height is 70% of the viewport */
+  overflow-y: auto;     /* Scroll the content if it exceeds the height */
+}
+
+.modal-background {
+  background-color: rgba(0, 0, 0, 0.7);  /* This gives the blur effect */
+}
+
+.delete, button.delete {
+  z-index: 50;
+  position: relative;
+}
+
+/* forms style */
+
+/* Base Styles */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+/* Header Styles */
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+}
+
+.form-header h2 {
+  color: var(--primary-color);
+  margin: 0;
+  font-size: 28px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  transition: var(--transition);
+}
+
+.close-btn:hover {
+  color: #666;
+}
+
+/* Course Information Styles */
+.course-info {
+  background-color: var(--light-bg);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 30px;
+}
+
+.course-info h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.info-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-list li {
+  padding: 8px 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.info-list .icon {
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.highlight-text {
+  font-weight: bold;
+  border-left: 4px solid var(--primary-color);
+  padding-left: 15px;
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Registration Steps */
+.registration-steps {
+  margin-bottom: 30px;
+}
+
+.registration-steps h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+}
+
+.registration-steps ol {
+  padding-left: 20px;
+}
+
+.registration-steps li {
+  margin-bottom: 8px;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: white;
+}
+
+.form-section h3 {
+  margin-top: 0;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 18px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+/* Form Controls */
+/* Base Styles */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+/* Header Styles */
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+}
+
+.form-header h2 {
+  color: var(--primary-color);
+  margin: 0;
+  font-size: 28px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  transition: var(--transition);
+}
+
+.close-btn:hover {
+  color: #666;
+}
+
+/* Course Information Styles */
+.course-info {
+  background-color: var(--light-bg);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 30px;
+}
+
+.course-info h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.info-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-list li {
+  padding: 8px 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.info-list .icon {
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.highlight-text {
+  font-weight: bold;
+  border-left: 4px solid var(--primary-color);
+  padding-left: 15px;
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Registration Steps */
+.registration-steps {
+  margin-bottom: 30px;
+}
+
+.registration-steps h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+}
+
+.registration-steps ol {
+  padding-left: 20px;
+}
+
+.registration-steps li {
+  margin-bottom: 8px;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: white;
+}
+
+.form-section h3 {
+  margin-top: 0;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 18px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+/* Form Controls */
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 5px rgba(233, 78, 119, 0.3);
+}
+
+/* Validation Styles */
+.input-error {
+  border-color: var(--error-color) !important;
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Checkbox and Radio Styles */
+.form-question {
+  margin-bottom: 20px;
+}
+
+.form-question p {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.checkbox-group,
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.option-label input {
+  margin-right: 8px;
+}
+
+/* Terms Agreement */
+.terms-agreement {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.terms-agreement input {
+  margin-right: 10px;
+}
+
+.terms-agreement label {
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+.terms-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+  transition: var(--transition);
+}
+
+.terms-link:hover {
+  color: #d53e68;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.submit-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.submit-btn:hover {
+  background-color: #d53e68;
+}
+
+/* Loading Spinner */
+.htmx-indicator {
+  display: none;
+}
+
+.htmx-request .htmx-indicator {
+  display: block;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(233, 78, 119, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Success Message */
+.success-message {
+  text-align: center;
+  background-color: #e8f5e9;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  border-left: 5px solid var(--success-color);
+}
+
+.success-message h3 {
+  color: var(--success-color);
+  margin-top: 0;
+}
+
+
+
+
+/* footer */
+footer {
+  padding: 1rem 1rem;
+}
+
+footer a {
+  color: #333;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #a64d79;
+}
+
+footer .buttons .button {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  text-align: left;
+}
+
+footer .buttons .icon {
+  margin-right: 0.5rem;
+}

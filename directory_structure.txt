@@ -1,0 +1,318 @@
+.
+├── air.toml
+├── config.json
+├── cors.json
+├── deploy.sh
+├── directory_structure.txt
+├── Dockerfile
+├── .dockerignore
+├── .env
+├── .git
+│   ├── branches
+│   ├── COMMIT_EDITMSG
+│   ├── config
+│   ├── description
+│   ├── FETCH_HEAD
+│   ├── HEAD
+│   ├── hooks
+│   │   ├── applypatch-msg.sample
+│   │   ├── commit-msg.sample
+│   │   ├── fsmonitor-watchman.sample
+│   │   ├── post-update.sample
+│   │   ├── pre-applypatch.sample
+│   │   ├── pre-commit.sample
+│   │   ├── pre-merge-commit.sample
+│   │   ├── prepare-commit-msg.sample
+│   │   ├── pre-push.sample
+│   │   ├── pre-rebase.sample
+│   │   ├── pre-receive.sample
+│   │   ├── push-to-checkout.sample
+│   │   └── update.sample
+│   ├── index
+│   ├── info
+│   │   └── exclude
+│   ├── logs
+│   │   ├── HEAD
+│   │   └── refs
+│   ├── objects
+│   │   ├── 00
+│   │   ├── 02
+│   │   ├── 03
+│   │   ├── 04
+│   │   ├── 07
+│   │   ├── 08
+│   │   ├── 09
+│   │   ├── 0a
+│   │   ├── 0b
+│   │   ├── 0e
+│   │   ├── 0f
+│   │   ├── 10
+│   │   ├── 11
+│   │   ├── 13
+│   │   ├── 14
+│   │   ├── 15
+│   │   ├── 16
+│   │   ├── 17
+│   │   ├── 18
+│   │   ├── 19
+│   │   ├── 1b
+│   │   ├── 1c
+│   │   ├── 1d
+│   │   ├── 20
+│   │   ├── 21
+│   │   ├── 22
+│   │   ├── 23
+│   │   ├── 24
+│   │   ├── 25
+│   │   ├── 26
+│   │   ├── 27
+│   │   ├── 2a
+│   │   ├── 2b
+│   │   ├── 2c
+│   │   ├── 2d
+│   │   ├── 2e
+│   │   ├── 2f
+│   │   ├── 30
+│   │   ├── 31
+│   │   ├── 32
+│   │   ├── 35
+│   │   ├── 36
+│   │   ├── 37
+│   │   ├── 38
+│   │   ├── 39
+│   │   ├── 3a
+│   │   ├── 3b
+│   │   ├── 3c
+│   │   ├── 3d
+│   │   ├── 3e
+│   │   ├── 3f
+│   │   ├── 43
+│   │   ├── 44
+│   │   ├── 45
+│   │   ├── 48
+│   │   ├── 4a
+│   │   ├── 4b
+│   │   ├── 4c
+│   │   ├── 4e
+│   │   ├── 4f
+│   │   ├── 50
+│   │   ├── 51
+│   │   ├── 52
+│   │   ├── 53
+│   │   ├── 55
+│   │   ├── 56
+│   │   ├── 57
+│   │   ├── 58
+│   │   ├── 59
+│   │   ├── 5b
+│   │   ├── 5c
+│   │   ├── 5d
+│   │   ├── 5e
+│   │   ├── 5f
+│   │   ├── 60
+│   │   ├── 61
+│   │   ├── 62
+│   │   ├── 63
+│   │   ├── 65
+│   │   ├── 66
+│   │   ├── 67
+│   │   ├── 6a
+│   │   ├── 6b
+│   │   ├── 6c
+│   │   ├── 6d
+│   │   ├── 6f
+│   │   ├── 70
+│   │   ├── 72
+│   │   ├── 73
+│   │   ├── 74
+│   │   ├── 75
+│   │   ├── 77
+│   │   ├── 79
+│   │   ├── 7a
+│   │   ├── 7b
+│   │   ├── 7d
+│   │   ├── 7e
+│   │   ├── 7f
+│   │   ├── 80
+│   │   ├── 82
+│   │   ├── 83
+│   │   ├── 84
+│   │   ├── 85
+│   │   ├── 86
+│   │   ├── 87
+│   │   ├── 88
+│   │   ├── 89
+│   │   ├── 8a
+│   │   ├── 8b
+│   │   ├── 8d
+│   │   ├── 8f
+│   │   ├── 90
+│   │   ├── 91
+│   │   ├── 92
+│   │   ├── 93
+│   │   ├── 95
+│   │   ├── 97
+│   │   ├── 98
+│   │   ├── 99
+│   │   ├── 9a
+│   │   ├── 9c
+│   │   ├── 9d
+│   │   ├── 9e
+│   │   ├── 9f
+│   │   ├── a0
+│   │   ├── a1
+│   │   ├── a3
+│   │   ├── a4
+│   │   ├── a5
+│   │   ├── a7
+│   │   ├── a8
+│   │   ├── a9
+│   │   ├── aa
+│   │   ├── ab
+│   │   ├── ac
+│   │   ├── ad
+│   │   ├── ae
+│   │   ├── af
+│   │   ├── b0
+│   │   ├── b1
+│   │   ├── b2
+│   │   ├── b3
+│   │   ├── b4
+│   │   ├── b5
+│   │   ├── b6
+│   │   ├── b7
+│   │   ├── b9
+│   │   ├── ba
+│   │   ├── be
+│   │   ├── bf
+│   │   ├── c0
+│   │   ├── c2
+│   │   ├── c4
+│   │   ├── c8
+│   │   ├── c9
+│   │   ├── ca
+│   │   ├── cb
+│   │   ├── cc
+│   │   ├── cd
+│   │   ├── ce
+│   │   ├── cf
+│   │   ├── d0
+│   │   ├── d1
+│   │   ├── d2
+│   │   ├── d3
+│   │   ├── d4
+│   │   ├── d5
+│   │   ├── d6
+│   │   ├── d7
+│   │   ├── d8
+│   │   ├── d9
+│   │   ├── da
+│   │   ├── db
+│   │   ├── dc
+│   │   ├── dd
+│   │   ├── de
+│   │   ├── df
+│   │   ├── e0
+│   │   ├── e1
+│   │   ├── e2
+│   │   ├── e3
+│   │   ├── e4
+│   │   ├── e5
+│   │   ├── e6
+│   │   ├── e7
+│   │   ├── e8
+│   │   ├── e9
+│   │   ├── ea
+│   │   ├── ec
+│   │   ├── ed
+│   │   ├── ee
+│   │   ├── f0
+│   │   ├── f1
+│   │   ├── f2
+│   │   ├── f4
+│   │   ├── f6
+│   │   ├── fa
+│   │   ├── fb
+│   │   ├── fc
+│   │   ├── fd
+│   │   ├── fe
+│   │   ├── ff
+│   │   ├── info
+│   │   └── pack
+│   ├── ORIG_HEAD
+│   └── refs
+│       ├── heads
+│       ├── remotes
+│       └── tags
+├── .gitignore
+├── go.mod
+├── go.sum
+├── notes.md
+├── .qodo
+│   └── history.sqlite
+├── readme.md
+├── server
+│   ├── internal
+│   │   ├── api
+│   │   ├── config
+│   │   ├── errors
+│   │   ├── middleware
+│   │   ├── monitoring
+│   │   ├── routes.go
+│   │   ├── static.go
+│   │   └── storage
+│   ├── main.go
+│   └── tests
+│       ├── test_api.sh
+│       ├── test_configh.sh
+│       ├── test_rate_fast.sh
+│       └── test_rate_limit.sh
+├── static
+│   ├── assets
+│   │   ├── images
+│   │   └── videos
+│   ├── css
+│   │   ├── bulma-custom.css
+│   │   ├── components.css
+│   │   ├── layout.css
+│   │   ├── navigation.css
+│   │   ├── resp-desktop.css
+│   │   ├── resp-mobile.css
+│   │   ├── responsive.css
+│   │   ├── resp-tablet.css
+│   │   └── style.css
+│   ├── data
+│   │   ├── carousel.json
+│   │   ├── schedule.html
+│   │   └── schedule.json
+│   └── js
+│       ├── main.js
+│       └── modules
+├── templates
+│   ├── about
+│   │   ├── about.html
+│   │   ├── contact.html
+│   │   └── prices.html
+│   ├── classes
+│   │   ├── classes.html
+│   │   ├── lindyhop.html
+│   │   ├── oldclips.html
+│   │   └── solojazz.html
+│   ├── components
+│   │   ├── button.html
+│   │   ├── carousel.html
+│   │   ├── modal-large.html
+│   │   └── modal-small.html
+│   ├── events
+│   │   ├── festivals.html
+│   │   ├── parties.html
+│   │   └── workshops.html
+│   ├── forms
+│   │   ├── contact-form.html
+│   │   └── registration-form.html
+│   └── index.html
+└── tmp
+    ├── build-errors.log
+    └── main
+
+241 directories, 75 files

@@ -123,3 +123,4 @@ func (m *MiddlewareManager) BuildHandler(path string, handler http.Handler, midd
 func (m *MiddlewareManager) GetHandlers() []Handler {
 	return m.handlers
 }
+
