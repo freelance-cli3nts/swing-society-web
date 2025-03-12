@@ -33,7 +33,7 @@ document.body.addEventListener('htmx:beforeSwap', () => {
   }
 });
 
-
+// check if this is properly written
 function togglePartnerField(isAlone) {
   const partnerField = document.getElementById('partner-name-group');
   partnerField.style.display = isAlone ? 'none' : 'block';

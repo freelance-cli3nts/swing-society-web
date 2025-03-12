@@ -6,7 +6,7 @@ export function initLogoHandling() {
         // Add click event listener for main page          
         logoLink.addEventListener("click", (e) => {
               e.preventDefault();
-              htmx.ajax('GET', '/templates/about.html', {
+              htmx.ajax('GET', '/templates/about/about.html', {
                   target: '#main-view',
                   swap: 'innerHTML'
               }).catch(error => {

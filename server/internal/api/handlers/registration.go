@@ -6,6 +6,7 @@ import (
     "net/http"
     "swing-society-website/server/internal/api/models"
     "swing-society-website/server/internal/api/response"
+		"swing-society-website/server/internal/middleware"
     customerrors "swing-society-website/server/internal/errors"
     "swing-society-website/server/internal/storage"
 )
@@ -52,13 +53,13 @@ func (h *RegistrationHandler) HandleRegistration(w http.ResponseWriter, r *http.
 
     form.Name = r.FormValue("name")
     form.Email = r.FormValue("email")
-		form.Phone = r.FormValue("phone")
-			// roles := r.Form["roles[]"]
-			// registerAlone := r.FormValue("registerAlone")
-			// partnerName := r.FormValue("partner-name")
-			// source := r.FormValue("source")
-			// message := r.FormValue("message")
-		
+    form.Phone = r.FormValue("phone")
+    form.Roles = r.Form["roles[]"]
+    form.RegisterAlone = r.FormValue("registerAlone")
+    form.PartnerName = r.FormValue("partner-name")
+    form.Source = r.FormValue("source")
+    form.Message = r.FormValue("message")
+    form.Timestamp = middleware.GetRequestTime(r.Context())
 
     if validationErrors := form.Validate(); len(validationErrors) > 0 {
         response.Error(w, customerrors.NewValidationError(
@@ -70,6 +71,7 @@ func (h *RegistrationHandler) HandleRegistration(w http.ResponseWriter, r *http.
 
     // Store registration
     if err := h.storage.StoreRegistration(&form); err != nil {
+        log.Printf("Failed to store registration: %v", err)
         response.Error(w, customerrors.NewInternalError(
             "Failed to store registration",
             err,

@@ -1,4 +1,3 @@
-// internal/storage/template.go
 package storage
 
 import (

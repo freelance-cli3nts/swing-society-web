@@ -61,3 +61,4 @@ coverage.html
 *.tmp
 *.temp
 
+.qodo

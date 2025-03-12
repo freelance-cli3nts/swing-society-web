@@ -6,7 +6,6 @@ import (
     "os"
     "github.com/joho/godotenv"
     "swing-society-website/server/internal"
-
     "swing-society-website/server/internal/config"
 )
 

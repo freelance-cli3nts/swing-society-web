@@ -124,3 +124,12 @@ func TimestampMiddleware(next http.Handler) http.Handler {
 			next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
+
+// GetRequestTime retrieves the timestamp from context
+func GetRequestTime(ctx context.Context) int64 {
+	if ts, ok := ctx.Value("requestTime").(int64); ok {
+		return ts
+	}
+	// Return current time if not found in context
+	return time.Now().Unix()
+}

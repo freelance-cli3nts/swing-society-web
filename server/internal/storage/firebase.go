@@ -2,8 +2,10 @@ package storage
 
 import (
 	"context"
+	"log"
 	"os"
-	
+	"strings"
+
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/db"
 	"google.golang.org/api/option"
@@ -21,7 +23,12 @@ func NewFirebaseClient() (*FirebaseClient, error) {
 	
 	var app *firebase.App
 	var err error
+	var config *firebase.Config
 
+	// Set database URL for the Realtime Database
+	config = &firebase.Config{
+		DatabaseURL: "https://swing-society-realtime-data-default-rtdb.europe-west1.firebasedatabase.app",
+	}
 
 	// Check for credentials in environment variable
 	credentials := os.Getenv("GOOGLE_CREDENTIALS")
@@ -29,10 +36,16 @@ func NewFirebaseClient() (*FirebaseClient, error) {
 	if credentials != "" {
 		// Initialize with credentials from environment variable
 		opt := option.WithCredentialsJSON([]byte(credentials))
-		app, err = firebase.NewApp(ctx, nil, opt)
+		app, err = firebase.NewApp(ctx, config, opt)
 	} else {
-		// Fall back to Application Default Credentials
-		app, err = firebase.NewApp(ctx, nil)
+		// Use service account credentials file
+		credentialsFile := os.Getenv("FIREBASE_CREDENTIALS_FILE")
+		if credentialsFile == "" {
+			credentialsFile = "swing-society-realtime-firebase-adminsdk.json"
+		}
+		
+		opt := option.WithCredentialsFile(credentialsFile)
+		app, err = firebase.NewApp(ctx, config, opt)
 	}
 	
 	if err != nil {
@@ -52,14 +65,81 @@ func NewFirebaseClient() (*FirebaseClient, error) {
 }
 
 // SaveForm saves form data to Firebase
-func (fc *FirebaseClient) SaveForm(formType string, data map[string]interface{}) error {
+func (fc *FirebaseClient) SaveForm(formType string, data map[string]interface{}) (string, error) {
 	ctx := context.Background()
 	
 	// Store data in a collection based on form type
-	ref := fc.db.NewRef(formType)
-	_, err := ref.Push(ctx, data)
+	ref := fc.db.NewRef("submissions").Child(formType)
+	newRef, err := ref.Push(ctx, data)
 	
+	if err != nil {
+		return "", err
+	}
+	
+	// Return the generated key
+	key := newRef.Key
+	return key, nil
+}
+
+// SaveUser saves or updates a user in Firebase
+func (fc *FirebaseClient) SaveUser(userId string, user interface{}) error {
+	ctx := context.Background()
+	
+	// Store user data
+	ref := fc.db.NewRef("users").Child(userId)
+	return ref.Set(ctx, user)
+}
+
+// GetUserByEmail retrieves a user by email using the email index
+func (fc *FirebaseClient) GetUserByEmail(email string) (string, error) {
+	ctx := context.Background()
+	
+	// Clean the email for use as a key (Firebase doesn't allow '.' in keys)
+	cleanEmail := strings.ReplaceAll(email, ".", "_dot_")
+	
+	// Use the email index to get user ID
+	ref := fc.db.NewRef("indexes/emailToUser").Child(cleanEmail)
+	
+	var userId string
+	if err := ref.Get(ctx, &userId); err != nil {
+		log.Printf("Error getting user by email %s: %v", email, err)
+		return "", err
+	}
+	
+	if userId == "" {
+		return "", nil // User not found
+	}
+	
+	return userId, nil
+}
+
+// UpdateEmailIndex updates the email-to-user index
+func (fc *FirebaseClient) UpdateEmailIndex(email, userId string) error {
+	ctx := context.Background()
+	
+	// Clean the email for use as a key (Firebase doesn't allow '.' in keys)
+	cleanEmail := strings.ReplaceAll(email, ".", "_dot_")
+	
+	// Update email index
+	ref := fc.db.NewRef("indexes/emailToUser").Child(cleanEmail)
+	err := ref.Set(ctx, userId)
+	if err != nil {
+		log.Printf("Error updating email index for %s: %v", email, err)
+	}
 	return err
+}
+
+// UpdatePhoneIndex updates the phone-to-user index
+func (fc *FirebaseClient) UpdatePhoneIndex(phone, userId string) error {
+	if phone == "" {
+		return nil // Skip if phone is empty
+	}
+	
+	ctx := context.Background()
+	
+	// Update phone index
+	ref := fc.db.NewRef("indexes/phoneToUser").Child(phone)
+	return ref.Set(ctx, userId)
 }
 
 // GetForms retrieves form submissions
@@ -67,7 +147,7 @@ func (fc *FirebaseClient) GetForms(formType string) (map[string]interface{}, err
 	ctx := context.Background()
 	
 	// Get reference to form type collection
-	ref := fc.db.NewRef(formType)
+	ref := fc.db.NewRef("submissions").Child(formType)
 	
 	var data map[string]interface{}
 	err := ref.Get(ctx, &data)

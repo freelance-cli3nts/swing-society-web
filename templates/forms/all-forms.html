@@ -1,0 +1,504 @@
+<div class="form-container" id="all-forms-container">
+  <button class="close-btn" hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;</button>
+
+  <section class="all-forms-info">
+    <h3>Всички форми</h3>
+    <p>Тук можете да видите и да изпратите всички форми, които предлагаме.</p>
+    <p class="highlight-text">🎵 Никога няма да пропуснете важна информация за нашата общност!</p>
+  </section>
+
+  <div class="form-container" id="contact-form-container">
+    <button class="close-btn" hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;</button>
+    
+    <section class="contact-info">
+      <h3>Пишете ни!</h3>
+      <p>Изпратете ни съобщение и ние ще се свържем с вас възможно най-скоро.</p>
+    </section>
+    
+    <form id="contact-form" 
+          hx-post="/api/contact" 
+          hx-target="this" 
+          hx-swap="outerHTML" 
+          hx-indicator="#loading-spinner">
+      <div class="form-section personal-info">
+        <div class="form-group">
+          <label for="name">Име*</label>
+          <input type="text" id="name" name="name" required
+                 hx-post="/api/validate-name" 
+                 hx-target="#name-error" 
+                 hx-swap="innerHTML" 
+                 hx-indicator="#loading-spinner" 
+                 hx-trigger="blur, keyup changed delay:500ms">
+          <small class="error-message" id="name-error"></small>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Имейл адрес*</label>
+          <input type="email" id="email" name="email" required 
+                 hx-post="/api/validate-email"  
+                 hx-target="#email-error" 
+                 hx-swap="innerHTML" 
+                 hx-indicator="#loading-spinner" 
+                 hx-trigger="blur, keyup changed delay:500ms">
+          <small class="error-message" id="email-error"></small>
+        </div>
+  
+        <div class="form-group">
+          <label for="phone">Телефон (по желание)</label>
+          <input type="tel" id="phone" name="phone"
+                 hx-post="/api/validate-phone" required
+                 hx-target="#phone-error" 
+                 hx-swap="innerHTML" 
+                 hx-indicator="#loading-spinner" 
+                 hx-trigger="blur, keyup changed delay:500ms">
+          <small class="error-message" id="phone-error"></small>
+        </div>
+  
+        <div class="form-group">
+          <label for="message">Съобщение*</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+        
+        <div class="form-question">
+          <p>Как предпочитате да се свържем с вас:</p>
+          <div class="radio-group">
+            <label class="option-label">
+              <input type="radio" name="contactPreference" value="email" checked>
+              Имейл
+            </label>
+            <label class="option-label">
+              <input type="radio" name="contactPreference" value="phone">
+              Телефонен разговор
+            </label>
+            <label class="option-label">
+              <input type="radio" name="contactPreference" value="viber">
+              Viber съобщение
+            </label>
+            <label class="option-label">
+              <input type="radio" name="contactPreference" value="whatsapp">
+              Whatsapp съобщение
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group gdpr">
+        <input type="checkbox" id="gdpr" name="gdpr" required>
+        <label for="gdpr">Съгласен съм с <a href="/gdpr.html" target="_blank" class="terms-link">GDPR</a></label>
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">Изпрати</button>
+        <div id="loading-spinner" class="htmx-indicator">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Success Message (Initially Hidden) -->
+  <div class="success-message" id="success-message" style="display: none;">
+    <h3>Благодарим за съобщението!</h3>
+    <p>Ще се свържем с вас възможно най-скоро.</p>
+  </div>
+
+  <div class="form-container" id="event-notifications-form-container">
+    <button class="close-btn" hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;</button>
+    
+    <section class="event-info">
+      <h3>Абонирайте се за известия за събития</h3>
+      <p>Бъдете първи информирани за предстоящи уъркшопи, партита, специални класове и други събития.</p>
+      <ul class="info-list">
+        <li><span class="icon">🎭</span> Информация за уъркшопи с гост-преподаватели</li>
+        <li><span class="icon">🎉</span> Датите и местата на всички партита</li>
+        <li><span class="icon">🎵</span> Музикални събития в България, свързани с суинг културата</li>
+        <li><span class="icon">🌎</span> Международни събития и фестивали</li>
+      </ul>
+      <p class="highlight-text">✨ Бъдете винаги в крак с танцовата общност и не пропускайте нито едно важно събитие!</p>
+    </section>
+  
+    <form id="event-notifications-form" 
+          hx-post="/api/notifications" 
+          hx-target="this" 
+          hx-swap="outerHTML" 
+          hx-indicator="#loading-spinner">
+      
+      <div class="form-section personal-info">
+        <div class="form-group">
+          <label for="email">Имейл адрес*</label>
+          <input type="email" id="email" name="email" required 
+                 hx-post="/api/validate-email"  
+                 hx-target="#email-error" 
+                 hx-swap="innerHTML" 
+                 hx-indicator="#loading-spinner" 
+                 hx-trigger="blur, keyup changed delay:500ms">
+          <small class="error-message" id="email-error"></small>
+        </div>
+  
+        <div class="form-group">
+          <label for="firstName">Име</label>
+          <input type="text" id="firstName" name="firstName"
+                  hx-post="/api/validate-name" 
+                  hx-target="#name-error" 
+                  hx-swap="innerHTML" 
+                  hx-indicator="#loading-spinner" 
+                  hx-trigger="blur, keyup changed delay:500ms">
+                  <small class="error-message" id="name-error"></small>
+        </div>
+  
+        <div class="form-group">
+          <label for="phone">Телефонен номер (по желание)</label>
+          <input type="tel" id="phone" name="phone"   
+                 hx-post="/api/validate-phone" required
+                 hx-target="#phone-error" 
+                 hx-swap="innerHTML" 
+                 hx-indicator="#loading-spinner" 
+                 hx-trigger="blur, keyup changed delay:500ms">
+          <small class="error-message" id="phone-error"></small>
+        </div>
+        
+        <div class="form-question">
+          <p>Предпочитан начин за получаване на известия:</p>
+          <div class="radio-group">
+            <label class="option-label">
+              <input type="radio" name="contactPreference" value="email" checked>
+              Имейл
+            </label>
+            <label class="option-label">
+              <input type="radio" name="contactPreference" value="sms">
+              SMS (ако е предоставен телефон)
+            </label>
+            <label class="option-label">
+              <input type="radio" name="contactPreference" value="both">
+              И двете
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-question">
+          <p>Типове събития, които ви интересуват:</p>
+          <div class="checkbox-group">
+            <label class="option-label">
+              <input type="checkbox" name="eventTypes[]" value="parties" checked>
+              Партита
+            </label>
+            <label class="option-label">
+              <input type="checkbox" name="eventTypes[]" value="workshops" checked>
+              Уъркшопи
+            </label>
+            <label class="option-label">
+              <input type="checkbox" name="eventTypes[]" value="festivals" checked>
+              Фестивали
+            </label>
+            <label class="option-label">
+              <input type="checkbox" name="eventTypes[]" value="specialClasses">
+              Специални класове
+            </label>
+          </div>
+        </div>
+        
+        <div class="form-question">
+          <p>Предпочитана честота на известията:</p>
+          <div class="radio-group">
+            <label class="option-label">
+              <input type="radio" name="frequency" value="asNeeded" checked>
+              Само при важни събития
+            </label>
+            <label class="option-label">
+              <input type="radio" name="frequency" value="weekly">
+              Седмично обобщение
+            </label>
+            <label class="option-label">
+              <input type="radio" name="frequency" value="monthly">
+              Месечно обобщение
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group terms-agreement">
+        <input type="checkbox" id="regulations" name="regulations" required>
+        <label for="regulations">Запознах се с <a href="/terms-of-use.html" target="_blank" class="terms-link">правилата и условията</a> и съм съгласен</label>
+      </div>
+      
+      <div class="form-group gdpr">
+        <input type="checkbox" id="gdpr" name="gdpr" required>
+        <label for="gdpr">Съгласен съм с <a href="/gdpr.html" target="_blank" class="terms-link">GDPR</a></label>
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">Абониране</button>
+        <div id="loading-spinner" class="htmx-indicator">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Success Message (Initially Hidden) -->
+  <div class="success-message" id="success-message" style="display: none;">
+    <h3>Благодарим за абонамента!</h3>
+    <p>Вече сте абонирани за известия за събития и ще получавате информация според вашите предпочитания.</p>
+  </div>
+
+  <div class="form-container" id="newsletter-form-container">
+    <button class="close-btn" hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;</button>
+    
+    <section class="newsletter-info">
+      <h3>Абонирайте се за нашия бюлетин</h3>
+      <p>Получавайте актуална информация за предстоящи събития, уъркшопи, партита и специални обучения.</p>
+      <p class="highlight-text">🎵 Никога няма да пропуснете важна информация за нашата общност!</p>
+    </section>
+  
+    <form id="newsletter-form" 
+          hx-post="/api/newsletter" 
+          hx-target="this" 
+          hx-swap="outerHTML" 
+          hx-indicator="#loading-spinner">
+      
+      <div class="form-section personal-info">
+        <div class="form-group">
+          <label for="email">Имейл адрес*</label>
+          <input type="email" id="email" name="email" required 
+                 hx-post="/api/validate-email"  
+                 hx-target="#email-error" 
+                 hx-swap="innerHTML" 
+                 hx-indicator="#loading-spinner" 
+                 hx-trigger="blur, keyup changed delay:500ms">
+          <small class="error-message" id="email-error"></small>
+        </div>
+  
+        <div class="form-group">
+          <label for="firstName">Име</label>
+          <input type="text" id="firstName" name="firstName" 
+                  hx-post="/api/validate-name" 
+                  hx-target="#name-error" 
+                  hx-swap="innerHTML" 
+                  hx-indicator="#loading-spinner" 
+                  hx-trigger="blur, keyup changed delay:500ms">
+                  <small class="error-message" id="name-error"></small>
+        </div>
+  
+        <div class="form-group">
+          <label for="phone">Телефонен номер (по желание)</label>
+          <input type="tel" id="phone" name="phone" 
+                 hx-post="/api/validate-phone" required
+                 hx-target="#phone-error" 
+                 hx-swap="innerHTML" 
+                 hx-indicator="#loading-spinner" 
+                 hx-trigger="blur, keyup changed delay:500ms">
+          <small class="error-message" id="phone-error"></small>
+        </div>
+        
+        <div class="form-question">
+          <p>Предпочитана честота на известията:</p>
+          <div class="radio-group">
+            <label class="option-label">
+              <input type="radio" name="frequency" value="weekly" checked>
+              Седмично
+            </label>
+            <label class="option-label">
+              <input type="radio" name="frequency" value="monthly">
+              Месечно
+            </label>
+            <label class="option-label">
+              <input type="radio" name="frequency" value="asNeeded">
+              Само при важни събития
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group terms-agreement">
+        <input type="checkbox" id="regulations" name="regulations" required>
+        <label for="regulations">Запознах се с <a href="/terms-of-use.html" target="_blank" class="terms-link">правилата и условията</a> и съм съгласен</label>
+      </div>
+      
+      <div class="form-group gdpr">
+        <input type="checkbox" id="gdpr" name="gdpr" required>
+        <label for="gdpr">Съгласен съм с <a href="/gdpr.html" target="_blank" class="terms-link">GDPR</a></label>
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">Абониране</button>
+        <div id="loading-spinner" class="htmx-indicator">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Success Message (Initially Hidden) -->
+  <div class="success-message" id="success-message" style="display: none;">
+    <h3>Благодарим за абонамента!</h3>
+    <p>Вече сте абонирани за нашия бюлетин и ще получавате известия за предстоящи събития.</p>
+  </div>
+
+  <!-- Registration Form Container -->
+<div class="form-container" id="registration-form-container">
+  <!-- Course Information -->
+  <section class="course-info">
+    <h3>Нова група по SWING танци за начинаещи!</h3>
+    <ul class="info-list">
+      <li><span class="icon">🗓️</span> <strong>Дата на старт:</strong> 15 януари 2025</li>
+      <li><span class="icon">🕢</span> <strong>Време:</strong> всеки понеделник и сряда от 19:30 ч.</li>
+      <li><span class="icon">📍</span> <strong>Локация:</strong> <a href="https://maps.app.goo.gl/6FUq5nkWctsXrxMQA" target="_blank">ул. Сердика 25</a></li>
+      <li><span class="icon">💃🕺</span> Предишен опит не е необходим. Няма нужда и от партньор.</li>
+      <li><span class="icon">🎷</span> Ще учим най-популярния SWING танц - Линди Хоп, който се появил в Ню Йорк през 30-те години на миналия век.</li>
+      <li><span class="icon">📅</span> <strong>Курсът се състои от:</strong> 16 класа по 70 минути.</li>
+      <li><span class="icon">💲</span> <strong>Цена на курса:</strong> 100 лв на месец или 180 лв за целия курс</li>
+    </ul>
+    <p class="highlight-text">🎉 Предизвикай себе си и стани част от световното SWING и JAZZ танцувално общество, в което те очакват ритъм, стил и много нови приятели!</p>
+  </section>
+
+  <!-- Registration Steps -->
+  <section class="registration-steps">
+    <h3>За да се запишете за часове:</h3>
+    <ol>
+      <li>Попълнете формуляра и прочетете практическата информация</li>
+      <li>Регистрирайте се и изчакайте максимум 4 дни за потвърждение по имейл</li>
+      <li>Платете за часовете и елате на първия час</li>
+    </ol>
+    <p>Моля, отговорете на следните въпроси и ще се видим в час!</p>
+  </section>
+
+  <!-- Registration Form -->
+  <form id="registration-form" 
+        hx-post="/api/register" 
+        hx-target="this" 
+        hx-swap="outerHTML" 
+        hx-indicator="#loading-spinner">
+    <div class="form-section personal-info">
+      <h3>Лична информация</h3>
+      
+      <div class="form-group">
+        <label for="email">Имейл адрес*</label>
+        <input type="email" id="email" name="email" required 
+               hx-post="/api/validate-email"  
+               hx-target="#email-error" 
+               hx-swap="innerHTML" 
+               hx-indicator="#loading-spinner" 
+               hx-trigger="blur, keyup changed delay:500ms">
+        <small class="error-message" id="email-error"></small>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Име и фамилия*</label>
+        <input type="text" id="name" name="name" required
+                hx-post="/api/validate-name" 
+                hx-target="#name-error" 
+                hx-swap="innerHTML" 
+                hx-indicator="#loading-spinner" 
+                hx-trigger="blur, keyup changed delay:500ms">
+        <small class="error-message" id="name-error"></small>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Телефонен номер</label>
+        <input type="tel" id="phone" name="phone" 
+               hx-post="/api/validate-phone" required
+               hx-target="#phone-error" 
+               hx-swap="innerHTML" 
+               hx-indicator="#loading-spinner" 
+               hx-trigger="blur, keyup changed delay:500ms">
+        <small class="error-message" id="phone-error"></small>
+      </div>
+    </div>
+
+    <div class="form-section dance-preferences">
+      <h3>Танцови предпочитания</h3>
+      
+      <div class="form-question">
+        <p>Имаш ли предпочитана роля?</p>
+        <div class="checkbox-group">
+          <label class="option-label">
+            <input type="checkbox" name="roles[]" value="leader">
+            Лидер
+          </label>
+          <label class="option-label">
+            <input type="checkbox" name="roles[]" value="follower">
+            Фолоуър
+          </label>
+          <label class="option-label">
+            <input type="checkbox" name="roles[]" value="solo">
+            Соло танци
+          </label>
+        </div>
+      </div>
+
+      <div class="form-question">
+        <p>Самостоятелно ли се записваш?</p>
+        <div class="radio-group">
+          <label class="option-label">
+            <input type="radio" name="registerAlone" value="yes" onchange="togglePartnerField(true)">
+            Да
+          </label>
+          <label class="option-label">
+            <input type="radio" name="registerAlone" value="no" onchange="togglePartnerField(false)">
+            Не
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group" id="partner-name-group" style="display: none;">
+        <label for="partner-name">Име на партньор/ка</label>
+        <input type="text" id="partner-name" name="partner-name">
+      </div>
+    </div>
+
+    <div class="form-section additional-info">
+      <h3>Допълнителна информация</h3>
+      
+      <div class="form-question">
+        <p>От къде научихте за нас?</p>
+        <div class="radio-group source-options">
+          <label class="option-label">
+            <input type="radio" id="source-fb" name="source" value="fb">
+            FB
+          </label>
+          <label class="option-label">
+            <input type="radio" id="source-google" name="source" value="google">
+            Google
+          </label>
+          <label class="option-label">
+            <input type="radio" id="source-friend" name="source" value="friend">
+            Приятел
+          </label>
+          <label class="option-label">
+            <input type="radio" id="source-other" name="source" value="other">
+            Друго
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Искате ли да ни кажете нещо?</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+      </div>
+
+      <div class="form-group terms-agreement">
+        <input type="checkbox" id="regulations" name="regulations" required>
+        <label for="regulations">Запознах се с <a href="/terms-of-use.html" target="_blank" class="terms-link">правилата и условията</a> и съм съгласен</label>
+      </div>
+      <div class="form-group gdpr">
+        <input type="checkbox" id="gdpr" name="gdpr" required>
+        <label for="gdpr">Съгласен съм с <a href="/gdpr.html" target="_blank" class="terms-link">GDPR</a></label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="submit-btn">Регистрация</button>
+      <div id="loading-spinner" class="htmx-indicator">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Success Message (Initially Hidden) -->
+<div class="success-message" id="success-message" style="display: none;">
+  <h3>Благодарим за регистрацията!</h3>
+  <p>Ще получите потвърждение по имейл до 4 работни дни.</p>
+</div>
+
+</div>

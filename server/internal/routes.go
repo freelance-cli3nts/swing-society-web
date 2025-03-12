@@ -1,10 +1,9 @@
-// internal/routes.go
 package internal
 
 import (
     "log"
-		"os"
-		"encoding/json"
+    "os"
+    "encoding/json"
     "net/http"
     "path/filepath"
     "strings"
@@ -126,6 +125,7 @@ func (r *Router) SetupRoutes() error {
     templateStorage := storage.NewFileTemplateStorage()
     newsletterStorage := storage.NewSimpleNewsletterStorage()
     contactStorage := storage.NewSimpleContactStorage()
+    eventNotificationStorage := storage.NewSimpleEventNotificationStorage()
     
     // Initialize all handlers with their dependencies
     carouselHandler := handlers.NewCarouselHandler(googleStorage, jsonStorage)
@@ -134,6 +134,7 @@ func (r *Router) SetupRoutes() error {
     templateHandler := handlers.NewTemplateHandler(templateStorage)
     newsletterHandler := handlers.NewNewsletterHandler(newsletterStorage)
     contactHandler := handlers.NewContactHandler(contactStorage)
+    eventNotificationHandler := handlers.NewEventNotificationHandler(eventNotificationStorage)
 
     // Health check endpoint (no rate limiting)
     r.mw.AddHandler("/health", http.HandlerFunc(handlers.HandleHealth))
@@ -195,6 +196,11 @@ func (r *Router) SetupRoutes() error {
     r.mw.AddHandler("/api/register", 
         http.HandlerFunc(registrationHandler.HandleRegistration), 
         apiChain.GetMiddlewares()...)
+        
+    // Test endpoint for Firebase schema
+    r.mw.AddHandler("/api/test-firebase-schema", 
+        http.HandlerFunc(storage.TestFirebaseSchemaHandler), 
+        apiChain.GetMiddlewares()...)
     
     r.mw.AddHandler("/api/class", 
         http.HandlerFunc(classHandler.HandleClass), 
@@ -206,6 +212,10 @@ func (r *Router) SetupRoutes() error {
     
     r.mw.AddHandler("/api/contact", 
         http.HandlerFunc(contactHandler.HandleContact), 
+        apiChain.GetMiddlewares()...)
+        
+    r.mw.AddHandler("/api/notifications", 
+        http.HandlerFunc(eventNotificationHandler.HandleEventNotification), 
         apiChain.GetMiddlewares()...)
 
 		// In your SetupRoutes method, replace the static handlers with:
