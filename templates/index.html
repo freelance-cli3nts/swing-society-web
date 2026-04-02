@@ -1,50 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="Swing Society - Learn swing dance with us"/>
-      <title>Swing Society</title>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">    
-      <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Forum&family=Merriweather:wght@300;400;700&display=swap&subset=latin,cyrillic" rel="stylesheet">
-      <link rel="stylesheet" href="/css/style.css" />
-      <link rel="icon" type="images/icon" href="/assets/images/fav-icon/favicon-32x32.png" />
-      <link rel="apple-touch-icon" type="images/icon" href="/assets/images/fav-icon/apple-touch-icon.png" />
-      <link rel="android-chrome" type="images/icon" href="/assets/images/fav-icon/android-chrome-192x192.png" />
-      <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
-      <script type="module" src="/static/js/main.js" defer></script>    
-      <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            htmx.config.ignoreFeatureWarnings = true;
-          });
-      </script>
-      <script>
-        document.addEventListener("DOMContentLoaded", function() {
-          document.body.addEventListener("htmx:beforeSwap", function(evt) {
-            console.log("HTMX Response:", evt.detail.xhr.responseText);
-          });
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Swing Society — Lindy Hop,Jazz &amp; Tap in Bulgaria</title>
+    <meta name="description" content="Swing Society is Bulgaria's premier swing dance school, offering Lindy Hop and Jazz Tap classes in Sofia and Stara Zagora. Rooted in the golden age of Harlem's Savoy Ballroom." />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              cream:    '#FFF8ED',
+              parchment:'#EDD9A3',
+              charcoal: '#1A1207',
+              gold:     '#E8A800',
+              goldDark: '#C48A00',
+              brown:    '#A0420D',
+            },
+            fontFamily: {
+              display: ['"Playfair Display"', 'Georgia', 'serif'],
+              body:    ['Inter', 'sans-serif'],
+            },
+          }
+        }
+      }
+    </script>
+
+    <style>
+      /* Hero collage grid */
+      .collage-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 3px;
+      }
+      .collage-grid img {
+        width: 100%; height: 100%; object-fit: cover; object-position: center 20%;
+      }
+      .collage-grid img { grid-column: auto; grid-row: auto; }
+
+      @media (min-width: 768px) {
+        .collage-grid {
+          grid-template-columns: 1fr 1.5fr 1.5fr 1fr;
+          grid-template-rows: 1fr 1fr;
+        }
+        #collage-1 { grid-column: 1; grid-row: 1; }
+        #collage-2 { grid-column: 2; grid-row: 1 / 3; }
+        #collage-3 { grid-column: 3; grid-row: 1 / 3; }
+        #collage-4 { grid-column: 1; grid-row: 2; }
+        #collage-5 { grid-column: 4; grid-row: 1; }
+        #collage-6 { grid-column: 4; grid-row: 2; }
+      }
+
+      body {
+        background-color: #FFF8ED;
+        color: #1A1207;
+        font-family: 'Inter', sans-serif;
+      }
+
+      /* Vintage grain texture overlay */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      * { position: relative; z-index: 1; }
+
+      .font-display { font-family: 'Playfair Display', Georgia, serif; }
+
+      /* Gold divider */
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 0 auto;
+        max-width: 24rem;
+      }
+      .divider::before,
+      .divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background-color: #E8A800;
+      }
+      .divider span {
+        color: #E8A800;
+        font-size: 1rem;
+      }
+
+      /* Sticky nav shadow on scroll */
+      #main-nav {
+        transition: box-shadow 0.3s ease, background-color 0.3s ease;
+      }
+      #main-nav.scrolled {
+        box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+        background-color: rgba(255,248,237,0.97);
+      }
+
+      /* Hero overlay */
+      .hero-overlay {
+        background: linear-gradient(
+          to bottom,
+          rgba(28, 28, 28, 0.72) 0%,
+          rgba(28, 28, 28, 0.55) 60%,
+          rgba(28, 28, 28, 0.78) 100%
+        );
+      }
+
+      /* Card hover effect */
+      .card-hover {
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(28,28,28,0.12);
+      }
+
+      /* Schedule table stripe */
+      .schedule-row:nth-child(even) { background-color: #EDD9A3; }
+      .schedule-row:nth-child(odd)  { background-color: #FFF8ED; }
+
+      /* Testimonial quote mark */
+      .quote-mark::before {
+        content: '\201C';
+        font-family: 'Playfair Display', serif;
+        font-size: 4rem;
+        color: #E8A800;
+        line-height: 0;
+        vertical-align: -1.4rem;
+        margin-right: 0.15rem;
+      }
+
+      /* Badge */
+      .badge {
+        display: inline-block;
+        padding: 0.2rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .badge-beginner     { background: #d4f1d4; color: #1a5c1a; }
+      .badge-intermediate { background: #fef3cd; color: #7a5200; }
+      .badge-advanced     { background: #fde0d0; color: #7a1c00; }
+      .badge-all-levels   { background: #e0e7ff; color: #3730a3; }
+
+      /* Smooth anchor offset for sticky nav */
+      section[id] { scroll-margin-top: 72px; }
+    </style>
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="icon" type="images/icon" href="/assets/images/fav-icon/favicon-32x32.png" />
+    <link rel="apple-touch-icon" type="images/icon" href="/assets/images/fav-icon/apple-touch-icon.png" />
+    <link rel="android-chrome" type="images/icon" href="/assets/images/fav-icon/android-chrome-192x192.png" />
+    <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
+    <script type="module" src="/static/js/main.js" defer></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        htmx.config.ignoreFeatureWarnings = true;
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        document.body.addEventListener("htmx:beforeSwap", function(evt) {
+          console.log("HTMX Response:", evt.detail.xhr.responseText);
         });
-      </script>
-    </head>
-  <body>
-    <!-- Header Section with fixed navbar -->
+      });
+    </script>
+  </head>
+
+  <body class="antialiased">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         NAVIGATION
+    ═══════════════════════════════════════════════════════════ -->
     <header>
-      <!-- Navbar (mobile only shows logo and hamburger) -->
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="container">
-          <div class="navbar-brand" id="logo-link">
-            <a class="navbar-item" href="/">
+      <nav id="main-nav" class="navbar sticky top-0 z-50 flex items-stretch min-h-[52px] bg-cream/95 backdrop-blur-sm border-b border-gold/20" role="navigation" aria-label="main navigation">
+        <div class="max-w-7xl mx-auto px-4 w-full flex items-center">
+
+          <!-- Brand / logo -->
+          <div class="navbar-brand flex items-center flex-1 lg:flex-none" id="logo-link">
+            <a class="navbar-item flex items-center px-2 py-1" href="/">
               <img src="/static/assets/images/logo.png" alt="Swing Society Logo">
             </a>
-            
-            <!-- Social icons for tablet view only -->
-            <div class="navbar-item is-hidden-mobile is-hidden-desktop tablet-social-icons">
-              <div class="buttons">
+
+            <!-- Social icons — tablet only -->
+            <div class="navbar-item tablet-social-icons hidden">
+              <div class="buttons flex items-center gap-4">
                 <a href="https://www.facebook.com/swingsocietybg" target="_blank">
-                  <span class="icon">
-                    <i class="fa-brands fa-facebook"></i>
-                  </span>
-                  <!-- <img src="/static/assets/images/social-icons/5296511_network_social network_tumblr_tumblr logo_icon.svg" alt="Facebook" width="24" height="24"> -->
+                  <span class="icon"><i class="fa-brands fa-facebook"></i></span>
                 </a>
                 <a href="https://www.instagram.com/bgswingsociety/" target="_blank">
                   <img src="/static/assets/images/social-icons/facebook-brands.svg" alt="Instagram" width="24" height="24">
@@ -57,297 +214,1049 @@
                 </a>
               </div>
             </div>
-            
-            <!-- Hamburger menu for mobile -->
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" id="mobile-menu-toggle">
+
+            <!-- Hamburger — hidden on desktop (lg+) -->
+            <a role="button" class="navbar-burger lg:hidden ml-auto" aria-label="menu" aria-expanded="false" id="mobile-menu-toggle">
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
             </a>
           </div>
+
           <button class="close-menu" id="close-menu">X</button>
-          <!-- Standard Bulma menu for desktop -->
-          <div class="navbar-menu">
-            <div class="navbar-start">
-              <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link" href="#main-view" hx-get="/templates/classes/classes.html" hx-target="#main-view" hx-push-url="/classes">Classes</a>
-                <div class="navbar-dropdown">
-                  <a class="navbar-item" href="#main-view" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo">Solo Dancing</a>
-                  <a class="navbar-item" href="#main-view" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/coupled">Coupled Dancing</a>
-                  <a class="navbar-item" href="#main-view" hx-get="/templates/classes/oldclips.html" hx-target="#main-view" hx-push-url="/classes/old-clips">Old Clips</a>
+
+          <!-- Desktop nav — hidden below lg -->
+          <div class="navbar-menu hidden lg:flex items-center flex-1">
+            <div class="navbar-start flex items-center mx-auto gap-1">
+
+              <!-- Classes -->
+              <div class="navbar-item has-dropdown group relative">
+                <a class="navbar-link nav-link flex items-center px-3 py-4 cursor-pointer text-charcoal/70 hover:text-gold transition-colors duration-200" href="#main-view"
+                   hx-get="/templates/classes/classes.html" hx-target="#main-view" hx-push-url="/classes">Classes</a>
+                <div class="navbar-dropdown absolute top-full left-0 hidden group-hover:block z-50 min-w-[180px] py-2">
+                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo">Solo Dancing</a>
+                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/coupled">Coupled Dancing</a>
+                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/classes/oldclips.html" hx-target="#main-view" hx-push-url="/classes/old-clips">Old Clips</a>
                 </div>
               </div>
-              <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">Events</a>
-                <div class="navbar-dropdown">
-                  <a class="navbar-item" href="#main-view" hx-get="/templates/events/parties.html" hx-target="#main-view" hx-push-url="/events/party">Parties</a>
-                  <a class="navbar-item" href="#main-view" hx-get="/templates/events/festivals.html" hx-target="#main-view" hx-push-url="/events/festivals">Festivals</a>
-                  <a class="navbar-item" href="#main-view" hx-get="/templates/events/workshops.html" hx-target="#main-view" hx-push-url="/events/workshops">Workshops</a>
+
+              <!-- Events -->
+              <div class="navbar-item has-dropdown group relative">
+                <a class="navbar-link nav-link flex items-center px-3 py-4 cursor-pointer text-charcoal/70 hover:text-gold transition-colors duration-200">Events</a>
+                <div class="navbar-dropdown absolute top-full left-0 hidden group-hover:block z-50 min-w-[180px] py-2">
+                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/events/parties.html" hx-target="#main-view" hx-push-url="/events/party">Parties</a>
+                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/events/festivals.html" hx-target="#main-view" hx-push-url="/events/festivals">Festivals</a>
+                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/events/workshops.html" hx-target="#main-view" hx-push-url="/events/workshops">Workshops</a>
                 </div>
               </div>
-              <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">About</a>
-                <div class="navbar-dropdown">
-                  <a class="navbar-item" href="#main-view" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us">About Us</a>
-                  <a class="navbar-item" href="#main-view" hx-get="/templates/prices.html" hx-target="#main-view" hx-push-url="/prices">Prices</a>
-                  <a class="navbar-item" href="#main-view" hx-get="/templates/rules.html" hx-target="#main-view" hx-push-url="/rules">Rules</a>
-                  <a class="navbar-item" href="#main-view" hx-get="/templates/FAQ.html" hx-target="#main-view" hx-push-url="/FAQ">FAQ</a>
+
+              <!-- About -->
+              <div class="navbar-item has-dropdown group relative">
+                <a class="navbar-link nav-link flex items-center px-3 py-4 cursor-pointer text-charcoal/70 hover:text-gold transition-colors duration-200">About</a>
+                <div class="navbar-dropdown absolute top-full left-0 hidden group-hover:block z-50 min-w-[180px] py-2">
+                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us">About Us</a>
+                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/prices.html" hx-target="#main-view" hx-push-url="/prices">Prices</a>
+                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/rules.html" hx-target="#main-view" hx-push-url="/rules">Rules</a>
+                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/FAQ.html" hx-target="#main-view" hx-push-url="/FAQ">FAQ</a>
                 </div>
               </div>
+
+              <!-- Anchor links to page sections -->
+              <a href="#about"     class="nav-link navbar-item px-3 py-4 text-charcoal/70 hover:text-gold transition-colors duration-200 text-sm font-medium font-body">About</a>
+              <a href="#schedule"  class="nav-link navbar-item px-3 py-4 text-charcoal/70 hover:text-gold transition-colors duration-200 text-sm font-medium font-body">Schedule</a>
+              <a href="#events"    class="nav-link navbar-item px-3 py-4 text-charcoal/70 hover:text-gold transition-colors duration-200 text-sm font-medium font-body">Events</a>
+
             </div>
-            <div class="navbar-end">
-              <div class="buttons">
-                <a class="navbar-item" href="https://www.facebook.com/swingsocietybg" target="_blank">
-                  <img src="/static/assets/images/social-icons/fb-bw.svg" alt="Facebook" width="24" height="24">
-                </a>
-                <a class="navbar-item" href="https://www.instagram.com/bgswingsociety/" target="_blank">
-                  <img src="/static/assets/images/social-icons/ig-bw.svg" alt="Instagram" width="24" height="24">
-                </a>
-                <a class="navbar-item" href="https://www.youtube.com/@bgswingsociety" target="_blank">
-                  <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" width="24" height="24">
-                </a>
-                <a class="navbar-item" href="https://www.tiktok.com/@swing_society5" target="_blank">
-                  <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" width="24" height="24">
-                </a>
-              </div>
+            <div class="navbar-end flex items-center gap-1">
+              <a href="#new-groups"
+                 class="ml-2 px-4 py-2 bg-gold text-charcoal text-xs font-semibold font-body tracking-wider uppercase rounded hover:bg-goldDark transition-colors duration-200">
+                Join a Class
+              </a>
+              <a class="navbar-item p-2" href="https://www.facebook.com/swingsocietybg" target="_blank">
+                <img src="/static/assets/images/social-icons/fb-bw.svg" alt="Facebook" width="24" height="24">
+              </a>
+              <a class="navbar-item p-2" href="https://www.instagram.com/bgswingsociety/" target="_blank">
+                <img src="/static/assets/images/social-icons/ig-bw.svg" alt="Instagram" width="24" height="24">
+              </a>
+              <a class="navbar-item p-2" href="https://www.youtube.com/@bgswingsociety" target="_blank">
+                <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" width="24" height="24">
+              </a>
+              <a class="navbar-item p-2" href="https://www.tiktok.com/@swing_society5" target="_blank">
+                <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" width="24" height="24">
+              </a>
             </div>
           </div>
+
         </div>
       </nav>
-      <!-- Mobile menu (separate from Bulma navbar) -->
+
+      <!-- Mobile menu -->
       <div class="mobile-menu" id="mobile-menu">
         <div class="menu-item has-submenu" data-target="classes-submenu">Classes</div>
         <div id="classes-submenu" class="submenu">
-          <a class="submenu-item" href="#main-view" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo">
-            Solo Dancing</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/coupled">
-            Coupled Dancing</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/classes/oldclips.html" hx-target="#main-view" hx-push-url="/classes/old-clips">
-            Old Clips</a>
+          <a class="submenu-item" href="#main-view" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo">Solo Dancing</a>
+          <a class="submenu-item" href="#main-view" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/coupled">Coupled Dancing</a>
+          <a class="submenu-item" href="#main-view" hx-get="/templates/classes/oldclips.html" hx-target="#main-view" hx-push-url="/classes/old-clips">Old Clips</a>
         </div>
         <div class="menu-item has-submenu" data-target="events-submenu">Events</div>
         <div id="events-submenu" class="submenu">
-          <a class="submenu-item" href="#main-view" hx-get="/templates/events/parties.html" hx-target="#main-view" hx-push-url="/events/party">
-          Parties</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/events/festivals.html" hx-target="#main-view" hx-push-url="/events/festivals">
-          Festivals</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/events/workshops.html" hx-target="#main-view" hx-push-url="/events/workshops">
-          Workshops</a>
+          <a class="submenu-item" href="#main-view" hx-get="/templates/events/parties.html" hx-target="#main-view" hx-push-url="/events/party">Parties</a>
+          <a class="submenu-item" href="#main-view" hx-get="/templates/events/festivals.html" hx-target="#main-view" hx-push-url="/events/festivals">Festivals</a>
+          <a class="submenu-item" href="#main-view" hx-get="/templates/events/workshops.html" hx-target="#main-view" hx-push-url="/events/workshops">Workshops</a>
         </div>
         <div class="menu-item has-submenu" data-target="about-submenu">About</div>
         <div id="about-submenu" class="submenu">
-          <a class="submenu-item" href="#main-view" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us">
-          About Us</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/prices.html" hx-target="#main-view" hx-push-url="/prices">
-          Prices</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/rules.html" hx-target="#main-view" hx-push-url="/rules">
-          Rules</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/FAQ.html" hx-target="#main-view" hx-push-url="/FAQ">
-          FAQ</a>
+          <a class="submenu-item" href="#main-view" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us">About Us</a>
+          <a class="submenu-item" href="#main-view" hx-get="/templates/prices.html" hx-target="#main-view" hx-push-url="/prices">Prices</a>
+          <a class="submenu-item" href="#main-view" hx-get="/templates/rules.html" hx-target="#main-view" hx-push-url="/rules">Rules</a>
+          <a class="submenu-item" href="#main-view" hx-get="/templates/FAQ.html" hx-target="#main-view" hx-push-url="/FAQ">FAQ</a>
         </div>
       </div>
-      <!-- Banner section (visible on desktop and tablet, hidden on mobile) -->
-      <section class="hero is-primary is-small hero-section is-hidden-mobile">
-        <div class="hero-body py-2">
-          <div class="container full-width">
-            <div class="columns is-vcentered">
-              <!-- Headline on the left -->
-              <div class="column is-8">
-                <h1 class="title">Swing Society Where Jazz Happens</h1>
-              </div>
-              <!-- Button on the right -->
-              <div class="column is-3 has-text-right">
-                <button class="button is-dark is-normal is-hoverable"
-                        hx-get="/templates/components/modal-large.html"
-                        data-form="/templates/forms/registration-form.html"
-                        hx-target="main"
-                        hx-swap="beforeend"
-                        hx-on="after-request: loadFormIntoModal(this)">
-                        Sign Up</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </header>
-    <!-- Hero Section -->  
-    <section class="hero is-fullheight-with-navbar">
-      <div class="hero-body has-background-dark p-0 is-relative">
-        <!-- The image as background -->
-        <figure class="image is-fullwidth m-2" style="height: 100%;">
-          <img src="/static/assets/images/the founders.jpg" alt="Swing Society Founders" style="object-fit: cover; width: 100%; height: 100%;">
-        </figure>
-        <!-- The text overlay - switch between these classes for positioning: 
-             - For top: is-absolute pt-5 pl-5
-             - For middle: is-absolute pt-0 pl-5 mt-6
-             - For bottom: is-absolute pb-5 pl-5 mb-6 -->
-        <div class="is-overlay is-flex is-flex-direction-column is-justify-content-flex-end" style="pointer-events: none;">
-          <div class="container pb-6 pl-5 pr-5">
-            <div class="is-flex is-justify-content-space-between is-align-items-flex-end">
-              <h2 class="title has-text-white is-size-2 has-text-shadow" style="pointer-events: auto;">Хората, които го стартираха!</h2>
-              <a href="/templates/forms/all-forms.html" class="button is-warning is-medium mb-2" style="pointer-events: auto; font-family: var(--heading-font-latin); letter-spacing: 0.05em;" hx-get="/templates/forms/all-forms.html" hx-target="#main-view">Sign Up</a>
-            </div>
-          </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         HERO — collage grid
+    ═══════════════════════════════════════════════════════════ -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+
+      <!-- Background collage -->
+      <div class="absolute inset-0 z-0 collage-grid">
+        <img id="collage-1" alt="" />
+        <img id="collage-2" alt="" />
+        <img id="collage-3" alt="" />
+        <img id="collage-4" alt="" />
+        <img id="collage-5" alt="" />
+        <img id="collage-6" alt="" />
+        <!-- Sepia tint layer -->
+        <div style="position:absolute; inset:0; background:rgba(140,90,30,0.18); mix-blend-mode:multiply;"></div>
+      </div>
+
+      <!-- Dark overlay -->
+      <div class="absolute inset-0 hero-overlay z-10"></div>
+
+      <!-- Decorative frame -->
+      <div class="absolute inset-6 sm:inset-10 border border-gold/25 z-20 pointer-events-none rounded-sm"></div>
+      <div class="absolute inset-8 sm:inset-12 border border-gold/12 z-20 pointer-events-none rounded-sm"></div>
+
+      <!-- Content -->
+      <div class="relative z-30 text-center px-6 max-w-5xl mx-auto">
+
+        <p class="font-body text-gold text-xs sm:text-sm font-semibold tracking-[0.3em] uppercase mb-6">
+          Swing Society
+        </p>
+
+        <h1 class="font-display italic font-bold leading-tight mb-6 text-cream"
+            style="font-size: clamp(3rem, 8vw, 5.5rem); text-shadow: 0 2px 20px rgba(0,0,0,0.5);">
+          Swing Dancing,<br />
+          <span style="color: #C9A84C;">Jazz and Tap</span><br />
+          done in the old school way
+        </h1>
+
+        <p class="font-body text-cream/80 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+           style="text-shadow: 0 1px 6px rgba(0,0,0,0.4);">
+          We teach Lindy Hop, Jazz and Tap classes in Bulgaria. We get our inspiration
+          from the old clips and the original swing, jazz and tap dancers.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#new-groups"
+             class="px-8 py-4 bg-gold text-charcoal font-semibold font-body tracking-wider uppercase text-sm rounded hover:bg-goldDark transition-colors duration-200 shadow-lg">
+            Join a Class
+          </a>
+          <a href="#about"
+             class="px-8 py-4 border border-cream/50 text-cream font-semibold font-body tracking-wider uppercase text-sm rounded hover:bg-cream/10 transition-colors duration-200">
+            Our Story
+          </a>
         </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-cream/40 animate-bounce">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+          </svg>
+        </div>
+
       </div>
     </section>
-      <!-- <div class="video-container">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/OpXc2svVtZM?si=ZyEVIMdwmfnH_33u/?autoplay=1&mute=1&playsinline=1" title="Miro & Stella Dance of the Gremlins" frameborder="0" 
-        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      </div> -->
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         HTMX CONTENT TARGET + CALENDAR
+    ═══════════════════════════════════════════════════════════ -->
     <main>
       <div id="main-view" hx-indicator="#loading-spinner">
-        <!-- content that is swapped based on where user clicks-->
-      </div>   
+        <!-- Content swapped by HTMX nav links -->
+      </div>
       <div id="loading-spinner" class="htmx-indicator">
         <div class="spinner-ring"></div>
       </div>
-      <section class="calendar-section">
-      <h2 class="calendar-heading">Календар класове и партита</h2>
-      <div class="container">
-        <!-- Desktop View -->
-        <div class="columns is-hidden-mobile is-hidden-tablet">
-            <div class="column is-4">
-                <h2 class="title is-4">Минали</h2>
-                <div id="past-events"
+
+      <!-- Calendar Section — dynamic via HTMX -->
+      <section class="calendar-section" id="calendar">
+        <h2 class="calendar-heading">Календар класове и партита</h2>
+        <div class="max-w-7xl mx-auto">
+
+          <!-- Desktop View (lg+) -->
+          <div class="hidden lg:grid grid-cols-3 gap-6">
+            <div>
+              <h2 class="font-display text-xl font-semibold mb-4">Минали</h2>
+              <div id="past-events"
+                   hx-get="/api/calendar/past"
+                   hx-trigger="load"
+                   hx-indicator="#loading-spinner"></div>
+            </div>
+            <div>
+              <h2 class="font-display text-xl font-semibold mb-4">Днес</h2>
+              <div id="today-events"
+                   hx-get="/api/calendar/today"
+                   hx-trigger="load"
+                   hx-indicator="#loading-spinner"></div>
+            </div>
+            <div>
+              <h2 class="font-display text-xl font-semibold mb-4">Предстоящи</h2>
+              <div id="upcoming-events"
+                   hx-get="/api/calendar/upcoming"
+                   hx-trigger="load"
+                   hx-indicator="#loading-spinner"></div>
+            </div>
+          </div>
+
+          <!-- Tablet View (md – lg) -->
+          <div class="hidden md:block lg:hidden tablet-layout">
+            <div>
+              <h2 class="font-display text-xl font-semibold mb-4">Днес</h2>
+              <div id="tablet-today-events"
+                   hx-get="/api/calendar/today"
+                   hx-trigger="load"
+                   hx-indicator="#loading-spinner"></div>
+            </div>
+            <div class="tablet-columns">
+              <div class="column">
+                <h2 class="font-display text-xl font-semibold mb-4">Минали</h2>
+                <div id="tablet-past-events"
                      hx-get="/api/calendar/past"
                      hx-trigger="load"
                      hx-indicator="#loading-spinner"></div>
-            </div>
-            <div class="column is-4">
-                <h2 class="title is-4">Днес</h2>
-                <div id="today-events"
-                     hx-get="/api/calendar/today"
-                     hx-trigger="load"
-                     hx-indicator="#loading-spinner"></div>
-            </div>
-            <div class="column is-4">
-                <h2 class="title is-4">Предстоящи</h2>
-                <div id="upcoming-events"
+              </div>
+              <div class="column">
+                <h2 class="font-display text-xl font-semibold mb-4">Предстоящи</h2>
+                <div id="tablet-upcoming-events"
                      hx-get="/api/calendar/upcoming"
                      hx-trigger="load"
                      hx-indicator="#loading-spinner"></div>
+              </div>
             </div>
-        </div>
+          </div>
 
-        <!-- Tablet View -->
-        <div class="is-hidden-desktop is-hidden-mobile tablet-layout">
+          <!-- Mobile View (up to md) -->
+          <div class="block md:hidden columns-mobile">
             <div>
-                <h2 class="title is-4">Днес</h2>
-                <div id="tablet-today-events"
-                     hx-get="/api/calendar/today"
-                     hx-trigger="load"
-                     hx-indicator="#loading-spinner"></div>
-            </div>
-            <div class="columns">
-                <div class="column is-6">
-                    <h2 class="title is-4">Минали</h2>
-                    <div id="tablet-past-events"
-                         hx-get="/api/calendar/past"
-                         hx-trigger="load"
-                         hx-indicator="#loading-spinner"></div>
-                </div>
-                <div class="column is-6">
-                    <h2 class="title is-4">Предстоящи</h2>
-                    <div id="tablet-upcoming-events"
-                         hx-get="/api/calendar/upcoming"
-                         hx-trigger="load"
-                         hx-indicator="#loading-spinner"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile View -->
-        <div class="is-hidden-tablet columns-mobile">
-            <div>
-                <h2 class="title is-4">Днес</h2>
-                <div id="mobile-today-events"
-                     hx-get="/api/calendar/today"
-                     hx-trigger="load"
-                     hx-indicator="#loading-spinner"></div>
+              <h2 class="font-display text-xl font-semibold mb-4">Днес</h2>
+              <div id="mobile-today-events"
+                   hx-get="/api/calendar/today"
+                   hx-trigger="load"
+                   hx-indicator="#loading-spinner"></div>
             </div>
             <div>
-                <h2 class="title is-4">Предстоящи</h2>
-                <div id="mobile-upcoming-events"
-                     hx-get="/api/calendar/upcoming"
-                     hx-trigger="load"
-                     hx-indicator="#loading-spinner"></div>
+              <h2 class="font-display text-xl font-semibold mb-4">Предстоящи</h2>
+              <div id="mobile-upcoming-events"
+                   hx-get="/api/calendar/upcoming"
+                   hx-trigger="load"
+                   hx-indicator="#loading-spinner"></div>
             </div>
-        </div>
+          </div>
 
-        <!-- Sign Up Button -->
-        <div class="has-text-centered mt-4">
-            <button class="button is-primary">Sign Up for Notifications</button>
+          <!-- Sign Up Button -->
+          <div class="text-center mt-6">
+            <a href="#new-groups"
+               class="px-6 py-3 bg-gold text-charcoal font-semibold font-body tracking-wider uppercase text-sm rounded hover:bg-goldDark transition-colors duration-200">
+              Sign Up for Classes
+            </a>
+          </div>
+
         </div>
-      </div>
       </section>
     </main>
-    <!-- Footer Section -->
-    <footer class="footer has-background-light">
-      <div class="container">
-        <div class="columns is-multiline is-variable is-5">
-          <!-- Contacts -->
-          <div class="column is-4">
-            <h3 class="title is-5">Контакти</h3>
-            <p class="is-size-6">Адрес: <a href="https://maps.app.goo.gl/Vhr6hWq7p1xr4wb37" target="_blank" class="nowrap">София, ул Сердика 25</a></p>
-            <p class="is-size-6">Телефон: <a href="tel:+885554597">0885554597</a></p>
-            <p class="is-size-6">Имейл: <a href="mailto:info@swingsociety.bg" class="nowrap">info@swingsociety.bg</a></p>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         ABOUT
+    ═══════════════════════════════════════════════════════════ -->
+    <section id="about" class="py-24 px-6 bg-cream">
+      <div class="max-w-4xl mx-auto">
+
+        <div class="text-center mb-14">
+          <p class="font-body text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">Who We Are</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold text-charcoal mb-6">About the School</h2>
+          <div class="divider"><span>★</span></div>
+        </div>
+
+        <div class="grid sm:grid-cols-5 gap-10 items-start">
+          <div class="sm:col-span-3 space-y-6 font-body text-charcoal/80 leading-relaxed text-base">
+
+            <p>Swing Society is several things in one — a swing dance school for people from 10 to 100 years old, for all levels, with exceptionally experienced teachers who travel all over the world and bring authentic stories, experience, and inspiration back to Bulgaria.</p>
+
+            <p>Swing Society is also an underground culture, but one that is open to everyone. Some people just dance with us once a week after work, some bring their children and dance with them, and some come to meet new people. With the most passionate and advanced students, we travel to dozens of countries around the world, often participating in competitions or learning from some of the creators of the genre.</p>
+
+            <p>At the beginning, we had no performances — only dancing and lessons. We danced in other schools, but we realized that for us it wasn't enough just to dance; we wanted to learn more about the culture, the stage, and performance. So we created Swing Society. In recent years, we have been receiving more and more invitations to perform at private parties, corporate events, and festivals in Bulgaria and abroad. Although the swing scene in Bulgaria is still niche, it continues to grow, and that makes us very happy because we believe we are an essential part of that development.</p>
+
+            <p>Our cause and mission are to preserve and spread authentic swing and jazz culture in Bulgaria, following the American model and tradition. Swing was born as an urban culture of young and modern people. We believe that jazz cultivates and refines taste, and that good music has no age limit. That is why we continue to invest more and more in our school and in the experiences we share with everyone.</p>
+
+            <p>Our dream is for swing to be taught in Bulgarian schools.</p>
+
           </div>
-    
-          <!-- Information -->
-          <div class="column is-3">
-            <h3 class="title is-5">Информация</h3>
-            <ul>
-              <li><a href="#">Често Задавани Въпроси</a></li>
-              <li><a href="#">Разписание</a></li>
-              <li><a href="#">Цени</a></li>
-              <li><a href="#">Условия</a></li>
-              <li><a href="#">Политика за поверителност</a></li>
-            </ul>
-          </div>
-    
-          <!-- Projects -->
-          <div class="column is-3">
-            <h3 class="title is-5">Проекти</h3>
-            <ul>
-              <li><a href="https://swingbuzz.eu/" target="_blank">Swing Buzz</a></li>
-              <li><a href="#">Podcast</a></li>
-              <li><a href="#">Jazz Scene</a></li>
-            </ul>
-          </div>
-    
-          <!-- Social Links -->
-          <div class="column is-3">
-            <h3 class="title is-5">Намерете ни</h3>
-            <div class="buttons">
-              <a class="button is-light" href="https://www.facebook.com/swingsocietybg" target="_blank">
-                <span class="icon">
-                  <!-- <img src="/static/assets/images/social-icons/fb-bw.svg" alt="Facebook"> -->
-                  <i class="fab fa-instagram"></i>
-                </span>
-                <span>Facebook</span>
-              </a>
-              <a class="button is-light" href="https://www.instagram.com/bgswingsociety/" target="_blank">
-                <img src="/static/assets/images/social-icons/ig-bw.svg" alt="Instagram" width="24" height="24">
-                <span>Instagram</span>
-              </a>
-              <a class="button is-light" href="https://www.youtube.com/@bgswingsociety" target="_blank">
-                <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" width="24" height="24">
-                <span>Youtube</span>
-              </a>
-              <a class="button is-light" href="https://www.tiktok.com/@swing_society5" target="_blank">
-                <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" width="24" height="24">
-                <span>TikTok</span>
-              </a>
+
+          <div class="sm:col-span-2 space-y-4">
+            <div class="bg-parchment border border-gold/30 rounded p-6 card-hover shadow-sm">
+              <p class="font-display text-4xl font-bold text-gold">10+</p>
+              <p class="font-body text-sm text-charcoal/70 mt-1">Years swing dance classes</p>
+            </div>
+            <div class="bg-parchment border border-gold/30 rounded p-6 card-hover shadow-sm">
+              <p class="font-display text-4xl font-bold text-gold">400+</p>
+              <p class="font-body text-sm text-charcoal/70 mt-1">Inspired students</p>
+            </div>
+            <div class="bg-parchment border border-gold/30 rounded p-6 card-hover shadow-sm">
+              <p class="font-display text-4xl font-bold text-gold">2</p>
+              <p class="font-body text-sm text-charcoal/70 mt-1">Cities — Sofia &amp; Stara Zagora</p>
+            </div>
+            <div class="bg-parchment border border-gold/30 rounded p-6 card-hover shadow-sm">
+              <p class="font-display text-4xl font-bold text-gold">∞</p>
+              <p class="font-body text-sm text-charcoal/70 mt-1">The joy of a good night out dancing</p>
             </div>
           </div>
         </div>
-    
-        <!-- Footer bottom -->
-        <div class="has-text-centered mt-4">
-          <p>&copy; 2025 Swing Society. All Rights Reserved.</p>
+
+      </div>
+    </section>
+
+
+    <!-- Section divider -->
+    <div class="py-4 px-6 bg-cream">
+      <div class="divider max-w-sm mx-auto"><span>♦</span></div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         OUR DANCES
+    ═══════════════════════════════════════════════════════════ -->
+    <section id="dances" class="py-24 px-6 bg-cream">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="text-center mb-14">
+          <p class="font-body text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">What We Teach</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold text-charcoal mb-6">Our Dances</h2>
+          <div class="divider"><span>★</span></div>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-8">
+
+          <!-- Lindy Hop -->
+          <div class="bg-parchment border border-gold/30 rounded-sm overflow-hidden card-hover shadow-sm">
+            <div class="h-56 overflow-hidden bg-charcoal/10 relative">
+              <img
+                src="/static/assets/images/Miro&Kalina.jpg"
+                alt="Lindy Hop dancers"
+                class="w-full h-full object-cover object-top sepia-[0.3] hover:sepia-0 transition-all duration-500"
+                onerror="this.parentElement.style.background='#1C1C1C'"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal/60 to-transparent"></div>
+              <span class="absolute bottom-4 left-5 font-display italic text-cream text-2xl font-bold" style="text-shadow:0 1px 6px rgba(0,0,0,0.6)">Lindy Hop</span>
+            </div>
+            <div class="p-7">
+              <p class="font-body text-xs text-gold font-semibold tracking-widest uppercase mb-3">The Original Swing Dance · 1930s Harlem</p>
+              <p class="font-body text-charcoal/80 leading-relaxed mb-4">
+                Lindy Hop is the mother of all swing dances — an Afro-American vernacular art form born on the dance floors
+                of Harlem during the Jazz Age. It blends African rhythms, European partner dance traditions, and the
+                spontaneous genius of improvisation.
+              </p>
+              <p class="font-body text-charcoal/80 leading-relaxed mb-5">
+                We teach it with attention to its roots: musicality, connection, playfulness, and the deep groove that
+                comes from truly listening to jazz. From your first swing-out to airsteps, we'll take you there step by step.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="badge badge-beginner">Beginner</span>
+                <span class="badge badge-intermediate">Intermediate</span>
+                <span class="badge badge-advanced">Advanced</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Jazz -->
+          <div class="bg-parchment border border-gold/30 rounded-sm overflow-hidden card-hover shadow-sm">
+            <div class="h-56 overflow-hidden bg-charcoal/10 relative">
+              <img
+                src="/static/assets/images/DJ-Rosi.jpg"
+                alt="Solo Jazz dancers"
+                class="w-full h-full object-cover object-top sepia-[0.3] hover:sepia-0 transition-all duration-500"
+                onerror="this.parentElement.style.background='#1C1C1C'"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal/60 to-transparent"></div>
+              <span class="absolute bottom-4 left-5 font-display italic text-cream text-2xl font-bold" style="text-shadow:0 1px 6px rgba(0,0,0,0.6)">Jazz</span>
+            </div>
+            <div class="p-7">
+              <p class="font-body text-xs text-gold font-semibold tracking-widest uppercase mb-3">Vernacular Solo Jazz · Movement &amp; Expression</p>
+              <p class="font-body text-charcoal/80 leading-relaxed mb-4">
+                Vernacular Jazz is the solo side of the swing world — a rich vocabulary of steps born in Harlem's ballrooms
+                and juke joints. The Charleston, the Shim Sham, the Big Apple: these dances are the living language of jazz
+                music expressed through the body.
+              </p>
+              <p class="font-body text-charcoal/80 leading-relaxed mb-5">
+                Solo jazz classes sharpen your musicality, timing, and personal style. Whether you're a Lindy Hopper looking
+                to deepen your groove or a complete beginner, jazz movement will transform the way you feel the music.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="badge badge-beginner">Beginner</span>
+                <span class="badge badge-intermediate">Intermediate</span>
+                <span class="badge" style="background:#e8e0f5;color:#3d1a78;">Solo</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tap -->
+          <div class="bg-parchment border border-gold/30 rounded-sm overflow-hidden card-hover shadow-sm">
+            <div class="h-56 overflow-hidden bg-charcoal/10 relative">
+              <img
+                src="/static/assets/images/vynil.jpg"
+                alt="Tap dancer"
+                class="w-full h-full object-cover object-top sepia-[0.3] hover:sepia-0 transition-all duration-500"
+                onerror="this.parentElement.style.background='#1C1C1C'"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal/60 to-transparent"></div>
+              <span class="absolute bottom-4 left-5 font-display italic text-cream text-2xl font-bold" style="text-shadow:0 1px 6px rgba(0,0,0,0.6)">Tap</span>
+            </div>
+            <div class="p-7">
+              <p class="font-body text-xs text-gold font-semibold tracking-widest uppercase mb-3">Rhythm &amp; Percussion · Your Feet as Instruments</p>
+              <p class="font-body text-charcoal/80 leading-relaxed mb-4">
+                Tap is the art of making music with your feet. Rooted in African percussive traditions and the blues,
+                tap dancers like Bill "Bojangles" Robinson and the Nicholas Brothers turned the stage into a drum kit
+                and made history.
+              </p>
+              <p class="font-body text-charcoal/80 leading-relaxed mb-5">
+                Our classes focus on the improvisational, jazz-driven approach — not Broadway choreography, but the
+                intimate, conversational tap that truly swings. You'll develop timing, musicality, and a vocabulary
+                of rhythm that transforms the way you hear music.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="badge badge-beginner">Beginner</span>
+                <span class="badge badge-intermediate">Intermediate</span>
+                <span class="badge" style="background:#fde8e8;color:#7a0a0a;">Rhythm Tap</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
+    </section>
+
+
+    <!-- Section divider -->
+    <div class="py-4 px-6 bg-cream">
+      <div class="divider max-w-sm mx-auto"><span>♦</span></div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TEAM
+    ═══════════════════════════════════════════════════════════ -->
+    <section id="team" class="py-24 px-6 bg-charcoal">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="text-center mb-14">
+          <p class="font-body text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">Let's meet</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold text-cream mb-6">Our Team</h2>
+          <div class="divider"><span class="text-gold">★</span></div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- Rosi -->
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-6 card-hover text-center">
+            <div class="w-24 h-24 rounded-full bg-parchment/10 border-2 border-gold/40 mx-auto mb-5 overflow-hidden">
+              <img
+                src="/static/assets/images/DJ-Rosi.jpg"
+                alt="Rosi"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+            </div>
+            <h3 class="font-display text-xl font-bold text-cream mb-1">Rosi</h3>
+            <p class="font-body text-gold text-xs font-semibold tracking-wider uppercase mb-2">Lindy Hop &amp; Jazz</p>
+            <p class="font-body text-xs text-cream/50 tracking-wider mb-4">Stara Zagora</p>
+            <p class="font-body text-sm text-cream/65 leading-relaxed">
+              Passionate about swing music and the vibrant spirit of jazz, she has been dancing for
+              over eight years, focusing mainly on Lindy Hop and Authentic Jazz. She has attended more
+              than 30 international swing events and festivals, continuously learning from and drawing
+              inspiration from the global dance community.
+
+              Since July 2025, she has been teaching jazz classes in Stara Zagora, actively helping
+              grow the local swing scene and building a welcoming community through regular monthly
+              parties. Her teaching is driven by a genuine passion for sharing the joy, rhythm, and
+              freedom of jazz dance with others.
+            </p>
+          </div>
+
+          <!-- Kalina -->
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-6 card-hover text-center">
+            <div class="w-24 h-24 rounded-full bg-parchment/10 border-2 border-gold/40 mx-auto mb-5 overflow-hidden">
+              <img
+                src="/static/assets/images/Miro&Kalina.jpg"
+                alt="Kalina"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+            </div>
+            <h3 class="font-display text-xl font-bold text-cream mb-1">Kalina</h3>
+            <p class="font-body text-gold text-xs font-semibold tracking-wider uppercase mb-2">Lindy Hop &amp; Tap</p>
+            <p class="font-body text-xs text-cream/50 tracking-wider mb-4">Sofia</p>
+            <p class="font-body text-sm text-cream/65 leading-relaxed">
+              Kalina fell in love with swing after watching archival Savoy footage and never looked back. She brings
+              a deep musicality and historical perspective to her teaching, weaving jazz history into every class.
+            </p>
+          </div>
+
+          <!-- Miro -->
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-6 card-hover text-center">
+            <div class="w-24 h-24 rounded-full bg-parchment/10 border-2 border-gold/40 mx-auto mb-5 overflow-hidden">
+              <img
+                src="/static/assets/images/DJ-Miro&Mitko.jpg"
+                alt="Miro"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+            </div>
+            <h3 class="font-display text-xl font-bold text-cream mb-1">Miro</h3>
+            <p class="font-body text-gold text-xs font-semibold tracking-wider uppercase mb-2">Lindy Hop &amp; Jazz</p>
+            <p class="font-body text-xs text-cream/50 tracking-wider mb-4">Sofia</p>
+            <p class="font-body text-sm text-cream/65 leading-relaxed">
+              A passionate swing dancer who discovered jazz movement as a natural extension of rhythm and musicality, Miro
+              brings deep groove and playfulness to every class.
+            </p>
+          </div>
+
+          <!-- Deni -->
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-6 card-hover text-center">
+            <div class="w-24 h-24 rounded-full bg-parchment/10 border-2 border-gold/40 mx-auto mb-5 overflow-hidden">
+              <img
+                src="/static/assets/images/327415400_405404151790661_7353905136299666836_n.jpg"
+                alt="Deni"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+            </div>
+            <h3 class="font-display text-xl font-bold text-cream mb-1">Deni</h3>
+            <p class="font-body text-gold text-xs font-semibold tracking-wider uppercase mb-2">Tap &amp; Jazz</p>
+            <p class="font-body text-xs text-cream/50 tracking-wider mb-4">Sofia</p>
+            <p class="font-body text-sm text-cream/65 leading-relaxed">
+              Deni is a teacher with experience and passion for tap dance and solo jazz.
+              She enjoys classic choreographies and shares the belief that the most beautiful things are
+              hidden in history and tradition. That is why her solo jazz classes draw inspiration from
+              the great dancers of the 1930s and 1940s.
+              She has attended tap dance classes by Chester Whitmore, Daniel Larsson, Josette Wiggan,
+              and Thomas Wadelton in Herräng, but her true inspiration comes from that circle of tap
+              dancers — the "dinosaurs" of tap dancing.
+            </p>
+          </div>
+
+          <!-- Mitko -->
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-6 card-hover text-center">
+            <div class="w-24 h-24 rounded-full bg-parchment/10 border-2 border-gold/40 mx-auto mb-5 overflow-hidden">
+              <img
+                src="/static/assets/images/DJ-Mitko.jpg"
+                alt="Mitko"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+            </div>
+            <h3 class="font-display text-xl font-bold text-cream mb-1">Mitko</h3>
+            <p class="font-body text-gold text-xs font-semibold tracking-wider uppercase mb-2">Music &amp; Parties</p>
+            <p class="font-body text-xs text-cream/50 tracking-wider mb-4">Sofia</p>
+            <p class="font-body text-sm text-cream/65 leading-relaxed">
+              Mitko is the heartbeat behind Swing Society's parties and music curation. His deep love
+              for classic swing jazz and his ability to read a dance floor keep the energy alive through
+              every social dance night.
+            </p>
+          </div>
+
+          <!-- Viki -->
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-6 card-hover text-center">
+            <div class="w-24 h-24 rounded-full bg-parchment/10 border-2 border-gold/40 mx-auto mb-5 overflow-hidden">
+              <img
+                src="/static/assets/images/Mitko&Leni.jpg"
+                alt="Viki"
+                class="w-full h-full object-cover"
+                onerror="this.style.display='none'"
+              />
+            </div>
+            <h3 class="font-display text-xl font-bold text-cream mb-1">Viki</h3>
+            <p class="font-body text-gold text-xs font-semibold tracking-wider uppercase mb-2">Design &amp; Visuals</p>
+            <p class="font-body text-xs text-cream/50 tracking-wider mb-4">Sofia</p>
+            <p class="font-body text-sm text-cream/65 leading-relaxed">
+              Viki brings the visual identity of Swing Society to life — from posters and social media
+              to the aesthetic of every event. Her sense of vintage style and love for the era keep the
+              school's look as authentic as the dancing.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Section divider -->
+    <div class="py-4 px-6 bg-cream">
+      <div class="divider max-w-sm mx-auto"><span>♦</span></div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCHEDULE — static weekly timetable
+    ═══════════════════════════════════════════════════════════ -->
+    <section id="schedule" class="py-24 px-6 bg-cream">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="text-center mb-14">
+          <p class="font-body text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">Find Your Class</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold text-charcoal mb-6">Weekly Schedule</h2>
+          <div class="divider"><span>★</span></div>
+        </div>
+
+        <!-- Sofia -->
+        <div class="mb-12">
+          <h3 class="font-display text-2xl font-bold text-charcoal mb-1">
+            <span class="text-gold">—</span> Sofia
+          </h3>
+          <p class="font-body text-sm text-charcoal/55 mb-5">National Students' House</p>
+
+          <div class="overflow-x-auto rounded-sm border border-gold/25 shadow-sm">
+            <table class="w-full font-body text-sm">
+              <thead>
+                <tr class="bg-charcoal text-cream">
+                  <th class="text-left px-5 py-3 font-semibold tracking-wider text-xs uppercase">Day</th>
+                  <th class="text-left px-5 py-3 font-semibold tracking-wider text-xs uppercase">Time</th>
+                  <th class="text-left px-5 py-3 font-semibold tracking-wider text-xs uppercase">Class</th>
+                  <th class="text-left px-5 py-3 font-semibold tracking-wider text-xs uppercase">Level</th>
+                  <th class="text-left px-5 py-3 font-semibold tracking-wider text-xs uppercase">Teachers</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="schedule-row">
+                  <td class="px-5 py-3 font-medium">Monday</td>
+                  <td class="px-5 py-3 text-charcoal/70">20:15 – 21:25</td>
+                  <td class="px-5 py-3">Lindy Hop</td>
+                  <td class="px-5 py-3"><span class="badge badge-beginner">Beginner</span></td>
+                  <td class="px-5 py-3 text-charcoal/70">Kalina &amp; Miro</td>
+                </tr>
+                <tr class="schedule-row">
+                  <td class="px-5 py-3 font-medium">Wednesday</td>
+                  <td class="px-5 py-3 text-charcoal/70">19:30 – 21:40</td>
+                  <td class="px-5 py-3">Lindy Hop</td>
+                  <td class="px-5 py-3"><span class="badge badge-intermediate">Intermediate</span></td>
+                  <td class="px-5 py-3 text-charcoal/70">Miro &amp; Kalina</td>
+                </tr>
+                <tr class="schedule-row">
+                  <td class="px-5 py-3 font-medium">Wednesday</td>
+                  <td class="px-5 py-3 text-charcoal/70">20:50 – 22:00</td>
+                  <td class="px-5 py-3">Jazz</td>
+                  <td class="px-5 py-3"><span class="badge badge-all-levels">All Levels</span></td>
+                  <td class="px-5 py-3 text-charcoal/70">Deni</td>
+                </tr>
+                <tr class="schedule-row">
+                  <td class="px-5 py-3 font-medium">Thursday</td>
+                  <td class="px-5 py-3 text-charcoal/70">20:15 – 21:25</td>
+                  <td class="px-5 py-3">Lindy Hop</td>
+                  <td class="px-5 py-3"><span class="badge badge-beginner">Beginner</span></td>
+                  <td class="px-5 py-3 text-charcoal/70">Kalina &amp; Miro</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Stara Zagora -->
+        <div>
+          <h3 class="font-display text-2xl font-bold text-charcoal mb-1">
+            <span class="text-gold">—</span> Stara Zagora
+          </h3>
+          <p class="font-body text-sm text-charcoal/55 mb-5">Tanz Studio, ul. Gurko 7, Stara Zagora 6000</p>
+
+          <div class="overflow-x-auto rounded-sm border border-gold/25 shadow-sm">
+            <table class="w-full font-body text-sm">
+              <thead>
+                <tr class="bg-charcoal text-cream">
+                  <th class="text-left px-5 py-3 font-semibold tracking-wider text-xs uppercase">Day</th>
+                  <th class="text-left px-5 py-3 font-semibold tracking-wider text-xs uppercase">Time</th>
+                  <th class="text-left px-5 py-3 font-semibold tracking-wider text-xs uppercase">Class</th>
+                  <th class="text-left px-5 py-3 font-semibold tracking-wider text-xs uppercase">Level</th>
+                  <th class="text-left px-5 py-3 font-semibold tracking-wider text-xs uppercase">Teacher</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="schedule-row">
+                  <td class="px-5 py-3 font-medium">Thursday</td>
+                  <td class="px-5 py-3 text-charcoal/70">17:30 – 18:30</td>
+                  <td class="px-5 py-3">Jazz</td>
+                  <td class="px-5 py-3"><span class="badge badge-all-levels">All Levels</span></td>
+                  <td class="px-5 py-3 text-charcoal/70">Rosi</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p class="font-body text-sm text-charcoal/50 text-center mt-8">
+          * Drop-in classes are welcome. Monthly passes available. Contact us for pricing.
+        </p>
+
+      </div>
+    </section>
+
+
+    <!-- Section divider -->
+    <div class="py-4 px-6 bg-cream">
+      <div class="divider max-w-sm mx-auto"><span>♦</span></div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         NEW GROUPS STARTING SOON
+    ═══════════════════════════════════════════════════════════ -->
+    <section id="new-groups" class="py-24 px-6" style="background-color: #F0EAD6;">
+      <div class="max-w-5xl mx-auto">
+
+        <div class="text-center mb-14">
+          <p class="font-body text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">Fresh Start</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold text-charcoal mb-4">New Groups Starting Soon</h2>
+          <p class="font-body text-charcoal/60 max-w-xl mx-auto">
+            Follow our website and social media for announcements of new beginner-friendly groups starting every few months in both Sofia and Stara Zagora. Whether you're looking to learn Lindy Hop, Jazz, or Tap, we have a class for you!
+          </p>
+          <div class="divider mt-6"><span>★</span></div>
+        </div>
+
+        <div class="text-center mt-8">
+          <button class="px-8 py-4 bg-gold text-charcoal font-semibold font-body tracking-wider uppercase text-sm rounded hover:bg-goldDark transition-colors duration-200 shadow-lg"
+                  hx-get="/templates/forms/registration-form.html"
+                  hx-target="#main-view"
+                  hx-push-url="/register">
+            Register for a New Group
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Section divider -->
+    <div class="py-4 px-6 bg-cream">
+      <div class="divider max-w-sm mx-auto"><span>♦</span></div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         EVENTS
+    ═══════════════════════════════════════════════════════════ -->
+    <section id="events" class="py-24 px-6 bg-cream">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="text-center mb-14">
+          <p class="font-body text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">Mark Your Calendar</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold text-charcoal mb-6">Upcoming Events</h2>
+          <div class="divider"><span>★</span></div>
+        </div>
+
+        <!-- Swing Buzz Festival 2026 -->
+        <div class="bg-parchment border border-gold/30 rounded-sm overflow-hidden shadow-sm max-w-4xl mx-auto">
+
+          <!-- Header -->
+          <div class="bg-charcoal px-8 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center gap-6">
+              <div>
+                <p class="font-display text-2xl sm:text-3xl font-bold text-gold leading-tight">Swing Buzz Festival 2026</p>
+                <p class="font-body text-xs text-cream/60 uppercase tracking-widest mt-1">September 25–27, 2026 · Sofia, Bulgaria</p>
+              </div>
+            </div>
+            <span class="font-body text-xs text-cream/50 border border-cream/20 rounded px-3 py-1 tracking-wider uppercase self-start sm:self-center whitespace-nowrap">
+              Festival
+            </span>
+          </div>
+
+          <!-- Body -->
+          <div class="p-8">
+            <p class="font-body text-sm text-charcoal/75 leading-relaxed mb-8">
+              An old school jazz and Lindy Hop celebration held in the heart of Sofia — three days of
+              classes, historical talks, live music, and social dancing with an international community.
+              Classes take place at the National Students' House; evening parties at the Municipal Home
+              of Culture "Krasno selo" run from 22:00 to 04:00.
+              Registration opens <strong>March 16th</strong>.
+            </p>
+
+            <div class="grid sm:grid-cols-3 gap-6 mb-8">
+
+              <div>
+                <p class="font-body text-xs font-semibold text-gold uppercase tracking-wider mb-2">Teachers</p>
+                <ul class="font-body text-sm text-charcoal/70 space-y-1">
+                  <li>Alex</li>
+                  <li>Patrik &amp; Lizette</li>
+                  <li>Sakarias &amp; Elice</li>
+                </ul>
+              </div>
+
+              <div>
+                <p class="font-body text-xs font-semibold text-gold uppercase tracking-wider mb-2">Live Music</p>
+                <ul class="font-body text-sm text-charcoal/70 space-y-1">
+                  <li>Hornsgatan</li>
+                  <li>Swing Society Collective</li>
+                </ul>
+                <p class="font-body text-xs font-semibold text-gold uppercase tracking-wider mt-4 mb-2">DJs</p>
+                <ul class="font-body text-sm text-charcoal/70 space-y-1">
+                  <li>Pawel</li>
+                  <li>Dimas</li>
+                </ul>
+              </div>
+
+              <div>
+                <p class="font-body text-xs font-semibold text-gold uppercase tracking-wider mb-2">Passes</p>
+                <ul class="font-body text-sm text-charcoal/70 space-y-1">
+                  <li>Full Pass Gold</li>
+                  <li>Full Pass</li>
+                  <li>Jazz Performance Track</li>
+                  <li>Party Pass Plus</li>
+                  <li>Party Pass</li>
+                </ul>
+              </div>
+
+            </div>
+
+            <div class="pt-6 border-t border-gold/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <span class="font-body text-xs text-charcoal/50">Intermediate · Advanced · Pro · Jazz Performance Track</span>
+              <a href="https://www.swingbuzz.eu" target="_blank" rel="noopener"
+                 class="font-body text-xs font-semibold text-gold hover:text-goldDark uppercase tracking-wider transition-colors">
+                swingbuzz.eu →
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Section divider -->
+    <div class="py-4 px-6 bg-cream">
+      <div class="divider max-w-sm mx-auto"><span>♦</span></div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TESTIMONIALS
+    ═══════════════════════════════════════════════════════════ -->
+    <section id="reviews" class="py-24 px-6 bg-charcoal">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="text-center mb-14">
+          <p class="font-body text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">From Our Community</p>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold text-cream mb-6">What Students Say</h2>
+          <div class="divider"><span class="text-gold">★</span></div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-7 card-hover">
+            <div class="flex mb-4"><span class="text-gold text-lg">★★★★★</span></div>
+            <p class="font-body text-cream/80 leading-relaxed text-sm">
+              <span class="quote-mark"></span>Perfect place to learn Lindy Hop in Sofia, they're totally experienced and humble,
+              capable of evaluating your level and so cheerful to motivate you. Definitely suggest everyone
+              who'd like to improve themselves or just begin!
+            </p>
+          </div>
+
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-7 card-hover">
+            <div class="flex mb-4"><span class="text-gold text-lg">★★★★★</span></div>
+            <p class="font-body text-cream/80 leading-relaxed text-sm">
+              <span class="quote-mark"></span>The best jazz dance school in Sofia. The teachers are great people, who are in love
+              with the old time jazz culture. If you decide to go and try a class, get ready for jazz dancing
+              becoming the one thing you can't wait for in your regular day!
+            </p>
+          </div>
+
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-7 card-hover">
+            <div class="flex mb-4"><span class="text-gold text-lg">★★★★★</span></div>
+            <p class="font-body text-cream/80 leading-relaxed text-sm">
+              <span class="quote-mark"></span>The dance school is at a very central location and easy to access with public transport.
+              As for the school itself — it focuses on swing dancing from the 40s and conserving the soul and
+              style of that time. If you enjoy jazz, dancing, refreshing atmosphere — this is the place to be.
+            </p>
+          </div>
+
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-7 card-hover">
+            <div class="flex mb-4"><span class="text-gold text-lg">★★★★★</span></div>
+            <p class="font-body text-cream/80 leading-relaxed text-sm">
+              <span class="quote-mark"></span>A great place to learn Lindy Hop! The teachers are very friendly and welcoming,
+              and the beginner course that I attended was paced very well. 5/5, will definitely come back
+              for the next level.
+            </p>
+          </div>
+
+          <div class="bg-cream/5 border border-gold/20 rounded-sm p-7 card-hover">
+            <div class="flex mb-4"><span class="text-gold text-lg">★★★★★</span></div>
+            <p class="font-body text-cream/80 leading-relaxed text-sm">
+              <span class="quote-mark"></span>Absolutely amazing school! Thanks to the incredible teachers and the welcoming
+              atmosphere they've created, this is a place where I feel truly safe and confident to learn and
+              dance. A huge thank you — I'm so grateful to have found this wonderful community!
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════════════════════ -->
+    <footer class="bg-charcoal border-t border-gold/20 pt-16 pb-8 px-6">
+      <div class="max-w-6xl mx-auto">
+
+        <div class="grid sm:grid-cols-3 gap-10 mb-12">
+
+          <!-- Brand -->
+          <div>
+            <p class="font-display text-2xl font-bold text-cream mb-2">
+              Swing <span class="text-gold italic">Society</span>
+            </p>
+            <p class="font-body text-xs text-cream/40 tracking-widest uppercase mb-4">Lindy Hop &amp; Jazz Tap · Bulgaria</p>
+            <p class="font-body text-sm text-cream/60 leading-relaxed">
+              Bringing the spirit of the Savoy Ballroom to Sofia and Stara Zagora since 2017.
+              Dance like nobody's watching. Swing like everybody is.
+            </p>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <p class="font-body text-xs font-semibold text-gold tracking-widest uppercase mb-5">Navigation</p>
+            <ul class="space-y-2 font-body text-sm text-cream/60">
+              <li><a href="#about"      class="hover:text-gold transition-colors">About the School</a></li>
+              <li><a href="#dances"     class="hover:text-gold transition-colors">Our Dances</a></li>
+              <li><a href="#team"       class="hover:text-gold transition-colors">Teachers</a></li>
+              <li><a href="#schedule"   class="hover:text-gold transition-colors">Weekly Schedule</a></li>
+              <li><a href="#new-groups" class="hover:text-gold transition-colors">New Beginner Groups</a></li>
+              <li><a href="#events"     class="hover:text-gold transition-colors">Upcoming Events</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <p class="font-body text-xs font-semibold text-gold tracking-widest uppercase mb-5">Get in Touch</p>
+            <div class="space-y-3 font-body text-sm text-cream/60">
+              <a href="mailto:bgswingsociety@gmail.com"
+                 class="flex items-center gap-2.5 hover:text-gold transition-colors group">
+                <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                bgswingsociety@gmail.com
+              </a>
+
+              <a href="https://www.instagram.com/bgswingsociety" target="_blank" rel="noopener"
+                 class="flex items-center gap-2.5 hover:text-gold transition-colors group">
+                <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+                @bgswingsociety
+              </a>
+
+              <a href="https://www.facebook.com/swingsocietybg" target="_blank" rel="noopener"
+                 class="flex items-center gap-2.5 hover:text-gold transition-colors group">
+                <svg class="w-4 h-4 text-gold" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                </svg>
+                Swing Society Bulgaria
+              </a>
+
+              <div class="pt-2">
+                <p class="text-cream/40 text-xs mb-1">Sofia</p>
+                <p class="text-cream/60 text-xs">Studio Ritmo, ul. Positano 22</p>
+              </div>
+              <div>
+                <p class="text-cream/40 text-xs mb-1">Stara Zagora</p>
+                <p class="text-cream/60 text-xs">Tanz Studio, ul. Gurko 7</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="border-t border-gold/15 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p class="font-body text-xs text-cream/30">
+            &copy; 2026 Swing Society Bulgaria. All rights reserved.
+          </p>
+          <p class="font-body text-xs text-cream/25 italic font-display">
+            "The Savoy, the home of happy feet." — Frankie Manning
+          </p>
+        </div>
+
+      </div>
     </footer>
+
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SCRIPTS
+    ═══════════════════════════════════════════════════════════ -->
+    <script>
+      // Sticky nav scroll shadow
+      (function () {
+        var nav = document.getElementById('main-nav');
+        if (!nav) return;
+        window.addEventListener('scroll', function () {
+          nav.classList.toggle('scrolled', window.scrollY > 20);
+        }, { passive: true });
+
+        // Active nav link highlight
+        var sections = document.querySelectorAll('section[id]');
+        var navLinks = document.querySelectorAll('.nav-link');
+
+        function onScroll () {
+          var scrollPos = window.scrollY + 100;
+          sections.forEach(function (sec) {
+            if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) {
+              navLinks.forEach(function (link) {
+                link.classList.remove('text-gold');
+                link.classList.add('text-charcoal/70');
+                if (link.getAttribute('href') === '#' + sec.id) {
+                  link.classList.add('text-gold');
+                  link.classList.remove('text-charcoal/70');
+                }
+              });
+            }
+          });
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }());
+
+      // Shuffle collage photos on every page load
+      (function () {
+        var photos = [
+          '/static/assets/images/the founders.jpg',
+          '/static/assets/images/Miro&Kalina.jpg',
+          '/static/assets/images/DJ-Rosi.jpg',
+          '/static/assets/images/DJ-Miro&Mitko.jpg',
+          '/static/assets/images/DJ-Mitko.jpg',
+          '/static/assets/images/vynil.jpg'
+        ];
+        for (var i = photos.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = photos[i]; photos[i] = photos[j]; photos[j] = tmp;
+        }
+        for (var k = 1; k <= 6; k++) {
+          var el = document.getElementById('collage-' + k);
+          if (el) el.src = photos[k - 1];
+        }
+      }());
+    </script>
+
   </body>
 </html>

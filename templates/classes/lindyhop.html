@@ -1,58 +1,120 @@
-<div class="class-view couples">
-  <div class="class-card swing foundation">
-    <div class="class-image-container">
-      <img src="/static/assets/images/Miro&Kalina.jpg" alt="Lindy Hop Foundation" class="class-image" />
+<!-- Lindy Hop classes — HTMX fragment -->
+<section class="py-12 px-4">
+  <div class="max-w-4xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <p class="font-body text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3">Coupled Dancing</p>
+      <h1 class="font-display text-4xl sm:text-5xl font-semibold text-charcoal mb-4">Lindy Hop</h1>
+      <div class="flex items-center justify-center gap-3 max-w-xs mx-auto">
+        <span class="flex-1 h-px bg-gold/50"></span>
+        <span class="text-gold text-sm">✦</span>
+        <span class="flex-1 h-px bg-gold/50"></span>
+      </div>
     </div>
-    <div class="class-description">
-      <h2>Lindy Hop - Swing Foundation</h2>
-      <p>In this class, we focus on the basics of Lindy Hop - the most popular swing dance. No prior experience is needed to join.</p>
-      <p><strong>Location:</strong> Serdika Str 25</p>
-      <p><strong>Next group starts on:</strong> 15th February 2025</p>
+
+    <!-- Class cards — .class-card + variant kept for style.css left-border colours -->
+    <div class="flex flex-col gap-6 mb-12">
+
+      <!-- Foundation — image left, text right -->
+      <div class="class-card swing-foundation flex flex-col sm:flex-row bg-white rounded-lg border border-parchment shadow-sm overflow-hidden
+                  transition-shadow duration-200 hover:shadow-md">
+        <div class="sm:w-2/5 flex-shrink-0">
+          <img src="/static/assets/images/Miro&Kalina.jpg" alt="Lindy Hop Foundation"
+               class="w-full h-52 sm:h-full object-cover">
+        </div>
+        <div class="flex-1 p-6">
+          <span class="inline-block px-2.5 py-0.5 bg-cream text-charcoal/60 text-xs font-semibold tracking-wider uppercase rounded-full border border-parchment mb-3">
+            Swing Foundation
+          </span>
+          <h2 class="font-display text-2xl font-semibold text-charcoal mb-3">Lindy Hop — Swing Foundation</h2>
+          <p class="text-sm text-charcoal/70 leading-relaxed mb-4">
+            In this class, we focus on the basics of Lindy Hop — the most popular swing dance.
+            No prior experience is needed to join.
+          </p>
+          <div class="flex flex-col gap-1.5 text-xs text-charcoal/60 mb-5">
+            <p><span class="font-semibold text-charcoal">📍 Локация:</span> Serdika Str 25</p>
+            <p><span class="font-semibold text-charcoal">🗓️ Следваща група:</span> 15th February 2025</p>
+          </div>
+          <a href="/templates/forms/registration-form.html"
+             class="inline-flex items-center gap-1.5 px-4 py-2 bg-gold text-charcoal font-body font-semibold text-xs tracking-wider uppercase rounded hover:bg-goldDark transition-colors duration-200"
+             hx-get="/templates/forms/registration-form.html" hx-target="#main-view">
+            Запишете се
+          </a>
+        </div>
+      </div>
+
+      <!-- Basics — text left, image right -->
+      <div class="class-card swing-basics flex flex-col sm:flex-row-reverse bg-white rounded-lg border border-parchment shadow-sm overflow-hidden
+                  transition-shadow duration-200 hover:shadow-md">
+        <div class="sm:w-2/5 flex-shrink-0">
+          <img src="/static/assets/images/Miro&Kalina.jpg" alt="Lindy Hop Basics"
+               class="w-full h-52 sm:h-full object-cover">
+        </div>
+        <div class="flex-1 p-6">
+          <span class="inline-block px-2.5 py-0.5 bg-cream text-charcoal/60 text-xs font-semibold tracking-wider uppercase rounded-full border border-parchment mb-3">
+            Swing Basics
+          </span>
+          <h2 class="font-display text-2xl font-semibold text-charcoal mb-3">Lindy Hop — Swing Basics</h2>
+          <p class="text-sm text-charcoal/70 leading-relaxed mb-4">
+            In this class, we solidify and polish our fundamentals of Lindy Hop. You should have
+            finished the Swing Foundation course.
+          </p>
+          <div class="flex flex-col gap-1.5 text-xs text-charcoal/60 mb-5">
+            <p><span class="font-semibold text-charcoal">📍 Локация:</span> Serdika Str 25</p>
+            <p><span class="font-semibold text-charcoal">🗓️ Следваща група:</span> 30th March 2025</p>
+          </div>
+          <a href="/templates/forms/registration-form.html"
+             class="inline-flex items-center gap-1.5 px-4 py-2 bg-gold text-charcoal font-body font-semibold text-xs tracking-wider uppercase rounded hover:bg-goldDark transition-colors duration-200"
+             hx-get="/templates/forms/registration-form.html" hx-target="#main-view">
+            Запишете се
+          </a>
+        </div>
+      </div>
+
+      <!-- Variations — image left, text right -->
+      <div class="class-card swing-variations flex flex-col sm:flex-row bg-white rounded-lg border border-parchment shadow-sm overflow-hidden
+                  transition-shadow duration-200 hover:shadow-md">
+        <div class="sm:w-2/5 flex-shrink-0">
+          <img src="/static/assets/images/Miro&Kalina.jpg" alt="Lindy Hop Variations"
+               class="w-full h-52 sm:h-full object-cover">
+        </div>
+        <div class="flex-1 p-6">
+          <span class="inline-block px-2.5 py-0.5 bg-cream text-charcoal/60 text-xs font-semibold tracking-wider uppercase rounded-full border border-parchment mb-3">
+            Swing Variations
+          </span>
+          <h2 class="font-display text-2xl font-semibold text-charcoal mb-3">Lindy Hop — Swing Variations</h2>
+          <p class="text-sm text-charcoal/70 leading-relaxed mb-4">
+            We refine &amp; expand our Swing dance knowledge. Technique, new jazz vocabulary, rhythmical variations,
+            and other Swing Dances: Balboa, Shag, Blues. Module-based, rotating class.
+          </p>
+          <div class="flex flex-col gap-1.5 text-xs text-charcoal/60 mb-5">
+            <p><span class="font-semibold text-charcoal">⚠️ Опит и прослушване:</span> Мин. 12 месеца предишен опит</p>
+            <p><span class="font-semibold text-charcoal">🗓️ Присъединяване:</span> По всяко време — препоръчително в началото на модул</p>
+          </div>
+          <a href="/templates/forms/registration-form.html"
+             class="inline-flex items-center gap-1.5 px-4 py-2 bg-gold text-charcoal font-body font-semibold text-xs tracking-wider uppercase rounded hover:bg-goldDark transition-colors duration-200"
+             hx-get="/templates/forms/registration-form.html" hx-target="#main-view">
+            Запишете се
+          </a>
+        </div>
+      </div>
+
     </div>
+
+    <!-- Carousel section -->
+    <div class="border-t border-parchment/60 pt-10">
+      <h2 class="font-display text-2xl font-semibold text-charcoal text-center mb-6">Class Images</h2>
+
+      <div id="carousel-content"
+           hx-get="/api/carousel?type=classes"
+           hx-trigger="load"
+           hx-swap="innerHTML">
+        <div class="flex items-center justify-center py-8 text-charcoal/40 text-sm font-body">
+          Loading carousel…
+        </div>
+      </div>
+    </div>
+
   </div>
-  <div class="class-card swing basics">
-    <div class="class-description">
-      <h2>Lindy Hop - Swing Basics</h2>
-      <p>In this class, we solidify and polish our fundamentals of Lindy Hop - the most popular swing dance. You should have finished the Swing Foundation course.</p>
-      <p><strong>Location:</strong> Serdika Str 25</p>
-      <p><strong>Next group starts on:</strong> 30th March 2025</p>
-    </div>
-    <div class="class-image-container">
-      <img src="/static/assets/images/Miro&Kalina.jpg" alt="Lindy Hop Basics" class="class-image" />
-    </div> 
-  </div>
-  <div class="class-card swing variations">
-    <div class="class-image-container">
-      <img src="/static/assets/images/Miro&Kalina.jpg" alt="Lindy Hop Variations" class="class-image" />
-    </div>
-    <div class="class-description">
-      <h2>Lindy Hop - Swing Variations</h2>
-      <p>In this class, we refine & expand our Swing dance knowledge and understanding. We work on technique, and introduce new jazz vocabulary and rhythmical variations. We explore also other Swing Dances like: Balboa, Shag, Blues. It's a module based class that has a rotating manner</p>
-      <p><strong>Experience & Audition is Required:</strong> At least 12 months of prior experience.</p>
-      <p><strong>You can join anytime:</strong> But it's best to join and stick to a module.</p>
-    </div>
-  </div>
-  <div id="carousel-container">
-    <!-- Image Carousel (Auto-Play) -->
-    <h3>Class Images</h3>
-    <div 
-      id="carousel-content" 
-      hx-get="/api/carousel?type=classes" 
-      hx-trigger="load" 
-      hx-swap="innerHTML">
-      <div class="loading-spinner">Loading carousel...</div>
-    </div>
-    <div>
-      CONTENT TO BE LOADED
-    </div>
-    <!-- Text Carousel (Click-to-Change) -->
-     <h3>Class text</h3>
-    <div 
-      id="carousel-content" 
-      hx-get="/api/carousel?type=classes" 
-      hx-trigger="load"
-      hx-swap="innerHTML">
-      <div class="loading-spinner">Loading carousel...</div>
-    </div>
-  </div>
-</div>
+</section>

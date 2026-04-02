@@ -1,21 +1,57 @@
-<div class="carousel" aria-label="Carousel Component" data-carousel="{{ carouselType }}">
-  <div class="carousel-inner">
+<!-- Carousel component
+     JS uses .carousel-inner (translateX) and .carousel-item (width) for slide mechanics —
+     those class names are kept. style.css provides the core flex/transform behaviour;
+     Tailwind provides visual refinements. -->
+<div class="carousel relative w-full max-w-3xl mx-auto overflow-hidden rounded"
+     aria-label="Carousel Component" data-carousel="{{ carouselType }}">
+
+  <div class="carousel-inner flex">
     {{ range .Items }}
-      <div class="carousel-item">
+      <div class="carousel-item flex-none w-full">
+
         {{ if .Image }}
-          <img src="{{ .Image }}" alt="{{ .Alt }}">
-        {{ else if. Video }}
-          <video controls>
+          <img src="{{ .Image }}" alt="{{ .Alt }}"
+               class="w-full h-auto object-cover">
+
+        {{ else if .Video }}
+          <video controls class="w-full h-auto bg-charcoal">
             <source src="{{ .Video }}" type="video/mp4">
             Your browser does not support the video tag.
           </video>
+
         {{ else }}
-          <h2>{{ .Title }}</h2>
-          <p>{{ .Text }}</p>
+          <!-- Text slide -->
+          <div class="flex flex-col items-center justify-center text-center px-10 py-14 bg-charcoal min-h-[240px]">
+            <!-- Gold rule above title -->
+            <div class="w-10 h-px bg-gold mb-5"></div>
+            <h2 class="font-display text-2xl font-semibold text-cream mb-3">{{ .Title }}</h2>
+            <p class="font-body text-cream/75 text-sm max-w-prose leading-relaxed">{{ .Text }}</p>
+            <div class="w-10 h-px bg-gold mt-5"></div>
+          </div>
         {{ end }}
+
       </div>
     {{ end }}
   </div>
-  <button class="carousel-control prev" aria-label="Previous Slide">&#10094;</button>
-  <button class="carousel-control next" aria-label="Next Slide">&#10095;</button>
+
+  <!-- Previous button -->
+  <button class="carousel-control prev
+                 absolute left-0 top-1/2 -translate-y-1/2 z-10
+                 w-10 h-16 flex items-center justify-center
+                 bg-charcoal/50 hover:bg-charcoal/80
+                 text-cream text-lg
+                 transition-colors duration-200
+                 border-none cursor-pointer"
+          aria-label="Previous Slide">&#10094;</button>
+
+  <!-- Next button -->
+  <button class="carousel-control next
+                 absolute right-0 top-1/2 -translate-y-1/2 z-10
+                 w-10 h-16 flex items-center justify-center
+                 bg-charcoal/50 hover:bg-charcoal/80
+                 text-cream text-lg
+                 transition-colors duration-200
+                 border-none cursor-pointer"
+          aria-label="Next Slide">&#10095;</button>
+
 </div>

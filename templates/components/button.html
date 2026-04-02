@@ -1,0 +1,32 @@
+<!-- Reusable button component
+     Variables: .Label, .Variant ("primary"|"secondary"|"ghost"), .href, .attrs (extra HTML attrs) -->
+{{ $base := "inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded font-body font-semibold text-xs tracking-wider uppercase transition-colors duration-200 cursor-pointer border-none" }}
+
+{{ if eq .Variant "primary" }}
+  <!-- Gold CTA — matches landing.html primary action style -->
+  <a href="{{ .href }}" {{ .attrs }}
+     class="{{ $base }} bg-gold text-charcoal hover:bg-goldDark">
+    {{ .Label }}
+  </a>
+
+{{ else if eq .Variant "secondary" }}
+  <!-- Outlined, charcoal border -->
+  <a href="{{ .href }}" {{ .attrs }}
+     class="{{ $base }} bg-transparent text-charcoal border border-charcoal hover:bg-charcoal hover:text-cream">
+    {{ .Label }}
+  </a>
+
+{{ else if eq .Variant "ghost" }}
+  <!-- Text-only with underline on hover -->
+  <a href="{{ .href }}" {{ .attrs }}
+     class="inline-flex items-center gap-1 font-body text-sm text-charcoal/70 hover:text-gold underline-offset-4 hover:underline transition-colors duration-200">
+    {{ .Label }}
+  </a>
+
+{{ else }}
+  <!-- Default fallback: same as primary -->
+  <a href="{{ .href }}" {{ .attrs }}
+     class="{{ $base }} bg-gold text-charcoal hover:bg-goldDark">
+    {{ .Label }}
+  </a>
+{{ end }}

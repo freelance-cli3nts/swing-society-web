@@ -1,11 +1,22 @@
-<!-- Minimalist Modal -->
-<div id="small-modal" class="modal">
-  <!-- Close on background click -->
-  <div class="modal-background" id="close-small-modal">
-  </div>
-  <div class="modal-content box">
+<!-- Small / Confirmation Modal
+     JS hook: add/remove 'is-active' on #small-modal to show/hide
+     style.css provides: .modal { position:fixed; display:none } / .modal.is-active { display:flex }
+     Tailwind provides: alignment + all visual styling inside -->
+<div id="small-modal" class="modal items-center justify-center">
+
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-charcoal/70 backdrop-blur-sm cursor-pointer"
+       id="close-small-modal"></div>
+
+  <!-- Card -->
+  <div class="relative z-10 w-[90vw] max-w-sm bg-cream rounded shadow-2xl p-6 border border-parchment">
+
     <!-- Close button -->
-    <button class="delete" aria-label="close" id="close-small-modal-btn"></button>
-    <p>This is a minimalist modal.</p>
+    <button class="absolute top-3 right-3 flex items-center justify-center w-7 h-7 rounded-full bg-charcoal/8 hover:bg-gold/20 transition-colors duration-200 text-charcoal/60 hover:text-charcoal text-sm leading-none"
+            aria-label="close" id="close-small-modal-btn">✕</button>
+
+    <!-- Content slot -->
+    <p class="text-charcoal/80 text-sm font-body pr-8">This is a minimalist modal.</p>
+
   </div>
 </div>

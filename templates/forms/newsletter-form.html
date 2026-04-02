@@ -1,92 +1,112 @@
-<div class="form-container" id="newsletter-form-container">
-  <button class="close-btn" hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;</button>
-  
-  <section class="newsletter-info">
-    <h3>Абонирайте се за нашия бюлетин</h3>
-    <p>Получавайте актуална информация за предстоящи събития, уъркшопи, партита и специални обучения.</p>
-    <p class="highlight-text">🎵 Никога няма да пропуснете важна информация за нашата общност!</p>
-  </section>
+<!-- Newsletter Form — HTMX fragment -->
+<div class="form-container relative max-w-2xl mx-auto" id="newsletter-form-container">
 
-  <form id="newsletter-form" 
-        hx-post="/api/newsletter" 
-        hx-target="this" 
-        hx-swap="outerHTML" 
+  <button class="absolute top-4 right-4 flex items-center justify-center w-7 h-7 rounded-full bg-charcoal/8 hover:bg-gold/20 transition-colors duration-200 text-charcoal/50 hover:text-charcoal text-sm leading-none"
+          hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;</button>
+
+  <!-- Header -->
+  <div class="mb-6 pb-4 border-b border-parchment">
+    <p class="font-body text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-1">Newsletter</p>
+    <h3 class="font-display text-2xl font-semibold text-charcoal">Абонирайте се за нашия бюлетин</h3>
+    <p class="text-sm text-charcoal/60 mt-1">Получавайте актуална информация за предстоящи събития, уъркшопи, партита и специални обучения.</p>
+    <p class="font-semibold border-l-4 border-gold pl-3 mt-3 text-sm text-charcoal">
+      🎵 Никога няма да пропуснете важна информация за нашата общност!
+    </p>
+  </div>
+
+  <form id="newsletter-form"
+        hx-post="/api/newsletter"
+        hx-target="this"
+        hx-swap="outerHTML"
         hx-indicator="#loading-spinner">
-    
-    <div class="form-section personal-info">
-      <div class="form-group">
-        <label for="email">Имейл адрес*</label>
-        <input type="email" id="email" name="email" required 
-               hx-post="/api/validate-email"  
-               hx-target="#email-error" 
-               hx-swap="innerHTML" 
-               hx-indicator="#loading-spinner" 
+
+    <div class="space-y-4 mb-6">
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-charcoal mb-1.5">Имейл адрес*</label>
+        <input type="email" id="email" name="email" required
+               class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body
+                      focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"
+               hx-post="/api/validate-email"
+               hx-target="#email-error"
+               hx-swap="innerHTML"
+               hx-indicator="#loading-spinner"
                hx-trigger="blur, keyup changed delay:500ms">
         <small class="error-message" id="email-error"></small>
       </div>
 
-      <div class="form-group">
-        <label for="firstName">Име</label>
-        <input type="text" id="firstName" name="firstName" 
-                hx-post="/api/validate-name" 
-                hx-target="#name-error" 
-                hx-swap="innerHTML" 
-                hx-indicator="#loading-spinner" 
-                hx-trigger="blur, keyup changed delay:500ms">
-                <small class="error-message" id="name-error"></small>
+      <div>
+        <label for="firstName" class="block text-sm font-medium text-charcoal mb-1.5">Ime</label>
+        <input type="text" id="firstName" name="firstName"
+               class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body
+                      focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"
+               hx-post="/api/validate-name"
+               hx-target="#name-error"
+               hx-swap="innerHTML"
+               hx-indicator="#loading-spinner"
+               hx-trigger="blur, keyup changed delay:500ms">
+        <small class="error-message" id="name-error"></small>
       </div>
 
-      <div class="form-group">
-        <label for="phone">Телефонен номер (по желание)</label>
-        <input type="tel" id="phone" name="phone" 
+      <div>
+        <label for="phone" class="block text-sm font-medium text-charcoal mb-1.5">Телефонен номер (по желание)</label>
+        <input type="tel" id="phone" name="phone"
+               class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body
+                      focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"
                hx-post="/api/validate-phone" required
-               hx-target="#phone-error" 
-               hx-swap="innerHTML" 
-               hx-indicator="#loading-spinner" 
+               hx-target="#phone-error"
+               hx-swap="innerHTML"
+               hx-indicator="#loading-spinner"
                hx-trigger="blur, keyup changed delay:500ms">
         <small class="error-message" id="phone-error"></small>
       </div>
-      
-      <div class="form-question">
-        <p>Предпочитана честота на известията:</p>
-        <div class="radio-group">
-          <label class="option-label">
-            <input type="radio" name="frequency" value="weekly" checked>
-            Седмично
+
+      <div>
+        <p class="text-sm font-medium text-charcoal mb-3">Предпочитана честота на известията:</p>
+        <div class="flex flex-wrap gap-4">
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" name="frequency" value="weekly" checked class="accent-gold"> Седмично
           </label>
-          <label class="option-label">
-            <input type="radio" name="frequency" value="monthly">
-            Месечно
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" name="frequency" value="monthly" class="accent-gold"> Месечно
           </label>
-          <label class="option-label">
-            <input type="radio" name="frequency" value="asNeeded">
-            Само при важни събития
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" name="frequency" value="asNeeded" class="accent-gold"> Само при важни събития
           </label>
         </div>
       </div>
-    </div>
-    
-    <div class="form-group terms-agreement">
-      <input type="checkbox" id="regulations" name="regulations" required>
-      <label for="regulations">Запознах се с <a href="/terms-of-use.html" target="_blank" class="terms-link">правилата и условията</a> и съм съгласен</label>
-    </div>
-    
-    <div class="form-group gdpr">
-      <input type="checkbox" id="gdpr" name="gdpr" required>
-      <label for="gdpr">Съгласен съм с <a href="/gdpr.html" target="_blank" class="terms-link">GDPR</a></label>
+
     </div>
 
-    <div class="form-actions">
-      <button type="submit" class="submit-btn">Абониране</button>
-      <div id="loading-spinner" class="htmx-indicator">
-        <div class="spinner"></div>
+    <!-- Terms & GDPR -->
+    <div class="space-y-3 mb-5">
+      <div class="flex items-start gap-2 text-sm">
+        <input type="checkbox" id="regulations" name="regulations" required class="mt-0.5 accent-gold">
+        <label for="regulations" class="text-charcoal/70">
+          Запознах се с <a href="/terms-of-use.html" target="_blank"
+             class="text-charcoal underline underline-offset-2 hover:text-gold transition-colors">правилата и условията</a> и съм съгласен
+        </label>
+      </div>
+      <div class="flex items-start gap-2 text-sm">
+        <input type="checkbox" id="gdpr" name="gdpr" required class="mt-0.5 accent-gold">
+        <label for="gdpr" class="text-charcoal/70">
+          Съгласен съм с <a href="/gdpr.html" target="_blank"
+             class="text-charcoal underline underline-offset-2 hover:text-gold transition-colors">GDPR</a>
+        </label>
       </div>
     </div>
+
+    <div class="flex items-center gap-4">
+      <button type="submit" class="submit-btn">Абониране</button>
+      <div id="loading-spinner" class="htmx-indicator">
+        <div class="spinner-ring"></div>
+      </div>
+    </div>
+
   </form>
 </div>
 
-<!-- Success Message (Initially Hidden) -->
-<div class="success-message" id="success-message" style="display: none;">
-  <h3>Благодарим за абонамента!</h3>
-  <p>Вече сте абонирани за нашия бюлетин и ще получавате известия за предстоящи събития.</p>
+<div class="text-center bg-green-50 p-8 rounded-lg border-l-4 border-green-500" id="success-message" style="display: none;">
+  <h3 class="font-display text-xl font-semibold text-green-700 mb-2">Благодарим за абонамента!</h3>
+  <p class="text-sm text-green-700/80">Вече сте абонирани за нашия бюлетин и ще получавате известия за предстоящи събития.</p>
 </div>

@@ -1,166 +1,190 @@
-<!-- Registration Form Container -->
-<div class="form-container" id="registration-form-container">
-  <!-- Course Information -->
-  <section class="course-info">
-    <h3>Нова група по SWING танци за начинаещи!</h3>
-    <ul class="info-list">
-      <li><span class="icon">🗓️</span> <strong>Дата на старт:</strong> 15 януари 2025</li>
-      <li><span class="icon">🕢</span> <strong>Време:</strong> всеки понеделник и сряда от 19:30 ч.</li>
-      <li><span class="icon">📍</span> <strong>Локация:</strong> <a href="https://maps.app.goo.gl/6FUq5nkWctsXrxMQA" target="_blank">ул. Сердика 25</a></li>
-      <li><span class="icon">💃🕺</span> Предишен опит не е необходим. Няма нужда и от партньор.</li>
-      <li><span class="icon">🎷</span> Ще учим най-популярния SWING танц - Линди Хоп, който се появил в Ню Йорк през 30-те години на миналия век.</li>
-      <li><span class="icon">📅</span> <strong>Курсът се състои от:</strong> 16 класа по 70 минути.</li>
-      <li><span class="icon">💲</span> <strong>Цена на курса:</strong> 100 лв на месец или 180 лв за целия курс</li>
+<!-- Registration Form — HTMX fragment
+     Keeps: .form-container (hx-target="closest"), .submit-btn/.htmx-indicator (style.css HTMX hooks), .error-message (HTMX validation target) -->
+<div class="form-container relative max-w-2xl mx-auto" id="registration-form-container">
+
+  <!-- Course info banner -->
+  <section class="bg-charcoal rounded-lg p-5 mb-6 text-cream">
+    <h3 class="font-display text-xl font-semibold text-gold mb-3">Нова група по SWING танци за начинаещи!</h3>
+    <ul class="list-none p-0 space-y-2 text-sm text-cream/80">
+      <li class="flex items-start gap-2"><span>🗓️</span> <span><strong class="text-cream">Дата на старт:</strong> 15 януари 2025</span></li>
+      <li class="flex items-start gap-2"><span>🕢</span> <span><strong class="text-cream">Време:</strong> всеки понеделник и сряда от 19:30 ч.</span></li>
+      <li class="flex items-start gap-2"><span>📍</span>
+        <span><strong class="text-cream">Локация:</strong>
+          <a href="https://maps.app.goo.gl/6FUq5nkWctsXrxMQA" target="_blank"
+             class="text-gold underline underline-offset-2 hover:text-parchment transition-colors">ул. Сердика 25</a>
+        </span>
+      </li>
+      <li class="flex items-start gap-2"><span>💃🕺</span> <span>Предишен опит не е необходим. Няма нужда и от партньор.</span></li>
+      <li class="flex items-start gap-2"><span>🎷</span> <span>Ще учим най-популярния SWING танц — Линди Хоп, появил се в Ню Йорк през 30-те.</span></li>
+      <li class="flex items-start gap-2"><span>📅</span> <span><strong class="text-cream">Курсът се състои от:</strong> 16 класа по 70 минути.</span></li>
+      <li class="flex items-start gap-2"><span>💲</span> <span><strong class="text-cream">Цена:</strong> 100 лв на месец или 180 лв за целия курс</span></li>
     </ul>
-    <p class="highlight-text">🎉 Предизвикай себе си и стани част от световното SWING и JAZZ танцувално общество, в което те очакват ритъм, стил и много нови приятели!</p>
+    <p class="border-l-4 border-gold pl-3 mt-4 text-sm text-gold/90 font-medium">
+      🎉 Предизвикай себе си и стани част от световното SWING и JAZZ танцувално общество!
+    </p>
   </section>
 
-  <!-- Registration Steps -->
-  <section class="registration-steps">
-    <h3>За да се запишете за часове:</h3>
-    <ol>
+  <!-- Steps -->
+  <section class="mb-6 p-5 border border-parchment/60 rounded-lg bg-cream/30">
+    <h3 class="font-display text-lg font-semibold text-charcoal mb-3">За да се запишете за часове:</h3>
+    <ol class="list-decimal list-inside space-y-1.5 text-sm text-charcoal/80 pl-1">
       <li>Попълнете формуляра и прочетете практическата информация</li>
       <li>Регистрирайте се и изчакайте максимум 4 дни за потвърждение по имейл</li>
       <li>Платете за часовете и елате на първия час</li>
     </ol>
-    <p>Моля, отговорете на следните въпроси и ще се видим в час!</p>
+    <p class="text-sm text-charcoal/60 mt-3">Моля, отговорете на следните въпроси и ще се видим в час!</p>
   </section>
 
-  <!-- Registration Form -->
-  <form id="registration-form" 
-        hx-post="/api/register" 
-        hx-target="this" 
-        hx-swap="outerHTML" 
+  <!-- Registration form -->
+  <form id="registration-form"
+        hx-post="/api/register"
+        hx-target="this"
+        hx-swap="outerHTML"
         hx-indicator="#loading-spinner">
-    <div class="form-section personal-info">
-      <h3>Лична информация</h3>
-      
-      <div class="form-group">
-        <label for="email">Имейл адрес*</label>
-        <input type="email" id="email" name="email" required 
-               hx-post="/api/validate-email"  
-               hx-target="#email-error" 
-               hx-swap="innerHTML" 
-               hx-indicator="#loading-spinner" 
+
+    <!-- Personal info -->
+    <div class="mb-5 p-5 border border-parchment/60 rounded-lg">
+      <h3 class="font-display text-lg font-semibold text-charcoal mb-4">Лична информация</h3>
+
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-charcoal mb-1.5">Имейл адрес*</label>
+        <input type="email" id="email" name="email" required
+               class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body
+                      focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"
+               hx-post="/api/validate-email"
+               hx-target="#email-error"
+               hx-swap="innerHTML"
+               hx-indicator="#loading-spinner"
                hx-trigger="blur, keyup changed delay:500ms">
         <small class="error-message" id="email-error"></small>
       </div>
 
-      <div class="form-group">
-        <label for="name">Име и фамилия*</label>
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-charcoal mb-1.5">Ime и фамилия*</label>
         <input type="text" id="name" name="name" required
-                hx-post="/api/validate-name" 
-                hx-target="#name-error" 
-                hx-swap="innerHTML" 
-                hx-indicator="#loading-spinner" 
-                hx-trigger="blur, keyup changed delay:500ms">
+               class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body
+                      focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"
+               hx-post="/api/validate-name"
+               hx-target="#name-error"
+               hx-swap="innerHTML"
+               hx-indicator="#loading-spinner"
+               hx-trigger="blur, keyup changed delay:500ms">
         <small class="error-message" id="name-error"></small>
       </div>
 
-      <div class="form-group">
-        <label for="phone">Телефонен номер</label>
-        <input type="tel" id="phone" name="phone" 
+      <div>
+        <label for="phone" class="block text-sm font-medium text-charcoal mb-1.5">Телефонен номер</label>
+        <input type="tel" id="phone" name="phone"
+               class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body
+                      focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"
                hx-post="/api/validate-phone" required
-               hx-target="#phone-error" 
-               hx-swap="innerHTML" 
-               hx-indicator="#loading-spinner" 
+               hx-target="#phone-error"
+               hx-swap="innerHTML"
+               hx-indicator="#loading-spinner"
                hx-trigger="blur, keyup changed delay:500ms">
         <small class="error-message" id="phone-error"></small>
       </div>
     </div>
 
-    <div class="form-section dance-preferences">
-      <h3>Танцови предпочитания</h3>
-      
-      <div class="form-question">
-        <p>Имаш ли предпочитана роля?</p>
-        <div class="checkbox-group">
-          <label class="option-label">
-            <input type="checkbox" name="roles[]" value="leader">
-            Лидер
+    <!-- Dance preferences -->
+    <div class="mb-5 p-5 border border-parchment/60 rounded-lg">
+      <h3 class="font-display text-lg font-semibold text-charcoal mb-4">Танцови предпочитания</h3>
+
+      <div class="mb-4">
+        <p class="text-sm font-medium text-charcoal mb-3">Имаш ли предпочитана роля?</p>
+        <div class="flex flex-wrap gap-4">
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="checkbox" name="roles[]" value="leader" class="accent-gold"> Лидер
           </label>
-          <label class="option-label">
-            <input type="checkbox" name="roles[]" value="follower">
-            Фолоуър
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="checkbox" name="roles[]" value="follower" class="accent-gold"> Фолоуър
           </label>
-          <label class="option-label">
-            <input type="checkbox" name="roles[]" value="solo">
-            Соло танци
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="checkbox" name="roles[]" value="solo" class="accent-gold"> Соло танци
           </label>
         </div>
       </div>
 
-      <div class="form-question">
-        <p>Самостоятелно ли се записваш?</p>
-        <div class="radio-group">
-          <label class="option-label">
-            <input type="radio" name="registerAlone" value="yes" onchange="togglePartnerField(true)">
-            Да
+      <div class="mb-4">
+        <p class="text-sm font-medium text-charcoal mb-3">Самостоятелно ли се записваш?</p>
+        <div class="flex flex-wrap gap-4">
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" name="registerAlone" value="yes" onchange="togglePartnerField(true)" class="accent-gold"> Да
           </label>
-          <label class="option-label">
-            <input type="radio" name="registerAlone" value="no" onchange="togglePartnerField(false)">
-            Не
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" name="registerAlone" value="no" onchange="togglePartnerField(false)" class="accent-gold"> Не
           </label>
         </div>
       </div>
 
-      <div class="form-group" id="partner-name-group" style="display: none;">
-        <label for="partner-name">Име на партньор/ка</label>
-        <input type="text" id="partner-name" name="partner-name">
+      <div id="partner-name-group" style="display: none;">
+        <label for="partner-name" class="block text-sm font-medium text-charcoal mb-1.5">Ime на партньор/ка</label>
+        <input type="text" id="partner-name" name="partner-name"
+               class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body
+                      focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors">
       </div>
     </div>
 
-    <div class="form-section additional-info">
-      <h3>Допълнителна информация</h3>
-      
-      <div class="form-question">
-        <p>От къде научихте за нас?</p>
-        <div class="radio-group source-options">
-          <label class="option-label">
-            <input type="radio" id="source-fb" name="source" value="fb">
-            FB
+    <!-- Additional info -->
+    <div class="mb-5 p-5 border border-parchment/60 rounded-lg">
+      <h3 class="font-display text-lg font-semibold text-charcoal mb-4">Допълнителна информация</h3>
+
+      <div class="mb-4">
+        <p class="text-sm font-medium text-charcoal mb-3">От къде научихте за нас?</p>
+        <div class="flex flex-wrap gap-4">
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" id="source-fb" name="source" value="fb" class="accent-gold"> FB
           </label>
-          <label class="option-label">
-            <input type="radio" id="source-google" name="source" value="google">
-            Google
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" id="source-google" name="source" value="google" class="accent-gold"> Google
           </label>
-          <label class="option-label">
-            <input type="radio" id="source-friend" name="source" value="friend">
-            Приятел
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" id="source-friend" name="source" value="friend" class="accent-gold"> Приятел
           </label>
-          <label class="option-label">
-            <input type="radio" id="source-other" name="source" value="other">
-            Друго
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" id="source-other" name="source" value="other" class="accent-gold"> Друго
           </label>
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="message">Искате ли да ни кажете нещо?</label>
-        <textarea id="message" name="message" rows="4"></textarea>
-      </div>
-
-      <div class="form-group terms-agreement">
-        <input type="checkbox" id="regulations" name="regulations" required>
-        <label for="regulations">Запознах се с <a href="/terms-of-use.html" target="_blank" class="terms-link">правилата и условията</a> и съм съгласен</label>
-      </div>
-      <div class="form-group gdpr">
-        <input type="checkbox" id="gdpr" name="gdpr" required>
-        <label for="gdpr">Съгласен съм с <a href="/gdpr.html" target="_blank" class="terms-link">GDPR</a></label>
+      <div>
+        <label for="message" class="block text-sm font-medium text-charcoal mb-1.5">Искате ли да ни кажете нещо?</label>
+        <textarea id="message" name="message" rows="4"
+                  class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body resize-none
+                         focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"></textarea>
       </div>
     </div>
 
-    <div class="form-actions">
+    <!-- Terms & GDPR -->
+    <div class="space-y-3 mb-5">
+      <div class="flex items-start gap-2 text-sm">
+        <input type="checkbox" id="regulations" name="regulations" required class="mt-0.5 accent-gold">
+        <label for="regulations" class="text-charcoal/70">
+          Запознах се с <a href="/terms-of-use.html" target="_blank"
+             class="text-charcoal underline underline-offset-2 hover:text-gold transition-colors">правилата и условията</a> и съм съгласен
+        </label>
+      </div>
+      <div class="flex items-start gap-2 text-sm">
+        <input type="checkbox" id="gdpr" name="gdpr" required class="mt-0.5 accent-gold">
+        <label for="gdpr" class="text-charcoal/70">
+          Съгласен съм с <a href="/gdpr.html" target="_blank"
+             class="text-charcoal underline underline-offset-2 hover:text-gold transition-colors">GDPR</a>
+        </label>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4">
       <button type="submit" class="submit-btn">Регистрация</button>
       <div id="loading-spinner" class="htmx-indicator">
-        <div class="spinner"></div>
+        <div class="spinner-ring"></div>
       </div>
     </div>
+
   </form>
 </div>
 
-<!-- Success Message (Initially Hidden) -->
-<div class="success-message" id="success-message" style="display: none;">
-  <h3>Благодарим за регистрацията!</h3>
-  <p>Ще получите потвърждение по имейл до 4 работни дни.</p>
+<!-- Success (shown by HTMX outerHTML swap or JS) -->
+<div class="text-center bg-green-50 p-8 rounded-lg border-l-4 border-green-500" id="success-message" style="display: none;">
+  <h3 class="font-display text-xl font-semibold text-green-700 mb-2">Благодарим за регистрацията!</h3>
+  <p class="text-sm text-green-700/80">Ще получите потвърждение по имейл до 4 работни дни.</p>
 </div>

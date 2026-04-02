@@ -1,94 +1,114 @@
-<div class="form-container" id="contact-form-container">
-  <button class="close-btn" hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;</button>
-  
-  <section class="contact-info">
-    <h3>Пишете ни!</h3>
-    <p>Изпратете ни съобщение и ние ще се свържем с вас възможно най-скоро.</p>
-  </section>
-  
-  <form id="contact-form" 
-        hx-post="/api/contact" 
-        hx-target="this" 
-        hx-swap="outerHTML" 
+<!-- Contact Form — HTMX fragment
+     Keeps: .form-container (hx-target="closest .form-container"), .submit-btn/.htmx-indicator (style.css HTMX state hooks), .error-message (HTMX validation target) -->
+<div class="form-container relative max-w-2xl mx-auto" id="contact-form-container">
+
+  <!-- Close button -->
+  <button class="absolute top-4 right-4 flex items-center justify-center w-7 h-7 rounded-full bg-charcoal/8 hover:bg-gold/20 transition-colors duration-200 text-charcoal/50 hover:text-charcoal text-sm leading-none"
+          hx-get="" hx-target="closest .form-container" hx-trigger="click" hx-swap="delete">&times;</button>
+
+  <!-- Header -->
+  <div class="mb-6 pb-4 border-b border-parchment">
+    <p class="font-body text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-1">Contact</p>
+    <h3 class="font-display text-2xl font-semibold text-charcoal">Пишете ни!</h3>
+    <p class="text-sm text-charcoal/60 mt-1">Изпратете ни съобщение и ние ще се свържем с вас възможно най-скоро.</p>
+  </div>
+
+  <form id="contact-form"
+        hx-post="/api/contact"
+        hx-target="this"
+        hx-swap="outerHTML"
         hx-indicator="#loading-spinner">
-    <div class="form-section personal-info">
-      <div class="form-group">
-        <label for="name">Име*</label>
+
+    <div class="mb-6 space-y-4">
+
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-charcoal mb-1.5">Ime*</label>
         <input type="text" id="name" name="name" required
-               hx-post="/api/validate-name" 
-               hx-target="#name-error" 
-               hx-swap="innerHTML" 
-               hx-indicator="#loading-spinner" 
+               class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body
+                      focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"
+               hx-post="/api/validate-name"
+               hx-target="#name-error"
+               hx-swap="innerHTML"
+               hx-indicator="#loading-spinner"
                hx-trigger="blur, keyup changed delay:500ms">
         <small class="error-message" id="name-error"></small>
       </div>
-      
-      <div class="form-group">
-        <label for="email">Имейл адрес*</label>
-        <input type="email" id="email" name="email" required 
-               hx-post="/api/validate-email"  
-               hx-target="#email-error" 
-               hx-swap="innerHTML" 
-               hx-indicator="#loading-spinner" 
+
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-charcoal mb-1.5">Имейл адрес*</label>
+        <input type="email" id="email" name="email" required
+               class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body
+                      focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"
+               hx-post="/api/validate-email"
+               hx-target="#email-error"
+               hx-swap="innerHTML"
+               hx-indicator="#loading-spinner"
                hx-trigger="blur, keyup changed delay:500ms">
         <small class="error-message" id="email-error"></small>
       </div>
 
-      <div class="form-group">
-        <label for="phone">Телефон (по желание)</label>
+      <div class="mb-4">
+        <label for="phone" class="block text-sm font-medium text-charcoal mb-1.5">Телефон (по желание)</label>
         <input type="tel" id="phone" name="phone"
+               class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body
+                      focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"
                hx-post="/api/validate-phone" required
-               hx-target="#phone-error" 
-               hx-swap="innerHTML" 
-               hx-indicator="#loading-spinner" 
+               hx-target="#phone-error"
+               hx-swap="innerHTML"
+               hx-indicator="#loading-spinner"
                hx-trigger="blur, keyup changed delay:500ms">
         <small class="error-message" id="phone-error"></small>
       </div>
 
-      <div class="form-group">
-        <label for="message">Съобщение*</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
+      <div class="mb-4">
+        <label for="message" class="block text-sm font-medium text-charcoal mb-1.5">Съобщение*</label>
+        <textarea id="message" name="message" rows="4" required
+                  class="w-full px-3 py-2.5 border border-parchment rounded text-sm font-body resize-none
+                         focus:outline-none focus:border-charcoal focus:ring-1 focus:ring-charcoal/20 transition-colors"></textarea>
       </div>
-      
-      <div class="form-question">
-        <p>Как предпочитате да се свържем с вас:</p>
-        <div class="radio-group">
-          <label class="option-label">
-            <input type="radio" name="contactPreference" value="email" checked>
-            Имейл
+
+      <div>
+        <p class="text-sm font-medium text-charcoal mb-3">Как предпочитате да се свържем с вас:</p>
+        <div class="flex flex-wrap gap-4">
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" name="contactPreference" value="email" checked class="accent-gold"> Имейл
           </label>
-          <label class="option-label">
-            <input type="radio" name="contactPreference" value="phone">
-            Телефонен разговор
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" name="contactPreference" value="phone" class="accent-gold"> Телефонен разговор
           </label>
-          <label class="option-label">
-            <input type="radio" name="contactPreference" value="viber">
-            Viber съобщение
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" name="contactPreference" value="viber" class="accent-gold"> Viber
           </label>
-          <label class="option-label">
-            <input type="radio" name="contactPreference" value="whatsapp">
-            Whatsapp съобщение
+          <label class="flex items-center gap-2 text-sm text-charcoal/80 cursor-pointer">
+            <input type="radio" name="contactPreference" value="whatsapp" class="accent-gold"> Whatsapp
           </label>
         </div>
       </div>
-    </div>
-    
-    <div class="form-group gdpr">
-      <input type="checkbox" id="gdpr" name="gdpr" required>
-      <label for="gdpr">Съгласен съм с <a href="/gdpr.html" target="_blank" class="terms-link">GDPR</a></label>
+
     </div>
 
-    <div class="form-actions">
+    <!-- GDPR -->
+    <div class="flex items-start gap-2 mb-5 text-sm">
+      <input type="checkbox" id="gdpr" name="gdpr" required class="mt-0.5 accent-gold">
+      <label for="gdpr" class="text-charcoal/70">
+        Съгласен съм с <a href="/gdpr.html" target="_blank"
+           class="text-charcoal underline underline-offset-2 hover:text-gold transition-colors">GDPR</a>
+      </label>
+    </div>
+
+    <!-- Submit -->
+    <div class="flex items-center gap-4">
       <button type="submit" class="submit-btn">Изпрати</button>
       <div id="loading-spinner" class="htmx-indicator">
-        <div class="spinner"></div>
+        <div class="spinner-ring"></div>
       </div>
     </div>
+
   </form>
 </div>
 
-<!-- Success Message (Initially Hidden) -->
-<div class="success-message" id="success-message" style="display: none;">
-  <h3>Благодарим за съобщението!</h3>
-  <p>Ще се свържем с вас възможно най-скоро.</p>
+<!-- Success (shown by HTMX outerHTML swap) -->
+<div class="text-center bg-green-50 p-8 rounded-lg border-l-4 border-green-500" id="success-message" style="display: none;">
+  <h3 class="font-display text-xl font-semibold text-green-700 mb-2">Благодарим за съобщението!</h3>
+  <p class="text-sm text-green-700/80">Ще се свържем с вас възможно най-скоро.</p>
 </div>

@@ -1,23 +1,18 @@
 <!-- Hero Section -->
-<section class="hero is-fullheight-with-navbar">
-  <div class="hero-body has-background-dark p-0 is-relative">
-    <!-- Hero Image -->
-    <figure class="image is-fullwidth m-0" style="height: 100%;">
+<section class="relative" style="height: calc(100vh - 52px);">
+  <div class="bg-black p-0 relative w-full h-full">
+    <figure class="w-full h-full" style="margin: 0;">
       <img src="/static/assets/images/the founders.jpg" alt="Swing Society Group Photo" style="object-fit: cover; width: 100%; height: 100%;">
     </figure>
-    
-    <!-- Overlay Text -->
-    <div class="is-overlay" style="background: rgba(0, 0, 0, 0.4);">
-      <div class="container has-text-centered">
-        <div class="columns is-centered" style="height: 100vh;">
-          <div class="column is-8 is-flex is-flex-direction-column is-justify-content-center">
-            <h1 class="title is-1 has-text-white mb-6">About Us</h1>
-            <p class="subtitle is-4 has-text-white">
-              Swing Society is a dance studio that offers classes in swing dance. Our instructors are passionate about teaching 
-              and sharing the joy of dance with others. Whether you're a beginner or an experienced dancer, we have a class for you. 
-              Come join us and discover the joy of swing dance!
-            </p>
-          </div>
+    <div class="absolute inset-0" style="background: rgba(0, 0, 0, 0.4);">
+      <div class="max-w-7xl mx-auto px-4 text-center h-full flex justify-center">
+        <div class="w-full lg:w-2/3 flex flex-col justify-center px-4">
+          <h1 class="font-display text-5xl font-bold text-white mb-6">About Us</h1>
+          <p class="text-xl text-white">
+            Swing Society is a dance studio that offers classes in swing dance. Our instructors are passionate about teaching
+            and sharing the joy of dance with others. Whether you're a beginner or an experienced dancer, we have a class for you.
+            Come join us and discover the joy of swing dance!
+          </p>
         </div>
       </div>
     </div>
@@ -25,69 +20,63 @@
 </section>
 
 <!-- Instructors Section -->
-<section class="section">
-  <div class="container">
-    <h2 class="title is-2 has-text-centered mb-6">Our Instructors</h2>
-    <p class="subtitle is-5 has-text-centered mb-6">
-      Swing Society организира събития, свързани със суинг танците в България, сред които и уроци по танци. 
+<section class="py-12">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="font-display text-3xl font-semibold text-center mb-6">Our Instructors</h2>
+    <p class="text-lg text-center mb-6">
+      Swing Society организира събития, свързани със суинг танците в България, сред които и уроци по танци.
       Това е нашият екип от учители:
     </p>
 
     <!-- Stella - Text Left, Image Right -->
-    <div class="columns is-vcentered mb-6">
-      <div class="column is-6 pr-6">
-        <h3 class="title is-3">Стела Калчева</h3>
-        <div class="content is-medium">
-          <p>
-            "Когато случайно се записах в група по суинг танци, разбрах, че... наистина няма нищо случайно. 
-            Човек не знае как танцът, може да промени живота му, докато не се случи. Заразяващото вдъхновение 
-            и чувството на свобода са само една малка част от тази необятна вселена, която всеки трябва да 
-            познае, за да открие себе си."
-          </p>
-        </div>
+    <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
+      <div class="flex-1 pr-0 md:pr-6">
+        <h3 class="font-display text-2xl font-semibold mb-3">Стела Калчева</h3>
+        <p>
+          "Когато случайно се записах в група по суинг танци, разбрах, че... наистина няма нищо случайно.
+          Човек не знае как танцът, може да промени живота му, докато не се случи. Заразяващото вдъхновение
+          и чувството на свобода са само една малка част от тази необятна вселена, която всеки трябва да
+          познае, за да открие себе си."
+        </p>
       </div>
-      <div class="column is-6">
-        <figure class="image is-4by3">
-          <img src="/static/assets/images/DJ-Rosi.jpg" alt="Стела Калчева">
+      <div class="flex-1">
+        <figure class="w-full aspect-[4/3] overflow-hidden rounded-lg">
+          <img src="/static/assets/images/DJ-Rosi.jpg" alt="Стела Калчева" class="w-full h-full object-cover">
         </figure>
       </div>
     </div>
 
     <!-- Miroslav - Image Left, Text Right -->
-    <div class="columns is-vcentered mb-6">
-      <div class="column is-6">
-        <figure class="image is-4by3">
-          <img src="/static/assets/images/DJ-Miro&Mitko.jpg" alt="Мирослав Миронов">
+    <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
+      <div class="flex-1">
+        <figure class="w-full aspect-[4/3] overflow-hidden rounded-lg">
+          <img src="/static/assets/images/DJ-Miro&Mitko.jpg" alt="Мирослав Миронов" class="w-full h-full object-cover">
         </figure>
       </div>
-      <div class="column is-6 pl-6">
-        <h3 class="title is-3">Мирослав Миронов</h3>
-        <div class="content is-medium">
-          <p>
-            Мирослав започва да се занимва със суинг танци през 2013 г. и досега не се спира да обикаля 
-            по света и унас, за да се учи и развива. Обича Lindy Hop, Collegiate Shag, Solo Jazz. 
-            В танца цени връзката с музиката и партньора, свободата да изразяваш себе си и забавлението.
-          </p>
-        </div>
+      <div class="flex-1 pl-0 md:pl-6">
+        <h3 class="font-display text-2xl font-semibold mb-3">Мирослав Миронов</h3>
+        <p>
+          Мирослав започва да се занимва със суинг танци през 2013 г. и досега не се спира да обикаля
+          по света и унас, за да се учи и развива. Обича Lindy Hop, Collegiate Shag, Solo Jazz.
+          В танца цени връзката с музиката и партньора, свободата да изразяваш себе си и забавлението.
+        </p>
       </div>
     </div>
 
     <!-- Dimitar - Text Left, Image Right -->
-    <div class="columns is-vcentered">
-      <div class="column is-6 pr-6">
-        <h3 class="title is-3">Димитър Анастасов</h3>
-        <div class="content is-small">
-          <p>
-            Димитър е нещо повече от фен на суинг танците, той е техен ценител. Обожава всички аспекти 
-            свързани с тях: модата - ретро дрехите и аксесоарите, социалната природа на танца - да общуваш 
-            с някого без да е нужно да казвате и дума, музиката, движението. Танцува от 4 години, за това 
-            време е бил къде ли не из Европа заради танците и има приятели наистина навсякъде.
-          </p>
-        </div>
+    <div class="flex flex-col md:flex-row items-center gap-8">
+      <div class="flex-1 pr-0 md:pr-6">
+        <h3 class="font-display text-2xl font-semibold mb-3">Димитър Анастасов</h3>
+        <p>
+          Димитър е нещо повече от фен на суинг танците, той е техен ценител. Обожава всички аспекти
+          свързани с тях: модата - ретро дрехите и аксесоарите, социалната природа на танца - да общуваш
+          с някого без да е нужно да казвате и дума, музиката, движението. Танцува от 4 години, за това
+          време е бил къде ли не из Европа заради танците и има приятели наистина навсякъде.
+        </p>
       </div>
-      <div class="column is-6">
-        <figure class="image is-4by3">
-          <img src="/static/assets/images/DJ-Mitko.jpg" alt="Димитър Анастасов">
+      <div class="flex-1">
+        <figure class="w-full aspect-[4/3] overflow-hidden rounded-lg">
+          <img src="/static/assets/images/DJ-Mitko.jpg" alt="Димитър Анастасов" class="w-full h-full object-cover">
         </figure>
       </div>
     </div>

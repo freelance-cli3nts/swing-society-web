@@ -1,17 +1,27 @@
-<!-- Large Form Modal -->
-<div id="large-modal" class="modal">
-  <!-- Close on background click -->
-  <div class="modal-background" id="close-large-modal">
-  </div>
-  <div class="modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Sign Up</p>
-      <!-- Close button -->
-      <button class="delete" aria-label="close" id="close-large-modal-btn"></button>
+<!-- Large Form Modal
+     JS hook: add/remove 'is-active' on #large-modal to show/hide
+     style.css provides: .modal { position:fixed; display:none } / .modal.is-active { display:flex }
+     Tailwind provides: alignment + all visual styling inside -->
+<div id="large-modal" class="modal items-center justify-center">
+
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-charcoal/70 backdrop-blur-sm cursor-pointer"
+       id="close-large-modal"></div>
+
+  <!-- Card -->
+  <div class="relative z-10 w-[90vw] max-w-xl bg-cream rounded shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-6 py-4 bg-charcoal border-b border-gold/30 flex-shrink-0">
+      <p class="font-display text-lg text-cream tracking-wide">Sign Up</p>
+      <button class="flex items-center justify-center w-7 h-7 rounded-full bg-cream/10 hover:bg-gold/20 transition-colors duration-200 text-cream text-sm leading-none"
+              aria-label="close" id="close-large-modal-btn">✕</button>
     </header>
-    <!-- Dynamic Form Content Will Be Inserted Here -->
-    <section class="modal-card-body" id="large-modal-content">
-      <p>Loading form...</p> <!-- Placeholder until form loads -->
+
+    <!-- Body — form content injected here via HTMX -->
+    <section class="px-6 py-5 overflow-y-auto flex-1" id="large-modal-content">
+      <p class="text-charcoal/50 text-sm font-body">Loading form…</p>
     </section>
+
   </div>
 </div>
