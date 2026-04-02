@@ -34,134 +34,6 @@
       }
     </script>
 
-    <style>
-      /* Hero collage grid */
-      .collage-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-        gap: 3px;
-      }
-      .collage-grid img {
-        width: 100%; height: 100%; object-fit: cover; object-position: center 20%;
-      }
-      .collage-grid img { grid-column: auto; grid-row: auto; }
-
-      @media (min-width: 768px) {
-        .collage-grid {
-          grid-template-columns: 1fr 1.5fr 1.5fr 1fr;
-          grid-template-rows: 1fr 1fr;
-        }
-        #collage-1 { grid-column: 1; grid-row: 1; }
-        #collage-2 { grid-column: 2; grid-row: 1 / 3; }
-        #collage-3 { grid-column: 3; grid-row: 1 / 3; }
-        #collage-4 { grid-column: 1; grid-row: 2; }
-        #collage-5 { grid-column: 4; grid-row: 1; }
-        #collage-6 { grid-column: 4; grid-row: 2; }
-      }
-
-      body {
-        background-color: #FFF8ED;
-        color: #1A1207;
-        font-family: 'Inter', sans-serif;
-      }
-
-      /* Vintage grain texture overlay */
-      body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      * { position: relative; z-index: 1; }
-
-      .font-display { font-family: 'Playfair Display', Georgia, serif; }
-
-      /* Gold divider */
-      .divider {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin: 0 auto;
-        max-width: 24rem;
-      }
-      .divider::before,
-      .divider::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background-color: #E8A800;
-      }
-      .divider span {
-        color: #E8A800;
-        font-size: 1rem;
-      }
-
-      /* Sticky nav shadow on scroll */
-      #main-nav {
-        transition: box-shadow 0.3s ease, background-color 0.3s ease;
-      }
-      #main-nav.scrolled {
-        box-shadow: 0 2px 20px rgba(0,0,0,0.15);
-        background-color: rgba(255,248,237,0.97);
-      }
-
-      /* Hero overlay */
-      .hero-overlay {
-        background: linear-gradient(
-          to bottom,
-          rgba(28, 28, 28, 0.72) 0%,
-          rgba(28, 28, 28, 0.55) 60%,
-          rgba(28, 28, 28, 0.78) 100%
-        );
-      }
-
-      /* Card hover effect */
-      .card-hover {
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
-      }
-      .card-hover:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 32px rgba(28,28,28,0.12);
-      }
-
-      /* Schedule table stripe */
-      .schedule-row:nth-child(even) { background-color: #EDD9A3; }
-      .schedule-row:nth-child(odd)  { background-color: #FFF8ED; }
-
-      /* Testimonial quote mark */
-      .quote-mark::before {
-        content: '\201C';
-        font-family: 'Playfair Display', serif;
-        font-size: 4rem;
-        color: #E8A800;
-        line-height: 0;
-        vertical-align: -1.4rem;
-        margin-right: 0.15rem;
-      }
-
-      /* Badge */
-      .badge {
-        display: inline-block;
-        padding: 0.2rem 0.75rem;
-        border-radius: 9999px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-      .badge-beginner     { background: #d4f1d4; color: #1a5c1a; }
-      .badge-intermediate { background: #fef3cd; color: #7a5200; }
-      .badge-advanced     { background: #fde0d0; color: #7a1c00; }
-      .badge-all-levels   { background: #e0e7ff; color: #3730a3; }
-
-      /* Smooth anchor offset for sticky nav */
-      section[id] { scroll-margin-top: 72px; }
-    </style>
-
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="icon" type="images/icon" href="/assets/images/fav-icon/favicon-32x32.png" />
     <link rel="apple-touch-icon" type="images/icon" href="/assets/images/fav-icon/apple-touch-icon.png" />
@@ -181,138 +53,47 @@
       });
     </script>
   </head>
-
   <body class="antialiased">
-
-    <!-- ═══════════════════════════════════════════════════════════
-         NAVIGATION
-    ═══════════════════════════════════════════════════════════ -->
     <header>
-      <nav id="main-nav" class="navbar sticky top-0 z-50 flex items-stretch min-h-[52px] bg-cream/95 backdrop-blur-sm border-b border-gold/20" role="navigation" aria-label="main navigation">
-        <div class="max-w-7xl mx-auto px-4 w-full flex items-center">
+    <!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+    ═══════════════════════════════════════════════════════════ -->
+      <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
 
-          <!-- Brand / logo -->
-          <div class="navbar-brand flex items-center flex-1 lg:flex-none" id="logo-link">
-            <a class="navbar-item flex items-center px-2 py-1" href="/">
-              <img src="/static/assets/images/logo.png" alt="Swing Society Logo">
+            <!-- Logo -->
+            <a href="#" class="flex items-center">
+              <img src="/static/assets/images/logo.png" alt="Swing Society" class="h-10 w-auto" />
             </a>
 
-            <!-- Social icons — tablet only -->
-            <div class="navbar-item tablet-social-icons hidden">
-              <div class="buttons flex items-center gap-4">
-                <a href="https://www.facebook.com/swingsocietybg" target="_blank">
-                  <span class="icon"><i class="fa-brands fa-facebook"></i></span>
-                </a>
-                <a href="https://www.instagram.com/bgswingsociety/" target="_blank">
-                  <img src="/static/assets/images/social-icons/facebook-brands.svg" alt="Instagram" width="24" height="24">
-                </a>
-                <a href="https://www.youtube.com/@bgswingsociety" target="_blank">
-                  <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" width="24" height="24">
-                </a>
-                <a href="https://www.tiktok.com/@swing_society5" target="_blank">
-                  <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" width="24" height="24">
-                </a>
-              </div>
-            </div>
-
-            <!-- Hamburger — hidden on desktop (lg+) -->
-            <a role="button" class="navbar-burger lg:hidden ml-auto" aria-label="menu" aria-expanded="false" id="mobile-menu-toggle">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </a>
-          </div>
-
-          <button class="close-menu" id="close-menu">X</button>
-
-          <!-- Desktop nav — hidden below lg -->
-          <div class="navbar-menu hidden lg:flex items-center flex-1">
-            <div class="navbar-start flex items-center mx-auto gap-1">
-
-              <!-- Classes -->
-              <div class="navbar-item has-dropdown group relative">
-                <a class="navbar-link nav-link flex items-center px-3 py-4 cursor-pointer text-charcoal/70 hover:text-gold transition-colors duration-200" href="#main-view"
-                   hx-get="/templates/classes/classes.html" hx-target="#main-view" hx-push-url="/classes">Classes</a>
-                <div class="navbar-dropdown absolute top-full left-0 hidden group-hover:block z-50 min-w-[180px] py-2">
-                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo">Solo Dancing</a>
-                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/coupled">Coupled Dancing</a>
-                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/classes/oldclips.html" hx-target="#main-view" hx-push-url="/classes/old-clips">Old Clips</a>
-                </div>
-              </div>
-
-              <!-- Events -->
-              <div class="navbar-item has-dropdown group relative">
-                <a class="navbar-link nav-link flex items-center px-3 py-4 cursor-pointer text-charcoal/70 hover:text-gold transition-colors duration-200">Events</a>
-                <div class="navbar-dropdown absolute top-full left-0 hidden group-hover:block z-50 min-w-[180px] py-2">
-                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/events/parties.html" hx-target="#main-view" hx-push-url="/events/party">Parties</a>
-                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/events/festivals.html" hx-target="#main-view" hx-push-url="/events/festivals">Festivals</a>
-                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/events/workshops.html" hx-target="#main-view" hx-push-url="/events/workshops">Workshops</a>
-                </div>
-              </div>
-
-              <!-- About -->
-              <div class="navbar-item has-dropdown group relative">
-                <a class="navbar-link nav-link flex items-center px-3 py-4 cursor-pointer text-charcoal/70 hover:text-gold transition-colors duration-200">About</a>
-                <div class="navbar-dropdown absolute top-full left-0 hidden group-hover:block z-50 min-w-[180px] py-2">
-                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us">About Us</a>
-                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/prices.html" hx-target="#main-view" hx-push-url="/prices">Prices</a>
-                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/rules.html" hx-target="#main-view" hx-push-url="/rules">Rules</a>
-                  <a class="navbar-item block px-4 py-2" href="#main-view" hx-get="/templates/FAQ.html" hx-target="#main-view" hx-push-url="/FAQ">FAQ</a>
-                </div>
-              </div>
-
-              <!-- Anchor links to page sections -->
-              <a href="#about"     class="nav-link navbar-item px-3 py-4 text-charcoal/70 hover:text-gold transition-colors duration-200 text-sm font-medium font-body">About</a>
-              <a href="#schedule"  class="nav-link navbar-item px-3 py-4 text-charcoal/70 hover:text-gold transition-colors duration-200 text-sm font-medium font-body">Schedule</a>
-              <a href="#events"    class="nav-link navbar-item px-3 py-4 text-charcoal/70 hover:text-gold transition-colors duration-200 text-sm font-medium font-body">Events</a>
-
-            </div>
-            <div class="navbar-end flex items-center gap-1">
-              <a href="#new-groups"
-                 class="ml-2 px-4 py-2 bg-gold text-charcoal text-xs font-semibold font-body tracking-wider uppercase rounded hover:bg-goldDark transition-colors duration-200">
+            <!-- Nav links -->
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium font-body">
+              <a href="#about"     class="nav-link text-charcoal/70 hover:text-gold transition-colors duration-200">About</a>
+              <a href="#dances"    class="nav-link text-charcoal/70 hover:text-gold transition-colors duration-200">Dances</a>
+              <a href="#team"      class="nav-link text-charcoal/70 hover:text-gold transition-colors duration-200">Team</a>
+              <a href="#schedule"  class="nav-link text-charcoal/70 hover:text-gold transition-colors duration-200">Schedule</a>
+              <a href="#new-groups" class="nav-link text-charcoal/70 hover:text-gold transition-colors duration-200">New Groups</a>
+              <a href="#events"    class="nav-link text-charcoal/70 hover:text-gold transition-colors duration-200">Events</a>
+              <a href="#reviews"   class="nav-link text-charcoal/70 hover:text-gold transition-colors duration-200">Reviews</a>
+              <a href="#schedule"
+                class="ml-2 px-4 py-2 bg-gold text-charcoal text-xs font-semibold tracking-wider uppercase rounded hover:bg-goldDark transition-colors duration-200">
                 Join a Class
               </a>
-              <a class="navbar-item p-2" href="https://www.facebook.com/swingsocietybg" target="_blank">
-                <img src="/static/assets/images/social-icons/fb-bw.svg" alt="Facebook" width="24" height="24">
-              </a>
-              <a class="navbar-item p-2" href="https://www.instagram.com/bgswingsociety/" target="_blank">
-                <img src="/static/assets/images/social-icons/ig-bw.svg" alt="Instagram" width="24" height="24">
-              </a>
-              <a class="navbar-item p-2" href="https://www.youtube.com/@bgswingsociety" target="_blank">
-                <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" width="24" height="24">
-              </a>
-              <a class="navbar-item p-2" href="https://www.tiktok.com/@swing_society5" target="_blank">
-                <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" width="24" height="24">
-              </a>
             </div>
-          </div>
 
+            <!-- Mobile nav (simple flex-wrap, no hamburger) -->
+            <div class="flex md:hidden items-center gap-3 text-xs font-medium flex-wrap justify-end max-w-[60%]">
+              <a href="#about"      class="text-charcoal/70 hover:text-gold">About</a>
+              <a href="#dances"     class="text-charcoal/70 hover:text-gold">Dances</a>
+              <a href="#schedule"   class="text-charcoal/70 hover:text-gold">Schedule</a>
+              <a href="#events"     class="text-charcoal/70 hover:text-gold">Events</a>
+            </div>
+
+          </div>
         </div>
       </nav>
-
-      <!-- Mobile menu -->
-      <div class="mobile-menu" id="mobile-menu">
-        <div class="menu-item has-submenu" data-target="classes-submenu">Classes</div>
-        <div id="classes-submenu" class="submenu">
-          <a class="submenu-item" href="#main-view" hx-get="/templates/classes/solojazz.html" hx-target="#main-view" hx-push-url="/classes/solo">Solo Dancing</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/classes/lindyhop.html" hx-target="#main-view" hx-push-url="/classes/coupled">Coupled Dancing</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/classes/oldclips.html" hx-target="#main-view" hx-push-url="/classes/old-clips">Old Clips</a>
-        </div>
-        <div class="menu-item has-submenu" data-target="events-submenu">Events</div>
-        <div id="events-submenu" class="submenu">
-          <a class="submenu-item" href="#main-view" hx-get="/templates/events/parties.html" hx-target="#main-view" hx-push-url="/events/party">Parties</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/events/festivals.html" hx-target="#main-view" hx-push-url="/events/festivals">Festivals</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/events/workshops.html" hx-target="#main-view" hx-push-url="/events/workshops">Workshops</a>
-        </div>
-        <div class="menu-item has-submenu" data-target="about-submenu">About</div>
-        <div id="about-submenu" class="submenu">
-          <a class="submenu-item" href="#main-view" hx-get="/templates/about.html" hx-target="#main-view" hx-push-url="/about-us">About Us</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/prices.html" hx-target="#main-view" hx-push-url="/prices">Prices</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/rules.html" hx-target="#main-view" hx-push-url="/rules">Rules</a>
-          <a class="submenu-item" href="#main-view" hx-get="/templates/FAQ.html" hx-target="#main-view" hx-push-url="/FAQ">FAQ</a>
-        </div>
-      </div>
-    </header>
+   </header>
 
 
     <!-- ═══════════════════════════════════════════════════════════
@@ -385,99 +166,8 @@
          HTMX CONTENT TARGET + CALENDAR
     ═══════════════════════════════════════════════════════════ -->
     <main>
-      <div id="main-view" hx-indicator="#loading-spinner">
-        <!-- Content swapped by HTMX nav links -->
-      </div>
-      <div id="loading-spinner" class="htmx-indicator">
-        <div class="spinner-ring"></div>
-      </div>
 
-      <!-- Calendar Section — dynamic via HTMX -->
-      <section class="calendar-section" id="calendar">
-        <h2 class="calendar-heading">Календар класове и партита</h2>
-        <div class="max-w-7xl mx-auto">
 
-          <!-- Desktop View (lg+) -->
-          <div class="hidden lg:grid grid-cols-3 gap-6">
-            <div>
-              <h2 class="font-display text-xl font-semibold mb-4">Минали</h2>
-              <div id="past-events"
-                   hx-get="/api/calendar/past"
-                   hx-trigger="load"
-                   hx-indicator="#loading-spinner"></div>
-            </div>
-            <div>
-              <h2 class="font-display text-xl font-semibold mb-4">Днес</h2>
-              <div id="today-events"
-                   hx-get="/api/calendar/today"
-                   hx-trigger="load"
-                   hx-indicator="#loading-spinner"></div>
-            </div>
-            <div>
-              <h2 class="font-display text-xl font-semibold mb-4">Предстоящи</h2>
-              <div id="upcoming-events"
-                   hx-get="/api/calendar/upcoming"
-                   hx-trigger="load"
-                   hx-indicator="#loading-spinner"></div>
-            </div>
-          </div>
-
-          <!-- Tablet View (md – lg) -->
-          <div class="hidden md:block lg:hidden tablet-layout">
-            <div>
-              <h2 class="font-display text-xl font-semibold mb-4">Днес</h2>
-              <div id="tablet-today-events"
-                   hx-get="/api/calendar/today"
-                   hx-trigger="load"
-                   hx-indicator="#loading-spinner"></div>
-            </div>
-            <div class="tablet-columns">
-              <div class="column">
-                <h2 class="font-display text-xl font-semibold mb-4">Минали</h2>
-                <div id="tablet-past-events"
-                     hx-get="/api/calendar/past"
-                     hx-trigger="load"
-                     hx-indicator="#loading-spinner"></div>
-              </div>
-              <div class="column">
-                <h2 class="font-display text-xl font-semibold mb-4">Предстоящи</h2>
-                <div id="tablet-upcoming-events"
-                     hx-get="/api/calendar/upcoming"
-                     hx-trigger="load"
-                     hx-indicator="#loading-spinner"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mobile View (up to md) -->
-          <div class="block md:hidden columns-mobile">
-            <div>
-              <h2 class="font-display text-xl font-semibold mb-4">Днес</h2>
-              <div id="mobile-today-events"
-                   hx-get="/api/calendar/today"
-                   hx-trigger="load"
-                   hx-indicator="#loading-spinner"></div>
-            </div>
-            <div>
-              <h2 class="font-display text-xl font-semibold mb-4">Предстоящи</h2>
-              <div id="mobile-upcoming-events"
-                   hx-get="/api/calendar/upcoming"
-                   hx-trigger="load"
-                   hx-indicator="#loading-spinner"></div>
-            </div>
-          </div>
-
-          <!-- Sign Up Button -->
-          <div class="text-center mt-6">
-            <a href="#new-groups"
-               class="px-6 py-3 bg-gold text-charcoal font-semibold font-body tracking-wider uppercase text-sm rounded hover:bg-goldDark transition-colors duration-200">
-              Sign Up for Classes
-            </a>
-          </div>
-
-        </div>
-      </section>
-    </main>
 
 
     <!-- ═══════════════════════════════════════════════════════════
@@ -1110,7 +800,7 @@
       </div>
     </section>
 
-
+  </main>
     <!-- ═══════════════════════════════════════════════════════════
          FOOTER
     ═══════════════════════════════════════════════════════════ -->

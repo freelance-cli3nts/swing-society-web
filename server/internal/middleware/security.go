@@ -13,7 +13,7 @@ func SecurityHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// Define the CSP directives with font-src included
 			cspDirectives := "default-src 'self' https:; " +
-					"script-src 'self' 'unsafe-inline' https://unpkg.com; " +
+					"script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.tailwindcss.com; " +
 					"style-src 'self' 'unsafe-inline' https:; " +
 					"img-src 'self' https: data:; " +
 					"font-src 'self' data: https:; " +  // Added font-src directive
