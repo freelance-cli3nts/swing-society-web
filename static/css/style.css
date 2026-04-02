@@ -7,6 +7,7 @@
 @import 'resp-tablet.css';
 @import 'resp-desktop.css'; */
 
+
 /* ✅ Consider creating a utilities.css for common utility classes */
 /* ✅ Keep related styles together (e.g., hero styles in one place) */
 
@@ -15,7 +16,7 @@
 /* ======================== */
 :root {
   /* 🎨 Color Palette */
-  --primary: #d4c4c4;  
+  --primary: #d4c4c4;
   --secondary: #ffce1b;
   --white: #fff;
   --black: #000;
@@ -26,6 +27,17 @@
   --heading-font-latin: 'Righteous', serif;
   --heading-font-cyrillic: 'Poiret One', cursive; /* Use 'Forum' if needed */
   --body-font: 'Merriweather', serif;
+
+  /* Form / component tokens (mapped to brand palette) */
+  --primary-color: #1c1410;
+  --error-color: #cc3333;
+  --success-color: #2d7a4f;
+  --text-color: #3a3030;
+  --light-bg: #f7f0e8;
+  --border-color: #d4c4c4;
+  --border-radius: 6px;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  --transition: all 0.2s ease;
 }
 
 /* ======================== */

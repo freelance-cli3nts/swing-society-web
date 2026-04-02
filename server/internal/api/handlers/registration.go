@@ -6,18 +6,21 @@ import (
     "net/http"
     "swing-society-website/server/internal/api/models"
     "swing-society-website/server/internal/api/response"
-		"swing-society-website/server/internal/middleware"
+    "swing-society-website/server/internal/email"
+    "swing-society-website/server/internal/middleware"
     customerrors "swing-society-website/server/internal/errors"
     "swing-society-website/server/internal/storage"
 )
 
 type RegistrationHandler struct {
-    storage storage.RegistrationStorage
+    storage  storage.RegistrationStorage
+    emailSvc *email.Service
 }
 
-func NewRegistrationHandler(storage storage.RegistrationStorage) *RegistrationHandler {
+func NewRegistrationHandler(storage storage.RegistrationStorage, emailSvc *email.Service) *RegistrationHandler {
     return &RegistrationHandler{
-        storage: storage,
+        storage:  storage,
+        emailSvc: emailSvc,
     }
 }
 
@@ -78,6 +81,16 @@ func (h *RegistrationHandler) HandleRegistration(w http.ResponseWriter, r *http.
         ))
         return
     }
+
+    // Send emails asynchronously so they don't block the response
+    go func() {
+        if err := h.emailSvc.SendWelcome(form.Name, form.Email); err != nil {
+            log.Printf("Failed to send welcome email to %s: %v", form.Email, err)
+        }
+        if err := h.emailSvc.SendRegistrationNotification(form.Name, form.Email, form.Phone); err != nil {
+            log.Printf("Failed to send registration notification: %v", err)
+        }
+    }()
 
     // Handle HTMX request
     if r.Header.Get("HX-Request") == "true" {

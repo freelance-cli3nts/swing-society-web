@@ -23,6 +23,12 @@
       },
       "csp_directives": "default-src 'self' https:; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data:; frame-src 'self' https://www.youtube.com; connect-src 'self' https:;"
   },
+  "cors": {
+      "origins": ["*"],
+      "methods": ["GET", "HEAD"],
+      "response_headers": ["Content-Type"],
+      "max_age_seconds": 3600
+  },
   "external": {
       "google_sheets_url": "https://docs.google.com/spreadsheets/d/129l5jEzO1_qIkpa43AeqKFzwfDglURjLUVPWfiR4n2c/edit?gid=0#gid=0",
       "project_id": "swingsociety-backend"

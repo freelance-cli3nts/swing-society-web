@@ -1,21 +1,26 @@
 package handlers
 
 import (
+    "log"
     "net/http"
     "time"
     "swing-society-website/server/internal/api/models"
     "swing-society-website/server/internal/api/response"
+    "swing-society-website/server/internal/email"
     customerrors "swing-society-website/server/internal/errors"
     "swing-society-website/server/internal/storage"
 )
+
 type NewsletterHandler struct {
-	storage storage.NewsletterStorage
+    storage  storage.NewsletterStorage
+    emailSvc *email.Service
 }
 
-func NewNewsletterHandler(storage storage.NewsletterStorage) *NewsletterHandler {
-	return &NewsletterHandler{
-			storage: storage,
-	}
+func NewNewsletterHandler(storage storage.NewsletterStorage, emailSvc *email.Service) *NewsletterHandler {
+    return &NewsletterHandler{
+        storage:  storage,
+        emailSvc: emailSvc,
+    }
 }
 
 func (h *NewsletterHandler) HandleNewsletter(w http.ResponseWriter, r *http.Request) {
@@ -66,15 +71,21 @@ func (h *NewsletterHandler) HandleNewsletter(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	if err := h.storage.Subscribe(newsletter); err != nil {
-		response.Error(w, customerrors.NewInternalError(
-			"Failed to store newsletter subscription",
-			err,
-		))
-		return
-	}
+    if err := h.storage.Subscribe(newsletter); err != nil {
+        response.Error(w, customerrors.NewInternalError(
+            "Failed to store newsletter subscription",
+            err,
+        ))
+        return
+    }
 
-	// Handle HTMX request
+    go func() {
+        if err := h.emailSvc.SendNewsletterConfirmation(newsletter.Name, newsletter.Email); err != nil {
+            log.Printf("Failed to send newsletter confirmation to %s: %v", newsletter.Email, err)
+        }
+    }()
+
+    // Handle HTMX request
 	if r.Header.Get("HX-Request") == "true" {
 		response.HTMLFragment(w, http.StatusOK, `
 			<div class="success-message show" role="alert">

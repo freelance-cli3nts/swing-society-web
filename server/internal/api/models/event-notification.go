@@ -34,6 +34,11 @@ func (n *EventNotification) Validate() map[string]string {
 		errors["phone"] = "Моля, въведете валиден телефонен номер: 0888123456 / +359888123456 / 00359888123456"
 	}
 
+	nameRegex := regexp.MustCompile(`^[a-zA-Z\s]+$`)
+	if len(strings.TrimSpace(n.FirstName)) < 3 || !nameRegex.MatchString(n.FirstName) {
+		errors["firstName"] = "Моля, въведете валидно име (поне 3 символа)"
+	}
+
 	// GDPR validation
 	if !n.GdprAccepted {
 		errors["gdpr"] = "Трябва да се съгласите с GDPR условията"

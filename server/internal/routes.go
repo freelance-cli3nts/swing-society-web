@@ -9,6 +9,8 @@ import (
     "strings"
     "swing-society-website/server/internal/api/handlers"
     "swing-society-website/server/internal/config"
+    "swing-society-website/server/internal/email"
+    "swing-society-website/server/internal/gcal"
     "swing-society-website/server/internal/middleware"
     "swing-society-website/server/internal/storage"
 )
@@ -54,6 +56,8 @@ func createFileServer(dir, contentType string) http.Handler {
 							contentType = "text/html"
 					case ".json":
 							contentType = "application/json"
+					case ".svg":
+							contentType = "image/svg+xml"
 					}
 			}
 			
@@ -62,6 +66,8 @@ func createFileServer(dir, contentType string) http.Handler {
 					w.Header().Set("Content-Type", contentType)
 			}
 			
+			log.Printf("Serving %s with Content-Type: %s", path, contentType)
+
 			// Check if file exists
 			if _, err := os.Stat(fullPath); os.IsNotExist(err) {
 					http.NotFound(w, r)
@@ -85,7 +91,7 @@ func DirectCSSHandler(staticDir string) http.HandlerFunc {
 			
 			// Always set the correct MIME type
 			w.Header().Set("Content-Type", "text/css")
-			
+
 			// Check if file exists
 			_, err := os.Stat(fullPath)
 			if os.IsNotExist(err) {
@@ -107,6 +113,42 @@ func DirectCSSHandler(staticDir string) http.HandlerFunc {
 	}
 }
 
+func SVGHandler(staticDir string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+			// Extract the SVG file path
+			path := strings.TrimPrefix(r.URL.Path, "/images/")
+			fullPath := filepath.Join(staticDir, "assets", "images", path)
+			
+			// Log the path for debugging
+			log.Printf("Serving SVG file: %s from %s", path, fullPath)
+			
+			ext := filepath.Ext(path)
+			if ext == ".svg" {
+					w.Header().Set("Content-Type", "image/svg+xml")
+					log.Printf("Serving SVG file: %s with MIME type image/svg+xml", path)
+			}
+
+			// Check if file exists
+			_, err := os.Stat(fullPath)
+			if os.IsNotExist(err) {
+					log.Printf("SVG file not found: %s", fullPath)
+					http.NotFound(w, r)
+					return
+			}
+			
+			// Read the file content
+			content, err := os.ReadFile(fullPath)
+			if err != nil {
+					log.Printf("Error reading SVG file: %v", err)
+					http.Error(w, "Error reading SVG file", http.StatusInternalServerError)
+					return
+			}
+			
+			// Write the SVG content directly
+			w.Write(content)
+	}
+}
+
 
 func (r *Router) SetupRoutes() error {
     // Create middleware chains
@@ -117,6 +159,15 @@ func (r *Router) SetupRoutes() error {
     staticChain := middleware.NewChain().
         Add(r.rateLimiter.RateLimitMiddleware)
 
+    // Initialize email service
+    emailSvc := email.NewService(config.AppConfig)
+
+    // Initialize Google Calendar service (optional — degrades gracefully if not configured)
+    gcalSvc, gcalErr := gcal.NewService(config.AppConfig.External.CalendarID)
+    if gcalErr != nil {
+        log.Printf("Warning: Google Calendar init failed: %v", gcalErr)
+    }
+
     // Initialize all storage implementations
     googleStorage := storage.NewGoogleSheetsStorage(config.AppConfig.External.GoogleSheetsURL)
     jsonStorage := storage.NewJSONFileStorage(filepath.Join(config.AppConfig.Paths.DataDir, "carousel.json"))
@@ -126,15 +177,17 @@ func (r *Router) SetupRoutes() error {
     newsletterStorage := storage.NewSimpleNewsletterStorage()
     contactStorage := storage.NewSimpleContactStorage()
     eventNotificationStorage := storage.NewSimpleEventNotificationStorage()
-    
+    calendarStorage := storage.NewCalendarStorage()
+
     // Initialize all handlers with their dependencies
     carouselHandler := handlers.NewCarouselHandler(googleStorage, jsonStorage)
-    registrationHandler := handlers.NewRegistrationHandler(registrationStorage)
+    registrationHandler := handlers.NewRegistrationHandler(registrationStorage, emailSvc)
     classHandler := handlers.NewClassHandler(classStorage)
     templateHandler := handlers.NewTemplateHandler(templateStorage)
-    newsletterHandler := handlers.NewNewsletterHandler(newsletterStorage)
-    contactHandler := handlers.NewContactHandler(contactStorage)
+    newsletterHandler := handlers.NewNewsletterHandler(newsletterStorage, emailSvc)
+    contactHandler := handlers.NewContactHandler(contactStorage, emailSvc)
     eventNotificationHandler := handlers.NewEventNotificationHandler(eventNotificationStorage)
+    calendarHandler := handlers.NewCalendarHandler(calendarStorage, gcalSvc)
 
     // Health check endpoint (no rate limiting)
     r.mw.AddHandler("/health", http.HandlerFunc(handlers.HandleHealth))
@@ -214,8 +267,12 @@ func (r *Router) SetupRoutes() error {
         http.HandlerFunc(contactHandler.HandleContact), 
         apiChain.GetMiddlewares()...)
         
-    r.mw.AddHandler("/api/notifications", 
-        http.HandlerFunc(eventNotificationHandler.HandleEventNotification), 
+    r.mw.AddHandler("/api/notifications",
+        http.HandlerFunc(eventNotificationHandler.HandleEventNotification),
+        apiChain.GetMiddlewares()...)
+
+    r.mw.AddHandler("/api/calendar/",
+        http.HandlerFunc(calendarHandler.HandleCalendar),
         apiChain.GetMiddlewares()...)
 
 		// In your SetupRoutes method, replace the static handlers with:
@@ -232,6 +289,10 @@ func (r *Router) SetupRoutes() error {
 		// JavaScript files handler with proper MIME type
 		jsHandler := http.StripPrefix("/js/", createFileServer(staticDir, "application/javascript"))
 		r.mw.AddHandler("/js/", jsHandler, staticChain.GetMiddlewares()...)
+
+		// Images handler with proper MIME type
+		svgHandler := http.StripPrefix("/images/", SVGHandler(staticDir))
+		r.mw.AddHandler("/images/", svgHandler, staticChain.GetMiddlewares()...)
 
     // Template route
     r.mw.AddHandler("/templates/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

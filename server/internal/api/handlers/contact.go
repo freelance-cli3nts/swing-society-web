@@ -2,20 +2,25 @@ package handlers
 
 import (
     "encoding/json"
+    "log"
     "net/http"
     "swing-society-website/server/internal/api/models"
     "swing-society-website/server/internal/api/response"
+    "swing-society-website/server/internal/email"
     customerrors "swing-society-website/server/internal/errors"
-		"swing-society-website/server/internal/storage"
+    "swing-society-website/server/internal/storage"
 )
+
 type ContactHandler struct {
-	storage storage.ContactStorage
+    storage  storage.ContactStorage
+    emailSvc *email.Service
 }
 
-func NewContactHandler(storage storage.ContactStorage) *ContactHandler {
-	return &ContactHandler{
-			storage: storage,
-	}
+func NewContactHandler(storage storage.ContactStorage, emailSvc *email.Service) *ContactHandler {
+    return &ContactHandler{
+        storage:  storage,
+        emailSvc: emailSvc,
+    }
 }
 
 func (h *ContactHandler) HandleContact(w http.ResponseWriter, r *http.Request) {
@@ -44,17 +49,23 @@ func (h *ContactHandler) HandleContact(w http.ResponseWriter, r *http.Request) {
 			return
 	}
 
-	if err := h.storage.StoreContactForm(&contact); err != nil {
-			response.Error(w, customerrors.NewInternalError(
-					"Failed to store contact form",
-					err,
-			))
-			return
-	}
+    if err := h.storage.StoreContactForm(&contact); err != nil {
+        response.Error(w, customerrors.NewInternalError(
+            "Failed to store contact form",
+            err,
+        ))
+        return
+    }
 
-	response.JSON(w, http.StatusOK, map[string]string{
-			"message": "Thank you for your message. We'll get back to you soon!",
-	})
+    go func() {
+        if err := h.emailSvc.SendContactNotification(contact.Name, contact.Email, contact.Message); err != nil {
+            log.Printf("Failed to send contact notification: %v", err)
+        }
+    }()
+
+    response.JSON(w, http.StatusOK, map[string]string{
+        "message": "Thank you for your message. We'll get back to you soon!",
+    })
 }
 
 

@@ -1,6 +1,6 @@
 # 📜 Swing Society Website
 
-A modern, high-performance website for Swing Society dance school, built with Go, HTMX, and HTML/CSS. Focusing on simplicity and speed while providing dynamic content updates without heavy JavaScript.
+A modern, high-performance website for Swing Society dance school, Focusing on simplicity and speed, while providing dynamic content and mobile friendly for better UX. 
 
 ## 🎯 Current Status
 
@@ -8,6 +8,7 @@ A modern, high-performance website for Swing Society dance school, built with Go
 - ✅ HTMX integration for dynamic content
 - ✅ Basic routing and template serving
 - ✅ Static file handling
+- ✅ Firebase Realtime Database integration
 - 🏗️ Form handling (In Progress)
 - 🏗️ Email notifications (In Progress)
 
@@ -44,27 +45,32 @@ swing-society/
 * ✅ Static file serving
 * ✅ Template-based pages
 * ✅ Basic monitoring metrics
+* ✅ Firebase Realtime Database integration
+* ✅ Configurable CORS settings
 
 ### In Development
 * 🏗️ Form submissions
 * 🏗️ Email notifications
-* 🏗️ Database integration
 * 🏗️ Analytics tracking
 * 🏗️ Event scheduling system
 
 ## 🛠️ Technologies
 
 - **Backend**: Go 1.21+
-- **Frontend**: HTML5, CSS3, HTMX
-- **Database**: Firestore (planned)
+- **Frontend**: HTML5, CSS3, HTMX, Bulma
+- **Database**: Firebase Realtime Database
 - **Deployment**: Google Cloud Run
+- **Containerization**: Docker
+- **CDN**: Cloudflare
 - **CI/CD**: Google Cloud Build (planned)
 
 ## 📌 Requirements
 
 - Go 1.21 or higher
 - Google Cloud SDK (for deployment)
+- Firebase Admin SDK credentials
 - `.env` file for environment variables
+- `config.json` for application configuration
 
 ## 🚦 Getting Started
 
@@ -92,11 +98,14 @@ go mod tidy
 ```
 
 4. **Run Locally** 
-// for development dynamic reloading as you make changes
 ```bash
-/go/bin/air -c air.toml 
+# For development with live reloading
+air -c air.toml
+
+# Or using Go directly
+go run server/main.go
 ```
-The site will be available at `http://localhost:3001`
+The site will be available at `http://localhost:8080`
 
 ## 🚀 Deployment
 
@@ -114,7 +123,7 @@ docker build -t gcr.io/swingsociety-backend/ss-go .
 docker push gcr.io/swingsociety-backend/ss-go
 
 # Deploy to Cloud Run // make it eu, stop the unauthenticated access
-gcloud run deploy ss-go --image gcr.io/swingsociety-backend/ss-go --platform managed --region us-central1 --allow-unauthenticated  --set-env-vars GOOGLE_CLOUD_PROJECT=swingsociety-backend
+gcloud run deploy ss-go --image gcr.io/swingsociety-backend/ss-go --platform managed --region  europe-north1 --allow-unauthenticated  --set-env-vars GOOGLE_CLOUD_PROJECT=swingsociety-backend
 --set-env-vars "GOOGLE_CREDENTIALS=$(cat swing-society-realtime-firebase-adminsdk.json)" --timeout=5m
 ```
 
@@ -122,70 +131,109 @@ gcloud run deploy ss-go --image gcr.io/swingsociety-backend/ss-go --platform man
 
 ### MVP
 - [x] validate concept
-- [ ] custom domain setup
-- [ ] implement back-end logic
+- [x] custom domain setup
+- [x] implement back-end logic
 
 ### High Priority
 - [ ] Design 
-  - [ ] Redesign Hero Page that demanding focus
-    - [ ] implement the carousel feature 
-    - [ ] fix positioning on mobile/tablet view of button and text
-  - [ ] Add main pages & route them
-    - [ ] Classes
-    - [ ] Forms
-    - [ ] About US
-  - [ ] Fix colors
-  - [ ] Layouts
-    - [x] Coupled Classes
-      - [o] Carousel view - we have problem with image & video loading
-    - [ ] Solo Classes
-    - [ ] Old Clips
-    - [ ] Teachers section
-    - [ ] Founders section
-    - [ ] Organization Concept
-    - [ ] Parties
-    - [ ] Festival Page
-    - [ ] Intense classes Offer
-    - [ ] Podcast 
-  - [ ] Content
-    - [ ] Coupled Classes
-    - [ ] Solo Classes
-    - [ ] Old Clips
+   [ ] Redesign Hero Page that demands focus
+     [ ] Implement the carousel feature 
+     [ ] Fix positioning on mobile/tablet view of button and text
+   [ ] Add main pages & route them
+    [ ] Landing page
+      [ ] header
+        [ ] nav - mobile desktop tablet
+        [ ] link all pages
+        [ ] logo functionality
+        [*] social icons proper links
+        [*] sign up button
+      [ ] main 
+        [ ] hero section - make it swappable container
+          [ ] mobile - desktop - tablet view of hero
+        [ ] dynamic calendar
+        [ ] add two column container 4 classes & blog
+      [ ] footer
+        [ ] mobile - desktop - tablet view of footer
+      [ ] Dynamic calendar: 60 - 120 min
+  [ ] Class view - MVP: 30 min -> if time -> fancy version: 60 min
+    [ ] board 4 all classes
+      [ ] coupled
+      [ ] solo
+      [ ] old clips
+    [*] Forms
+    [ ] About US
+    [ ] Fix colors
+    [ ] Layouts
+  [x] Coupled Classes
+    [o] Carousel view - fix image & video loading
+      [ ] Solo Classes
+      [ ] Old Clips
+      [ ] Teachers section
+      [ ] Founders section
+      [ ] Organization Concept
+      [ ] Parties
+      [ ] Festival Page
+      [ ] Intense classes Offer
+      [ ] Podcast 
+   [ ] Content
+      [ ] Coupled Classes
+      [ ] Solo Classes
+      [ ] Old Clips
 - [ ] Functionality
-  - [ ] Forms
-    - [ ] Contact form
-    - [ ] Registration form
-    - [ ] Newsletter subscription
-    - [ ] Implement form validation
-    - [ ] email validation and email sending logic
-    - [ ] Complete email notification system
-  - [ ] Set up Firestore database
-  - [ ] Add proper error handling
-  - [ ] Calendar
-
+    [x] Forms submission -> Writing to the database -> Front-end confirmation message & redirect -> Receiving welcome confirmation email
+      [x] Contact form
+      [x] Registration form
+      [x] Newsletter subscription
+      [x] Implement form validation
+      [ ] Email validation and sending logic
+      [ ] Complete email notification system
+      [ ] front-end logic
+        [ ]form validation
+        [ ]form submission
+        [ ]form confirmation
+        [ ]form error handling
+        [ ]form success message
+        [ ]form reset
+        [ ]form submission button
+        [ ]form submission button loading state
+        [ ]form submission button disabled state
+        [ ]form submission button success state
+        [ ]form submission button error state
+        [ ]form submission button disabled state
+- [x] Set up Firebase Realtime Database
+    [ ] email validation and email confirmation logic
+    [x] Configure CORS settings
+    [ ] Add proper error handling
+    [ ] Calendar
+  
 ### Medium Priority
 - [ ] Add event scheduling system
 - [ ] Add sub-pages & route them
-  - [ ] Prices
-  - [ ] Terms of Use
-  - [ ] GDPR
-  - [ ] Privacy policy
-  - [ ] Events
-  - [ ] Projects
+    [ ] Prices
+    [ ] Terms of Use
+    [ ] GDPR
+    [ ] Privacy policy
+    [ ] Events
+    [ ] Projects
 - [ ] Add analytics tracking
 - [ ] CMS or Admin dashboard
+  - [ ] alternative to CMS using google drive
 - [ ] Implement user authentication
-- [ ] integration with google calendar & icalendar
-    integration with fb events
-    layout with today, upcoming & past events 
+- [ ] Social calendar integration
+  - [ ] Google Calendar & iCalendar integration
+  - [ ] Facebook events integration
+  - [ ] Layout with today, upcoming & past events
+
+
+
 
 ### Low Priority
 - [ ] Implement logging system
 - [ ] Implement caching
 - [ ] Add performance monitoring
 - [ ] Create backup system
-- [ ] Implement rate limiting
-- [ ] Create automated tests for functionality 
+- [x] Implement rate limiting
+- [ ] Create automated tests for functionality
 
 ### Testing phase:
 - [ ] Make an alpha test of the website in the Swing Troupe group 
@@ -194,6 +242,21 @@ gcloud run deploy ss-go --image gcr.io/swingsociety-backend/ss-go --platform man
     - [ ] desktop: 24 inch, 15 inch, 14 inch, 13 inch
     - [ ] tablet: 10 inch, 8 inch
     - [ ] mobile: 6 inch, 5 inch 4 inch 
+
+Simple metrics logging (without Google Cloud integration)
+Implement proper Google Cloud monitoring
+* Automated test suit 4 all the security features:
+  * Rate limiting
+  * Security headers
+  * Static file serving
+  * Template routing
+  * Metrics logging
+
+
+Form submission 30 - 90 min
+-> Writing to the database
+-> Receiving welcome confirmation email
+-> Front-end message 4 form submission
 
 
 ## 🔗 Resources

@@ -67,9 +67,12 @@ export function initNavigation() {
   // Handle window resize
   window.addEventListener('resize', () => {
     if (window.innerWidth >= 1024) {
-      document.querySelector('.custom-menu').style.display = 'none';
-    } else if ($navMenu.classList.contains('is-active')) {
-      document.querySelector('.custom-menu').style.display = 'block';
+      // Hide mobile menu on desktop view
+      if (mobileMenu) {
+        mobileMenu.classList.remove('is-active');
+        if (closeMenuButton) closeMenuButton.classList.remove('is-active');
+        if (mobileMenuToggle) mobileMenuToggle.classList.remove('is-active');
+      }
     }
   });
 }

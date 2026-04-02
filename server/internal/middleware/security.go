@@ -1,6 +1,7 @@
 package middleware
 
 import (
+		"fmt"
 		"log"
     "net/http"
 		"strings"
@@ -19,10 +20,32 @@ func SecurityHeaders(next http.Handler) http.Handler {
 					"frame-src 'self' https://www.youtube.com; " +
 					"connect-src 'self' https:;"
 			
-			// Use allowed origins from config
-			if len(config.AppConfig.Security.AllowedOrigins) > 0 {
+			// Use CORS settings from config
+			if len(config.AppConfig.CORS.Origins) > 0 {
+					w.Header().Set("Access-Control-Allow-Origin", 
+							strings.Join(config.AppConfig.CORS.Origins, ", "))
+			} else if len(config.AppConfig.Security.AllowedOrigins) > 0 {
+					// Fallback to old config format for backward compatibility
 					w.Header().Set("Access-Control-Allow-Origin", 
 							strings.Join(config.AppConfig.Security.AllowedOrigins, ", "))
+			}
+
+			// Set CORS methods if configured
+			if len(config.AppConfig.CORS.Methods) > 0 {
+					w.Header().Set("Access-Control-Allow-Methods", 
+							strings.Join(config.AppConfig.CORS.Methods, ", "))
+			}
+
+			// Set CORS headers if configured
+			if len(config.AppConfig.CORS.ResponseHeaders) > 0 {
+					w.Header().Set("Access-Control-Allow-Headers", 
+							strings.Join(config.AppConfig.CORS.ResponseHeaders, ", "))
+			}
+
+			// Set max age if configured
+			if config.AppConfig.CORS.MaxAgeSeconds > 0 {
+					w.Header().Set("Access-Control-Max-Age", 
+							fmt.Sprintf("%d", config.AppConfig.CORS.MaxAgeSeconds))
 			}
 
 			// Standard security headers
@@ -33,7 +56,6 @@ func SecurityHeaders(next http.Handler) http.Handler {
 			w.Header().Set("Content-Security-Policy", cspDirectives)
 			w.Header().Set("Permissions-Policy", "microphone=(), camera=()")
 			w.Header().Set("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
-
 
 			next.ServeHTTP(w, r)
 	})

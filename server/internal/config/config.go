@@ -32,10 +32,27 @@ type Config struct {
         CSPDirectives  string            `json:"csp_directives"`
     } `json:"security"`
 
+    CORS struct {
+        Origins         []string `json:"origins"`
+        Methods         []string `json:"methods"`
+        ResponseHeaders []string `json:"response_headers"`
+        MaxAgeSeconds   int      `json:"max_age_seconds"`
+    } `json:"cors"`
+
     External struct {
         GoogleSheetsURL string `json:"google_sheets_url"`
         ProjectID       string `json:"project_id"`
+        CalendarID      string `json:"calendar_id"`
     } `json:"external"`
+
+    Email struct {
+        SMTPHost       string `json:"smtp_host"`
+        SMTPPort       string `json:"smtp_port"`
+        SMTPUser       string `json:"smtp_user"`
+        SMTPPass       string `json:"smtp_pass"`
+        RecipientEmail string `json:"recipient_email"`
+        Enabled        bool   `json:"enabled"`
+    } `json:"email"`
 
     Environment string `json:"environment"`
 }
@@ -152,6 +169,27 @@ func overrideWithEnv(config *Config) {
     if env := os.Getenv("ENVIRONMENT"); env != "" {
         config.Environment = env
     }
+    if v := os.Getenv("SMTP_HOST"); v != "" {
+        config.Email.SMTPHost = v
+    }
+    if v := os.Getenv("SMTP_PORT"); v != "" {
+        config.Email.SMTPPort = v
+    }
+    if v := os.Getenv("SMTP_USER"); v != "" {
+        config.Email.SMTPUser = v
+    }
+    if v := os.Getenv("SMTP_PASS"); v != "" {
+        config.Email.SMTPPass = v
+    }
+    if v := os.Getenv("RECIPIENT_EMAIL"); v != "" {
+        config.Email.RecipientEmail = v
+    }
+    if v := os.Getenv("GOOGLE_CALENDAR_ID"); v != "" {
+        config.External.CalendarID = v
+    }
+    config.Email.Enabled = config.Email.SMTPHost != "" &&
+        config.Email.SMTPUser != "" &&
+        config.Email.SMTPPass != ""
 }
 
 // initializePaths sets up file paths for the application

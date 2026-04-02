@@ -69,5 +69,26 @@ export function initFormHandling() {
       }
   });
 
+  // Reset form and clear button state after a successful submission
+  document.addEventListener('htmx:afterRequest', (evt) => {
+      const form = evt.detail.elt;
+      if (form.tagName !== 'FORM') return;
+
+      const btn = form.querySelector('.submit-btn');
+      if (evt.detail.successful) {
+          form.reset();
+          if (btn) {
+              btn.classList.remove('is-error');
+              btn.classList.add('is-success');
+              setTimeout(() => btn.classList.remove('is-success'), 3000);
+          }
+      } else {
+          if (btn) {
+              btn.classList.add('is-error');
+              setTimeout(() => btn.classList.remove('is-error'), 3000);
+          }
+      }
+  });
+
   document.addEventListener('htmx:afterSettle', setupRealTimeValidation);
 };

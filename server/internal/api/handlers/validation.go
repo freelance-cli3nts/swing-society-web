@@ -57,7 +57,7 @@ func ValidateEmail(w http.ResponseWriter, r *http.Request) {
 		} else {
 			// For API requests, return JSON error
 			response.Error(w, customerrors.NewValidationError(
-				"Please enter a valid email address",
+				"Моля, въведете валиден имейл адрес",
 				map[string]string{"email": errorMsg},
 			))
 		}
@@ -121,7 +121,7 @@ func ValidatePhone(w http.ResponseWriter, r *http.Request) {
 		} else {
 			// For API requests, return JSON error
 			response.Error(w, customerrors.NewValidationError(
-				"Please enter a valid phone number",
+				"Моля, въведете валиден БГ телефонен номер",
 				map[string]string{"phone": errorMsg},
 			))
 		}
@@ -186,7 +186,7 @@ func ValidateName(w http.ResponseWriter, r *http.Request) {
 		} else {
 			// For API requests, return JSON error
 			response.Error(w, customerrors.NewValidationError(
-				"Please enter a valid name",
+				"Името трябва да е поне 3 символа",
 				map[string]string{"name": errorMsg},
 			))
 		}

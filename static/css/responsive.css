@@ -35,7 +35,32 @@
     display: none !important;
   }
   
- 
+  /* Center social icons between logo and hamburger menu in tablet view */
+  .tablet-social-icons {
+    display: flex !important;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  
+  .tablet-social-icons .buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+  }
+  
+  .tablet-social-icons .buttons a {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .tablet-social-icons .buttons img {
+    width: 24px !important;
+    height: 24px !important;
+    display: block !important;
+  }
+  
   .hero-body {
     padding: 1rem !important;
   }

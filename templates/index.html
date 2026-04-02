@@ -5,7 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="description" content="Swing Society - Learn swing dance with us"/>
       <title>Swing Society</title>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">    
       <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Forum&family=Merriweather:wght@300;400;700&display=swap&subset=latin,cyrillic" rel="stylesheet">
       <link rel="stylesheet" href="/css/style.css" />
       <link rel="icon" type="images/icon" href="/assets/images/fav-icon/favicon-32x32.png" />
@@ -36,6 +36,28 @@
             <a class="navbar-item" href="/">
               <img src="/static/assets/images/logo.png" alt="Swing Society Logo">
             </a>
+            
+            <!-- Social icons for tablet view only -->
+            <div class="navbar-item is-hidden-mobile is-hidden-desktop tablet-social-icons">
+              <div class="buttons">
+                <a href="https://www.facebook.com/swingsocietybg" target="_blank">
+                  <span class="icon">
+                    <i class="fa-brands fa-facebook"></i>
+                  </span>
+                  <!-- <img src="/static/assets/images/social-icons/5296511_network_social network_tumblr_tumblr logo_icon.svg" alt="Facebook" width="24" height="24"> -->
+                </a>
+                <a href="https://www.instagram.com/bgswingsociety/" target="_blank">
+                  <img src="/static/assets/images/social-icons/facebook-brands.svg" alt="Instagram" width="24" height="24">
+                </a>
+                <a href="https://www.youtube.com/@bgswingsociety" target="_blank">
+                  <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" width="24" height="24">
+                </a>
+                <a href="https://www.tiktok.com/@swing_society5" target="_blank">
+                  <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" width="24" height="24">
+                </a>
+              </div>
+            </div>
+            
             <!-- Hamburger menu for mobile -->
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" id="mobile-menu-toggle">
               <span aria-hidden="true"></span>
@@ -75,17 +97,17 @@
             </div>
             <div class="navbar-end">
               <div class="buttons">
-                <a class="navbar-item" href="https://facebook.com/swingsociety" target="_blank">
-                  <img src="/static/assets/images/social-icons/fb-bw.svg" alt="Facebook" width="24">
+                <a class="navbar-item" href="https://www.facebook.com/swingsocietybg" target="_blank">
+                  <img src="/static/assets/images/social-icons/fb-bw.svg" alt="Facebook" width="24" height="24">
                 </a>
-                <a class="navbar-item" href="https://instagram.com/swingsociety" target="_blank">
-                  <img src="/static/assets/images/social-icons/ig-bw.svg" alt="Instagram" width="24">
+                <a class="navbar-item" href="https://www.instagram.com/bgswingsociety/" target="_blank">
+                  <img src="/static/assets/images/social-icons/ig-bw.svg" alt="Instagram" width="24" height="24">
                 </a>
-                <a class="navbar-item" href="https://youtube.com/swingsociety" target="_blank">
-                  <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" width="24">
+                <a class="navbar-item" href="https://www.youtube.com/@bgswingsociety" target="_blank">
+                  <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" width="24" height="24">
                 </a>
-                <a class="navbar-item" href="https://tiktok.com/swingsociety" target="_blank">
-                  <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" width="24">
+                <a class="navbar-item" href="https://www.tiktok.com/@swing_society5" target="_blank">
+                  <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" width="24" height="24">
                 </a>
               </div>
             </div>
@@ -124,8 +146,8 @@
           FAQ</a>
         </div>
       </div>
-      <!-- Hero section (visible on desktop and tablet, hidden on mobile) -->
-      <section class="hero is-primary is-small hero-section">
+      <!-- Banner section (visible on desktop and tablet, hidden on mobile) -->
+      <section class="hero is-primary is-small hero-section is-hidden-mobile">
         <div class="hero-body py-2">
           <div class="container full-width">
             <div class="columns is-vcentered">
@@ -159,18 +181,12 @@
              - For top: is-absolute pt-5 pl-5
              - For middle: is-absolute pt-0 pl-5 mt-6
              - For bottom: is-absolute pb-5 pl-5 mb-6 -->
-        <div class="is-overlay" style="pointer-events: none;">
-          <div class="container">
-            <!-- For bottom position -->
-            <div class="columns is-vcentered" style="height: 100vh;">
-              <div class="column is-5 has-text-white pb-6" style="pointer-events: auto;">
-                <h2 class="title has-text-white is-size-2 has-text-shadow">Хората, които го стартираха!</h2>
-              </div>
+        <div class="is-overlay is-flex is-flex-direction-column is-justify-content-flex-end" style="pointer-events: none;">
+          <div class="container pb-6 pl-5 pr-5">
+            <div class="is-flex is-justify-content-space-between is-align-items-flex-end">
+              <h2 class="title has-text-white is-size-2 has-text-shadow" style="pointer-events: auto;">Хората, които го стартираха!</h2>
+              <a href="/templates/forms/all-forms.html" class="button is-warning is-medium mb-2" style="pointer-events: auto; font-family: var(--heading-font-latin); letter-spacing: 0.05em;" hx-get="/templates/forms/all-forms.html" hx-target="#main-view">Sign Up</a>
             </div>
-          </div>
-          <!-- Button always at bottom right -->
-          <div class="is-flex is-justify-content-flex-end" style="position: absolute; bottom: 8rem; right: 8rem; pointer-events: auto;">
-            <a href="/templates/forms/all-forms.html" class="button is-light is-medium" hx-get="/templates/forms/all-forms.html" hx-target="#main-view">Sign Up</a>
           </div>
         </div>
       </div>
@@ -183,39 +199,60 @@
       <div id="main-view" hx-indicator="#loading-spinner">
         <!-- content that is swapped based on where user clicks-->
       </div>   
-      <div id="loading-spinner" class="htmx-indicator">Loading...</div>
-      <h2>Календар класове и партита </h2>
+      <div id="loading-spinner" class="htmx-indicator">
+        <div class="spinner-ring"></div>
+      </div>
+      <section class="calendar-section">
+      <h2 class="calendar-heading">Календар класове и партита</h2>
       <div class="container">
         <!-- Desktop View -->
         <div class="columns is-hidden-mobile is-hidden-tablet">
             <div class="column is-4">
-                <h2 class="title is-4">Past</h2>
-                <div id="past-events"></div>
+                <h2 class="title is-4">Минали</h2>
+                <div id="past-events"
+                     hx-get="/api/calendar/past"
+                     hx-trigger="load"
+                     hx-indicator="#loading-spinner"></div>
             </div>
             <div class="column is-4">
-                <h2 class="title is-4">Today</h2>
-                <div id="today-events"></div>
+                <h2 class="title is-4">Днес</h2>
+                <div id="today-events"
+                     hx-get="/api/calendar/today"
+                     hx-trigger="load"
+                     hx-indicator="#loading-spinner"></div>
             </div>
             <div class="column is-4">
-                <h2 class="title is-4">Upcoming</h2>
-                <div id="upcoming-events"></div>
+                <h2 class="title is-4">Предстоящи</h2>
+                <div id="upcoming-events"
+                     hx-get="/api/calendar/upcoming"
+                     hx-trigger="load"
+                     hx-indicator="#loading-spinner"></div>
             </div>
         </div>
 
         <!-- Tablet View -->
         <div class="is-hidden-desktop is-hidden-mobile tablet-layout">
             <div>
-                <h2 class="title is-4">Today</h2>
-                <div id="tablet-today-events"></div>
+                <h2 class="title is-4">Днес</h2>
+                <div id="tablet-today-events"
+                     hx-get="/api/calendar/today"
+                     hx-trigger="load"
+                     hx-indicator="#loading-spinner"></div>
             </div>
             <div class="columns">
                 <div class="column is-6">
-                    <h2 class="title is-4">Past</h2>
-                    <div id="tablet-past-events"></div>
+                    <h2 class="title is-4">Минали</h2>
+                    <div id="tablet-past-events"
+                         hx-get="/api/calendar/past"
+                         hx-trigger="load"
+                         hx-indicator="#loading-spinner"></div>
                 </div>
                 <div class="column is-6">
-                    <h2 class="title is-4">Upcoming</h2>
-                    <div id="tablet-upcoming-events"></div>
+                    <h2 class="title is-4">Предстоящи</h2>
+                    <div id="tablet-upcoming-events"
+                         hx-get="/api/calendar/upcoming"
+                         hx-trigger="load"
+                         hx-indicator="#loading-spinner"></div>
                 </div>
             </div>
         </div>
@@ -223,12 +260,18 @@
         <!-- Mobile View -->
         <div class="is-hidden-tablet columns-mobile">
             <div>
-                <h2 class="title is-4">Today</h2>
-                <div id="mobile-today-events"></div>
+                <h2 class="title is-4">Днес</h2>
+                <div id="mobile-today-events"
+                     hx-get="/api/calendar/today"
+                     hx-trigger="load"
+                     hx-indicator="#loading-spinner"></div>
             </div>
             <div>
-                <h2 class="title is-4">Upcoming</h2>
-                <div id="mobile-upcoming-events"></div>
+                <h2 class="title is-4">Предстоящи</h2>
+                <div id="mobile-upcoming-events"
+                     hx-get="/api/calendar/upcoming"
+                     hx-trigger="load"
+                     hx-indicator="#loading-spinner"></div>
             </div>
         </div>
 
@@ -237,11 +280,12 @@
             <button class="button is-primary">Sign Up for Notifications</button>
         </div>
       </div>
+      </section>
     </main>
     <!-- Footer Section -->
     <footer class="footer has-background-light">
       <div class="container">
-        <div class="columns is multiline is-variable is-5">
+        <div class="columns is-multiline is-variable is-5">
           <!-- Contacts -->
           <div class="column is-4">
             <h3 class="title is-5">Контакти</h3>
@@ -276,20 +320,23 @@
           <div class="column is-3">
             <h3 class="title is-5">Намерете ни</h3>
             <div class="buttons">
-              <a class="button is-light" href="https://facebook.com/swingsociety" target="_blank">
-                <img src="/static/assets/images/social-icons/fb-bw.svg" alt="Facebook" width="24">
+              <a class="button is-light" href="https://www.facebook.com/swingsocietybg" target="_blank">
+                <span class="icon">
+                  <!-- <img src="/static/assets/images/social-icons/fb-bw.svg" alt="Facebook"> -->
+                  <i class="fab fa-instagram"></i>
+                </span>
                 <span>Facebook</span>
               </a>
-              <a class="button is-light" href="https://instagram.com/swingsociety" target="_blank">
-                <img src="/static/assets/images/social-icons/ig-bw.svg" alt="Instagram" width="24">
+              <a class="button is-light" href="https://www.instagram.com/bgswingsociety/" target="_blank">
+                <img src="/static/assets/images/social-icons/ig-bw.svg" alt="Instagram" width="24" height="24">
                 <span>Instagram</span>
               </a>
-              <a class="button is-light" href="https://youtube.com/swingsociety" target="_blank">
-                <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" width="24">
+              <a class="button is-light" href="https://www.youtube.com/@bgswingsociety" target="_blank">
+                <img src="/static/assets/images/social-icons/yt-bw.svg" alt="YouTube" width="24" height="24">
                 <span>Youtube</span>
               </a>
-              <a class="button is-light" href="https://tiktok.com/swingsociety" target="_blank">
-                <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" width="24">
+              <a class="button is-light" href="https://www.tiktok.com/@swing_society5" target="_blank">
+                <img src="/static/assets/images/social-icons/tt-bw.svg" alt="TikTok" width="24" height="24">
                 <span>TikTok</span>
               </a>
             </div>
