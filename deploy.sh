@@ -1,7 +1,7 @@
 # Variables
-IMAGE_NAME="gcr.io/swingsociety-backend/ss-go"
+IMAGE_NAME="europe-north1-docker.pkg.dev/swingsociety-backend/ss-go/ss-go"
 SERVICE_NAME="ss-go"
-REGION="europe-west1"  # Changed to eu region as per your request
+REGION="europe-north1"  # Changed to eu region as per your request
 ALLOW_UNAUTHENTICATED=false  # Set to false to stop unauthenticated access
 
 
@@ -30,6 +30,8 @@ gcloud run deploy $SERVICE_NAME \
   --image $IMAGE_NAME \
   --platform managed \
   --region $REGION \
+  --project=swingsociety-backend \
+  --service-account=ss-go1@swingsociety-backend.iam.gserviceaccount.com \
   --no-allow-unauthenticated  # Disable unauthenticated access
 
 if [ $? -ne 0 ]; then

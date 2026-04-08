@@ -1,9 +1,10 @@
 package internal
 
 import (
+    "encoding/json"
+    "fmt"
     "log"
     "os"
-    "encoding/json"
     "net/http"
     "path/filepath"
     "strings"
@@ -171,13 +172,18 @@ func (r *Router) SetupRoutes() error {
     // Initialize all storage implementations
     googleStorage := storage.NewGoogleSheetsStorage(config.AppConfig.External.GoogleSheetsURL)
     jsonStorage := storage.NewJSONFileStorage(filepath.Join(config.AppConfig.Paths.DataDir, "carousel.json"))
-    registrationStorage := storage.NewSimpleRegistrationStorage()
     classStorage := storage.NewSimpleClassStorage()
     templateStorage := storage.NewFileTemplateStorage()
-    newsletterStorage := storage.NewSimpleNewsletterStorage()
-    contactStorage := storage.NewSimpleContactStorage()
-    eventNotificationStorage := storage.NewSimpleEventNotificationStorage()
-    calendarStorage := storage.NewCalendarStorage()
+
+    firebase, err := storage.NewFirebaseClient()
+    if err != nil {
+        return fmt.Errorf("Firebase initialization failed: %v", err)
+    }
+    registrationStorage := storage.NewSimpleRegistrationStorage(firebase)
+    newsletterStorage := storage.NewSimpleNewsletterStorage(firebase)
+    contactStorage := storage.NewSimpleContactStorage(firebase)
+    eventNotificationStorage := storage.NewSimpleEventNotificationStorage(firebase)
+    calendarStorage := storage.NewCalendarStorage(firebase)
 
     // Initialize all handlers with their dependencies
     carouselHandler := handlers.NewCarouselHandler(googleStorage, jsonStorage)

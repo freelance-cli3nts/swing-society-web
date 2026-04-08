@@ -107,25 +107,42 @@ go run server/main.go
 ```
 The site will be available at `http://localhost:8080`
 
-## 🚀 Deployment
+  ## Deployment
 
-### Local Development
-```bash
-go run main.go
-```
+  GCP Infrastructure
+  Resource                Value
+  Backend                 projectswingsociety-backend
+  Firebase                projectswing-society-realtime-data
+  Cloud Run               servicess-go
+  Region                  europe-north1
+  Service account         ss-go1@swingsociety-backend.iam.gserviceaccount.com
+  Artifact Registry       europe-north1-docker.pkg.dev/swingsociety-backend/ss-go/ss-go
 
-### Google Cloud Run Deployment
-```bash
-# Build the container
-docker build -t gcr.io/swingsociety-backend/ss-go .
+  ### First-time Setup (new collaborator)
+  1. Request GCP access from the project owner (mr.anastasov@gmail.com). You need roles/editor on swingsociety-backend.
+  2. Authenticate:
+  
+  ```bash  
+  gcloud auth login
+  gcloud auth configure-docker europe-north1-docker.pkg.dev
+  ```
+  3. Deploy
+  ```
+  bash
+  ./deploy.sh
+  ```
 
-# Push to Container Registry
-docker push gcr.io/swingsociety-backend/ss-go
+  The script builds the Docker image, pushes to Artifact Registry, and deploys to Cloud Run with the correct service account. No credential files needed.
 
-# Deploy to Cloud Run // make it eu, stop the unauthenticated access
-gcloud run deploy ss-go --image gcr.io/swingsociety-backend/ss-go --platform managed --region  europe-north1 --allow-unauthenticated  --set-env-vars GOOGLE_CLOUD_PROJECT=swingsociety-backend
---set-env-vars "GOOGLE_CREDENTIALS=$(cat swing-society-realtime-firebase-adminsdk.json)" --timeout=5m
-```
+  ***Firebase Authentication***
+  Firebase access uses GCP Application Default Credentials (ADC) — no key files. On Cloud Run, ss-go1 service account authenticates automatically. For local development, set GOOGLE_CREDENTIALS in .env with the JSON content of a service account key (never a file path, never committed).
+  
+  ***Security***
+
+  No credential files in the repository — enforced via .gitignore and gitleaks pre-commit hook
+  Firebase auth via Workload Identity (ADC) — zero service account keys in use
+  Cloud Run configured with dedicated service account ss-go1 (not the default compute SA)
+  Unauthenticated Cloud Run access disabled
 
 ## 📝 Development Tasks
 

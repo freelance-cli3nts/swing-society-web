@@ -17,28 +17,16 @@ type ContactStorage interface {
 }
 
 type SimpleContactStorage struct {
-    contacts []*models.ContactForm
     firebase *FirebaseClient
 }
 
-func NewSimpleContactStorage() *SimpleContactStorage {
-    // Initialize Firebase client
-    firebase, err := NewFirebaseClient()
-    if err != nil {
-        log.Printf("Warning: Firebase initialization failed for contact storage: %v", err)
-    }
-
+func NewSimpleContactStorage(firebase *FirebaseClient) *SimpleContactStorage {
     return &SimpleContactStorage{
-        contacts: make([]*models.ContactForm, 0),
         firebase: firebase,
     }
 }
 
 func (s *SimpleContactStorage) StoreContactForm(form *models.ContactForm) error {
-    // Store in memory
-    s.contacts = append(s.contacts, form)
-
-    // Also store in Firebase if available
     if s.firebase != nil {
         // Check if user already exists by email
         userId, err := s.firebase.GetUserByEmail(form.Email)
@@ -148,14 +136,6 @@ func (s *SimpleContactStorage) StoreContactForm(form *models.ContactForm) error 
 }
 
 func (s *SimpleContactStorage) GetContactForm(email string) (*models.ContactForm, error) {
-    // Check in-memory first
-    for _, contact := range s.contacts {
-        if contact.Email == email {
-            return contact, nil
-        }
-    }
-    
-    // If Firebase available, check there
     if s.firebase != nil {
         // Get submissions for this email
         var submissions map[string]interface{}
@@ -190,12 +170,6 @@ func (s *SimpleContactStorage) GetContactForm(email string) (*models.ContactForm
 }
 
 func (s *SimpleContactStorage) GetAllContactForms() ([]*models.ContactForm, error) {
-    // If only in-memory data requested, return that
-    if len(s.contacts) > 0 {
-        return s.contacts, nil
-    }
-    
-    // If Firebase available and no in-memory data, fetch from Firebase
     if s.firebase != nil {
         var submissions map[string]interface{}
         ref := s.firebase.db.NewRef("submissions/contacts")
@@ -228,5 +202,5 @@ func (s *SimpleContactStorage) GetAllContactForms() ([]*models.ContactForm, erro
         return forms, nil
     }
     
-    return s.contacts, nil
+    return nil, nil
 }

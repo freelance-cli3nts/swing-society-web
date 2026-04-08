@@ -16,28 +16,16 @@ type EventNotificationStorage interface {
 }
 
 type SimpleEventNotificationStorage struct {
-	notifications map[string]*models.EventNotification
-	firebase      *FirebaseClient
+	firebase *FirebaseClient
 }
 
-func NewSimpleEventNotificationStorage() *SimpleEventNotificationStorage {
-	// Initialize Firebase client
-	firebase, err := NewFirebaseClient()
-	if err != nil {
-		log.Printf("Warning: Firebase initialization failed for event notification storage: %v", err)
-	}
-
+func NewSimpleEventNotificationStorage(firebase *FirebaseClient) *SimpleEventNotificationStorage {
 	return &SimpleEventNotificationStorage{
-		notifications: make(map[string]*models.EventNotification),
-		firebase:      firebase,
+		firebase: firebase,
 	}
 }
 
 func (s *SimpleEventNotificationStorage) StoreEventNotification(notification *models.EventNotification) error {
-	// Store in memory
-	s.notifications[notification.Email] = notification
-
-	// Also store in Firebase if available
 	if s.firebase != nil {
 		// Check if user already exists by email
 		userId, err := s.firebase.GetUserByEmail(notification.Email)
@@ -147,12 +135,6 @@ func (s *SimpleEventNotificationStorage) StoreEventNotification(notification *mo
 }
 
 func (s *SimpleEventNotificationStorage) IsSubscribed(email string) (bool, error) {
-	// Check in-memory first
-	if _, exists := s.notifications[email]; exists {
-		return true, nil
-	}
-
-	// If Firebase available, check there
 	if s.firebase != nil {
 		// Get user by email
 		userId, err := s.firebase.GetUserByEmail(email)
@@ -180,10 +162,6 @@ func (s *SimpleEventNotificationStorage) IsSubscribed(email string) (bool, error
 }
 
 func (s *SimpleEventNotificationStorage) Unsubscribe(email string) error {
-	// Remove from memory
-	delete(s.notifications, email)
-
-	// Update in Firebase if available
 	if s.firebase != nil {
 		// Get user by email
 		userId, err := s.firebase.GetUserByEmail(email)

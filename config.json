@@ -5,9 +5,6 @@
       "read_timeout": 15000000000,
       "write_timeout": 15000000000
   },
-  "firebase": {
-    "credentials_file": "./swing-society-realtime-firebase-adminsdk.json"
-  },  
   "paths": {
       "root_dir": "",
       "templates_dir": "templates",
@@ -20,9 +17,7 @@
           "api": "100-M",
           "static": "1000-M",
           "default": "60-M"
-      },
-      "csp_directives": "default-src 'self' https:; script-src 'self' 'unsafe-inline' https://unpkg.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' https: data:; frame-src 'self' https://www.youtube.com; connect-src 'self' https:;"
-
+      }
   },
   "cors": {
       "origins": ["*"],

@@ -17,31 +17,16 @@ type RegistrationStorage interface {
 
 // SimpleRegistrationStorage implements RegistrationStorage using basic storage
 type SimpleRegistrationStorage struct {
-    // Could be extended to use a database later
-    registrations map[string]*models.RegistrationForm
-    // Add Firebase client
-    firebase      *FirebaseClient
+    firebase *FirebaseClient
 }
 
-func NewSimpleRegistrationStorage()*SimpleRegistrationStorage {
-    // Initialize Firebase client
-    firebase, err := NewFirebaseClient()
-    if err != nil {
-        // Log the error but don't fail - we can fall back to in-memory storage
-        log.Printf("Warning: Firebase initialization failed: %v", err)
-    }
-
+func NewSimpleRegistrationStorage(firebase *FirebaseClient) *SimpleRegistrationStorage {
     return &SimpleRegistrationStorage{
-        registrations: make(map[string]*models.RegistrationForm),
-        firebase:      firebase,
+        firebase: firebase,
     }
 }
 
 func (s *SimpleRegistrationStorage) StoreRegistration(reg *models.RegistrationForm) error {
-    // Store in memory map
-    s.registrations[reg.Email] = reg
-
-    // Also store in Firebase if available
     if s.firebase != nil {
         // First, check if user already exists by email
         userId, err := s.firebase.GetUserByEmail(reg.Email)
@@ -149,12 +134,6 @@ func (s *SimpleRegistrationStorage) StoreRegistration(reg *models.RegistrationFo
 }
 
 func (s *SimpleRegistrationStorage) GetRegistration(email string) (*models.RegistrationForm, error) {
-    // Try in-memory first
-    if reg, exists := s.registrations[email]; exists {
-        return reg, nil
-    }
-    
-    // If Firebase available, check there
     if s.firebase != nil {
         userId, err := s.firebase.GetUserByEmail(email)
         if err != nil {

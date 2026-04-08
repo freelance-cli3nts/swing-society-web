@@ -16,28 +16,16 @@ type NewsletterStorage interface {
 }
 
 type SimpleNewsletterStorage struct {
-    subscriptions map[string]*models.Newsletter
-    firebase      *FirebaseClient
+    firebase *FirebaseClient
 }
 
-func NewSimpleNewsletterStorage() *SimpleNewsletterStorage {
-    // Initialize Firebase client
-    firebase, err := NewFirebaseClient()
-    if err != nil {
-        log.Printf("Warning: Firebase initialization failed for newsletter storage: %v", err)
-    }
-
+func NewSimpleNewsletterStorage(firebase *FirebaseClient) *SimpleNewsletterStorage {
     return &SimpleNewsletterStorage{
-        subscriptions: make(map[string]*models.Newsletter),
-        firebase:      firebase,
+        firebase: firebase,
     }
 }
 
 func (s *SimpleNewsletterStorage) Subscribe(subscription *models.Newsletter) error {
-    // Store in memory
-    s.subscriptions[subscription.Email] = subscription
-
-    // Also store in Firebase if available
     if s.firebase != nil {
         // Check if user already exists by email
         userId, err := s.firebase.GetUserByEmail(subscription.Email)
@@ -134,10 +122,6 @@ func (s *SimpleNewsletterStorage) Subscribe(subscription *models.Newsletter) err
 }
 
 func (s *SimpleNewsletterStorage) Unsubscribe(email string) error {
-    // Remove from memory
-    delete(s.subscriptions, email)
-
-    // Update in Firebase if available
     if s.firebase != nil {
         // Get user by email
         userId, err := s.firebase.GetUserByEmail(email)
@@ -164,12 +148,6 @@ func (s *SimpleNewsletterStorage) Unsubscribe(email string) error {
 }
 
 func (s *SimpleNewsletterStorage) IsSubscribed(email string) (bool, error) {
-    // Check in-memory first
-    if _, exists := s.subscriptions[email]; exists {
-        return true, nil
-    }
-
-    // If Firebase available, check there
     if s.firebase != nil {
         // Get user by email
         userId, err := s.firebase.GetUserByEmail(email)

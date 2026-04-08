@@ -14,12 +14,8 @@ type CalendarStorage struct {
 	firebase *FirebaseClient
 }
 
-// NewCalendarStorage creates a CalendarStorage, degrading gracefully if Firebase is unavailable.
-func NewCalendarStorage() *CalendarStorage {
-	firebase, err := NewFirebaseClient()
-	if err != nil {
-		log.Printf("Warning: CalendarStorage Firebase init failed: %v", err)
-	}
+// NewCalendarStorage creates a CalendarStorage backed by the provided Firebase client.
+func NewCalendarStorage(firebase *FirebaseClient) *CalendarStorage {
 	return &CalendarStorage{firebase: firebase}
 }
 

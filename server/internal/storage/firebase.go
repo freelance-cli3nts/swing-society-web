@@ -2,7 +2,6 @@ package storage
 
 import (
 	"context"
-	"log"
 	"os"
 	"strings"
 
@@ -92,7 +91,6 @@ func (fc *FirebaseClient) GetUserByEmail(email string) (string, error) {
 	
 	var userId string
 	if err := ref.Get(ctx, &userId); err != nil {
-		log.Printf("Error getting user by email %s: %v", email, err)
 		return "", err
 	}
 	
@@ -114,7 +112,6 @@ func (fc *FirebaseClient) UpdateEmailIndex(email, userId string) error {
 	ref := fc.db.NewRef("indexes/emailToUser").Child(cleanEmail)
 	err := ref.Set(ctx, userId)
 	if err != nil {
-		log.Printf("Error updating email index for %s: %v", email, err)
 	}
 	return err
 }
@@ -158,80 +155,3 @@ func (fc *FirebaseClient) TestConnection(ctx context.Context) (map[string]interf
 	
 	return data, nil
 }
-
-
-// RESTful API 4 read/write to Firebase
-// func writeData(w http.ResponseWriter, r *http.Request) {
-// 	// Write data to Firebase
-// 	ref := client.NewRef("data")
-// 	if err := ref.Set(ctx, map[string]interface{}{
-// 			"key": "value",
-// 	}); err != nil {
-// 			http.Error(w, err.Error(), http.StatusInternalServerError)
-// 			return
-// 	}
-// 	w.WriteHeader(http.StatusOK)
-// 	w.Write([]byte("Data written successfully!"))
-// }
-
-// DeepSeek suggestion
-// import (
-//     "context"
-//     "log"
-//     "net/http"
-//     "firebase.google.com/go"
-//     "google.golang.org/api/option"
-// )
-
-// var client *firebase.Database
-
-// func main() {
-//     // Initialize Firebase Admin SDK
-//     opt := option.WithCredentialsFile("path/to/serviceAccountKey.json") // Path to your Firebase service account key
-//     app, err := firebase.NewApp(context.Background(), nil, opt)
-//     if err != nil {
-//         log.Fatalf("error initializing Firebase app: %v\n", err)
-//     }
-
-//     // Initialize Realtime Database client
-//     client, err = app.Database(context.Background())
-//     if err != nil {
-//         log.Fatalf("error initializing database client: %v\n", err)
-//     }
-
-//     // Set up HTTP routes
-//     http.HandleFunc("/submit-form", handleFormSubmission)
-
-//     // Start the server
-//     log.Println("Server started on :8080")
-//     log.Fatal(http.ListenAndServe(":8080", nil))
-// }
-
-// func handleFormSubmission(w http.ResponseWriter, r *http.Request) {
-//     // Parse form data
-//     name := r.FormValue("name")
-//     email := r.FormValue("email")
-//     message := r.FormValue("message")
-
-//     // Validate data (example)
-//     if name == "" || email == "" || message == "" {
-//         http.Error(w, "All fields are required", http.StatusBadRequest)
-//         return
-//     }
-
-//     // Save data to Firebase Realtime Database
-//     ref := client.NewRef("formSubmissions/")
-//     err := ref.Push(context.Background(), map[string]interface{}{
-//         "name":    name,
-//         "email":   email,
-//         "message": message,
-//     })
-//     if err != nil {
-//         http.Error(w, err.Error(), http.StatusInternalServerError)
-//         return
-//     }
-
-//     // Respond to the client
-//     w.WriteHeader(http.StatusOK)
-//     w.Write([]byte("Form submitted successfully!"))
-// }
