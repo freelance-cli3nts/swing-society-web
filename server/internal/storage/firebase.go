@@ -30,22 +30,12 @@ func NewFirebaseClient() (*FirebaseClient, error) {
 		DatabaseURL: "https://swing-society-realtime-data-default-rtdb.europe-west1.firebasedatabase.app",
 	}
 
-	// Check for credentials in environment variable
-	credentials := os.Getenv("GOOGLE_CREDENTIALS")
-
-	if credentials != "" {
-		// Initialize with credentials from environment variable
+	if credentials := os.Getenv("GOOGLE_CREDENTIALS"); credentials != "" {
+		// Local dev: explicig JSON via env var
 		opt := option.WithCredentialsJSON([]byte(credentials))
 		app, err = firebase.NewApp(ctx, config, opt)
 	} else {
-		// Use service account credentials file
-		credentialsFile := os.Getenv("FIREBASE_CREDENTIALS_FILE")
-		if credentialsFile == "" {
-			credentialsFile = "swing-society-realtime-firebase-adminsdk.json"
-		}
-		
-		opt := option.WithCredentialsFile(credentialsFile)
-		app, err = firebase.NewApp(ctx, config, opt)
+		app, err = firebase.NewApp(ctx, config)
 	}
 	
 	if err != nil {

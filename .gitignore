@@ -7,6 +7,9 @@
 *.test
 *.out
 go.work
+*-adminsdk*.json
+*service-account*.json
+*.pem
 
 # Go binary, compiled
 /bin/
@@ -15,6 +18,8 @@ go.work
 # Environment variables
 .env
 .env.*
+!.env.example
+
 
 # IDE specific
 .idea/
@@ -62,3 +67,5 @@ coverage.html
 *.temp
 
 .qodo
+
+
