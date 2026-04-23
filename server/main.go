@@ -40,5 +40,5 @@ func main() {
     port := config.AppConfig.Server.Port
     
     log.Printf("Server starting on port %s", port)
-    log.Fatal(http.ListenAndServe(":"+port, nil))
+    log.Fatal(http.ListenAndServe(":"+port, nil))																																																											
 }
