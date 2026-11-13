@@ -56,8 +56,8 @@ swing-society/
 
 ## 🛠️ Technologies
 
-- **Backend**: Go 1.21+
-- **Frontend**: HTML5, CSS3, HTMX, Bulma
+- **Backend**: Go 1.23+
+- **Frontend**: HTML5, HTMX, Tailwind CSS
 - **Database**: Firebase Realtime Database
 - **Deployment**: Google Cloud Run
 - **Containerization**: Docker
@@ -66,7 +66,7 @@ swing-society/
 
 ## 📌 Requirements
 
-- Go 1.21 or higher
+- Go 1.23 or higher
 - Google Cloud SDK (for deployment)
 - Firebase Admin SDK credentials
 - `.env` file for environment variables
@@ -81,14 +81,8 @@ cd swing-society
 ```
 
 2. **Set Up Environment Variables**
-Create a `.env` file in the root directory:
-```env
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_USER=your-email@example.com
-SMTP_PASS=your-email-password
-RECIPIENT_EMAIL=info@swingsociety.bg
-GOOGLE_CLOUD_PROJECT=swingsociety-backend
+```bash
+cp .env.example .env   # then fill in values; every variable is documented there
 ```
 
 3. **Install Dependencies**
@@ -142,7 +136,14 @@ The site will be available at `http://localhost:8080`
   No credential files in the repository — enforced via .gitignore and gitleaks pre-commit hook
   Firebase auth via Workload Identity (ADC) — zero service account keys in use
   Cloud Run configured with dedicated service account ss-go1 (not the default compute SA)
-  Unauthenticated Cloud Run access disabled
+  The Cloud Run service is publicly reachable. `deploy.sh` still passes `--no-allow-unauthenticated`, so check the IAM binding before the next deploy.
+
+## 🌍 Live
+
+- https://www.swingsociety.eu (Cloudflare DNS; apex 301 → www; `www` maps to Cloud Run `ss-go` in `europe-north1` via `ghs.googlehosted.com`)
+- Planned: `swingsociety.eu` will redirect to the new site at https://www.swingsociety.bg (Next.js + Payload on Vercel, a separate codebase)
+- Design references, research notes and raw client material live in Forge: `projects-feedback/proj06-swing-society/`
+- Database schema docs: [`docs/`](docs/)
 
 ## 📝 Development Tasks
 
