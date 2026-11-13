@@ -69,3 +69,7 @@ coverage.html
 .qodo
 
 
+
+# Client / planning material lives in forge (proj06-swing-society)
+conversations*.json
+ssw prep/

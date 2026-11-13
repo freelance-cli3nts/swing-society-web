@@ -5,4 +5,5 @@
 README.md
 **/tmp
 server/main
-**/*.test.go
+**/*.test.godocs
+.env.example
