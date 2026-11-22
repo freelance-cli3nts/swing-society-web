@@ -1,0 +1,32 @@
+# CI via Rumi-Shamz/ci-templates (reusable workflows pinned by commit SHA).
+name: CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+  push:
+    branches: [master]
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  go:
+    uses: Rumi-Shamz/ci-templates/.github/workflows/go.yml@7fce04bff5ab5058e749b6fb33c3486880fd65ef # v1
+    # with:
+    #   working-directory: "."
+
+  docker-build:
+    uses: Rumi-Shamz/ci-templates/.github/workflows/docker-build.yml@7fce04bff5ab5058e749b6fb33c3486880fd65ef # v1
+    # with:
+    #   context: "."
+    #   file: ""                 # default <context>/Dockerfile
